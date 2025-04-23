@@ -61,30 +61,29 @@ const assetDict = {
     "https://img.shields.io/badge/-Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white",
   github:
     "https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white",
-  // SVG内で使用される追加アセット
-  "profile-views": "https://komarev.com/ghpvc/?username=0xfab0131",
-  "github-followers":
+  profileViews: "https://komarev.com/ghpvc/?username=0xfab0131",
+  githubFollowers:
     "https://img.shields.io/github/followers/0xfab0131?style=flat&logo=github",
-  "typescript-badge":
+  typescriptBadge:
     "https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white",
-  "react-badge":
+  reactBadge:
     "https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white",
-  "nextjs-badge":
+  nextjsBadge:
     "https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=nextjs&logoColor=white",
-  "nodejs-badge":
+  nodejsBadge:
     "https://img.shields.io/badge/-Node.js-339933?style=flat-square&logo=nodejs&logoColor=white",
-  "tailwind-badge":
+  tailwindBadge:
     "https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white",
-  "prisma-badge":
+  prismaBadge:
     "https://img.shields.io/badge/-Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white",
-  "github-stats":
+  githubStats:
     "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=0xfab0131&theme=vue-dark&count_private=true&include_all_commits=true&rank_icon=github&show_icons=true",
-  "github-langs":
+  githubLangs:
     "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&count_private=true&show_icons=true&layout=compact&include_all_commits=true&rank_icon=github&size_weight=0.5&count_weight=0.5&langs_count=8&card_width=300&hide=html,css,php",
   avatar: "https://avatars.githubusercontent.com/u/0xfab0131",
-  "github-profile": "https://github.com/0xfab0131",
-  "twitter-profile": "https://twitter.com/fab_for_fab",
-  "linkedin-profile": "https://linkedin.com/in/0xfab0131",
+  githubProfile: "https://github.com/0xfab0131",
+  twitterProfile: "https://twitter.com/fab_for_fab",
+  linkedinProfile: "https://linkedin.com/in/0xfab0131",
 };
 
 // Function to proxy an asset
