@@ -4,7 +4,9 @@
      version="1.1" baseProfile="full"
      viewBox="0 0 800 1500"
      preserveAspectRatio="xMidYMid meet"
-     width="800" height="1500">
+     width="800" height="1500"
+     shape-rendering="geometricPrecision"
+     text-rendering="optimizeLegibility">
 
   <style type="text/css"><![CDATA[
     /* 背景アニメーション */
@@ -15,7 +17,8 @@
     svg {
       background: linear-gradient(90deg, #1e3a8a, #2563eb, #1e40af);
       background-size: 1600px 100%;
-      animation: bgScroll 10s linear infinite;
+      animation: bgScroll 20s linear infinite;
+      will-change: background-position;
     }
     /* 埋め込み HTML の基本整形 */
     body {
@@ -65,16 +68,16 @@
     <body xmlns="http://www.w3.org/1999/xhtml">
       <!-- 1. プロフィールビュー＆フォロワー -->
       <div class="center">
-        <img src="https://komarev.com/ghpvc/?username=0xfab0131" alt="Profile views" />
+        <img loading="lazy" src="https://komarev.com/ghpvc/?username=0xfab0131" alt="Profile views" />
         <a href="https://github.com/0xfab0131?tab=followers">
-          <img alt="GitHub followers"
+          <img loading="lazy" alt="GitHub followers"
                src="https://img.shields.io/github/followers/0xfab0131?style=flat&amp;logo=github" />
         </a>
       </div>
 
       <!-- 2. ウェルカム見出し -->
       <h1 class="flex-center">
-        <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif"
+        <img loading="lazy" src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif"
              width="28" height="28" alt="Welcome GIF" />
         <span style="margin-left:8px;">Welcome to my profile!</span>
       </h1>
@@ -94,64 +97,64 @@
 
       <h3>Frontend</h3>
       <p class="badge-row">
-        <img alt="React"
+        <img loading="lazy" alt="React"
              src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&amp;logo=react&amp;logoColor=white" />
-        <img alt="Next.js"
+        <img loading="lazy" alt="Next.js"
              src="https://img.shields.io/badge/-Next.js-000000?style=flat-square&amp;logo=nextjs&amp;logoColor=white" />
-        <img alt="TypeScript"
+        <img loading="lazy" alt="TypeScript"
              src="https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&amp;logo=typescript&amp;logoColor=white" />
-        <img alt="JavaScript"
+        <img loading="lazy" alt="JavaScript"
              src="https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&amp;logo=javascript&amp;logoColor=black" />
-        <img alt="Three.js"
+        <img loading="lazy" alt="Three.js"
              src="https://img.shields.io/badge/-Three.js-000000?style=flat-square&amp;logo=threejs&amp;logoColor=white" />
-        <img alt="Tailwind CSS"
+        <img loading="lazy" alt="Tailwind CSS"
              src="https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?style=flat-square&amp;logo=tailwindcss&amp;logoColor=white" />
-        <img alt="Material UI"
+        <img loading="lazy" alt="Material UI"
              src="https://img.shields.io/badge/-Material%20UI-0081CB?style=flat-square&amp;logo=materialui&amp;logoColor=white" />
-        <img alt="Astro"
+        <img loading="lazy" alt="Astro"
              src="https://img.shields.io/badge/-Astro-FF5D01?style=flat-square&amp;logo=astro&amp;logoColor=white" />
       </p>
 
       <h3>Backend &amp; Infrastructure</h3>
       <p class="badge-row">
-        <img alt="Node.js"
+        <img loading="lazy" alt="Node.js"
              src="https://img.shields.io/badge/-Node.js-339933?style=flat-square&amp;logo=nodejs&amp;logoColor=white" />
-        <img alt="Go"
+        <img loading="lazy" alt="Go"
              src="https://img.shields.io/badge/-Go-00ADD8?style=flat-square&amp;logo=go&amp;logoColor=white" />
-        <img alt="Python"
+        <img loading="lazy" alt="Python"
              src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white" />
-        <img alt="C#"
+        <img loading="lazy" alt="C#"
              src="https://img.shields.io/badge/-C%23-239120?style=flat-square&amp;logo=csharp&amp;logoColor=white" />
-        <img alt=".NET"
+        <img loading="lazy" alt=".NET"
              src="https://img.shields.io/badge/-.NET-512BD4?style=flat-square&amp;logo=dotnet&amp;logoColor=white" />
-        <img alt="Docker"
+        <img loading="lazy" alt="Docker"
              src="https://img.shields.io/badge/-Docker-46a2f1?style=flat-square&amp;logo=docker&amp;logoColor=white" />
-        <img alt="Kubernetes"
+        <img loading="lazy" alt="Kubernetes"
              src="https://img.shields.io/badge/-Kubernetes-326CE5?style=flat-square&amp;logo=kubernetes&amp;logoColor=white" />
-        <img alt="GraphQL"
+        <img loading="lazy" alt="GraphQL"
              src="https://img.shields.io/badge/-GraphQL-E10098?style=flat-square&amp;logo=graphql&amp;logoColor=white" />
-        <img alt="PostgreSQL"
+        <img loading="lazy" alt="PostgreSQL"
              src="https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&amp;logo=postgresql&amp;logoColor=white" />
       </p>
 
       <!-- 5. Cloud &amp; DevOps -->
       <h3>Cloud &amp; DevOps</h3>
       <p class="badge-row">
-        <img alt="AWS"
+        <img loading="lazy" alt="AWS"
              src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&amp;logo=amazonaws&amp;logoColor=white" />
-        <img alt="Azure"
+        <img loading="lazy" alt="Azure"
              src="https://img.shields.io/badge/-Azure-0089D6?style=flat-square&amp;logo=microsoftazure&amp;logoColor=white" />
-        <img alt="GCP"
+        <img loading="lazy" alt="GCP"
              src="https://img.shields.io/badge/-Google%20Cloud-4285F4?style=flat-square&amp;logo=googlecloud&amp;logoColor=white" />
-        <img alt="GitHub Actions"
+        <img loading="lazy" alt="GitHub Actions"
              src="https://img.shields.io/badge/-GitHub%20Actions-2088FF?style=flat-square&amp;logo=githubactions&amp;logoColor=white" />
-        <img alt="Vercel"
+        <img loading="lazy" alt="Vercel"
              src="https://img.shields.io/badge/-Vercel-000000?style=flat-square&amp;logo=vercel&amp;logoColor=white" />
-        <img alt="Firebase"
+        <img loading="lazy" alt="Firebase"
              src="https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&amp;logo=firebase&amp;logoColor=black" />
-        <img alt="Supabase"
+        <img loading="lazy" alt="Supabase"
              src="https://img.shields.io/badge/-Supabase-3ECF8E?style=flat-square&amp;logo=supabase&amp;logoColor=white" />
-        <img alt="Cloudflare"
+        <img loading="lazy" alt="Cloudflare"
              src="https://img.shields.io/badge/-Cloudflare-F38020?style=flat-square&amp;logo=cloudflare&amp;logoColor=white" />
       </p>
 
@@ -162,13 +165,13 @@
       <!-- 7. GitHub Stats -->
       <h2>📊 GitHub Stats</h2>
       <div class="center flex-center stats-section">
-        <img alt="GitHub Stats" class="stats-card"
+        <img loading="lazy" alt="GitHub Stats" class="stats-card"
              src="https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=0xfab0131&amp;theme=vue-dark&amp;count_private=true&amp;include_all_commits=true&amp;rank_icon=github&amp;show_icons=true" />
-        <img alt="Top Languages" class="stats-card"
+        <img loading="lazy" alt="Top Languages" class="stats-card"
              src="https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api/top-langs/?username=0xfab0131&amp;theme=vue-dark&amp;count_private=true&amp;show_icons=true&amp;layout=compact&amp;include_all_commits=true&amp;rank_icon=github&amp;size_weight=0.5&amp;count_weight=0.5&amp;langs_count=8&amp;card_width=300&amp;hide=html,css,php" />
       </div>
       <div class="center stats-section">
-        <img alt="GitHub Streak Stats"
+        <img loading="lazy" alt="GitHub Streak Stats"
              src="https://github-readme-streak-stats-rust-eta.vercel.app/?user=0xfab0131&amp;theme=vue-dark" />
       </div>
 
@@ -176,14 +179,14 @@
       <h2>📫 Connect with Me</h2>
       <div class="center">
         <a href="https://twitter.com/fab_for_fab">
-          <img alt="Twitter"
+          <img loading="lazy" alt="Twitter"
                src="https://img.shields.io/badge/-Twitter-1DA1F2?style=for-the-badge&amp;logo=twitter&amp;logoColor=white" />
         </a>
         <a href="https://github.com/0xfab0131">
-          <img alt="GitHub"
+          <img loading="lazy" alt="GitHub"
                src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" />
         </a>
       </div>
     </body>
   </foreignObject>
-</svg>
+</svg> 

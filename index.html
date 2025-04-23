@@ -1,0 +1,77 @@
+<!-- github pages (index.html?asset={assetName}) -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="max-age=86400, must-revalidate" />
+    <meta http-equiv="Expires" content="86400" />
+    <title>0xfab0131 Profile</title>
+    <link
+      rel="preload"
+      href="./assets/interactive.svg"
+      as="image"
+      type="image/svg+xml"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #0d1117;
+      }
+
+      .container {
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .profile-svg {
+        max-width: 100%;
+        height: auto;
+      }
+
+      @media (max-width: 850px) {
+        .profile-svg {
+          width: 90vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <object
+        class="profile-svg"
+        type="image/svg+xml"
+        data="./assets/interactive.svg"
+        aria-label="Interactive profile visualization"
+      >
+        Your browser does not support SVG
+      </object>
+    </div>
+
+    <script>
+      // Handle query parameters to dynamically load different assets if needed
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const assetParam = urlParams.get("asset");
+
+        if (assetParam) {
+          const obj = document.querySelector(".profile-svg");
+          const assetPath = `./assets/${assetParam}`;
+          obj.setAttribute("data", assetPath);
+
+          // Dynamically add preload for the requested asset
+          const preloadLink = document.querySelector('link[rel="preload"]');
+          if (preloadLink) {
+            preloadLink.setAttribute("href", assetPath);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
