@@ -44,30 +44,33 @@ const placeholderMap = {
 // Function to fetch an image and convert it to Data URI
 function fetchImageAsDataUri(url) {
   return new Promise((resolve, reject) => {
-    // Basic check for valid URL structure (can be improved)
     if (!url || !url.startsWith("https://")) {
       console.warn(`Skipping invalid or non-HTTPS URL: ${url}`);
-      // Resolve with an empty string or a placeholder if needed
-      return resolve("");
+      return resolve(""); // Resolve with empty string for invalid URLs
     }
 
     https
       .get(
         url,
-        { headers: { "User-Agent": "Node.js-Build-Script" } },
+        { headers: { "User-Agent": "Node.js-Build-Script/1.0" } }, // Added basic UA
         (response) => {
+          // Handle redirects explicitly
+          if (
+            response.statusCode >= 300 &&
+            response.statusCode < 400 &&
+            response.headers.location
+          ) {
+            console.log(
+              `Redirect detected for ${url}. Following to ${response.headers.location}`
+            );
+            // Recursively call fetchImageAsDataUri with the new location
+            return fetchImageAsDataUri(response.headers.location)
+              .then(resolve)
+              .catch(reject);
+          }
+
+          // Check for successful status code after handling redirects
           if (response.statusCode < 200 || response.statusCode >= 300) {
-            // Handle redirects
-            if (
-              response.statusCode >= 300 &&
-              response.statusCode < 400 &&
-              response.headers.location
-            ) {
-              console.log(`Redirecting to ${response.headers.location}`);
-              return fetchImageAsDataUri(response.headers.location)
-                .then(resolve)
-                .catch(reject);
-            }
             return reject(
               new Error(
                 `Failed to fetch ${url}: Status Code ${response.statusCode}`
@@ -83,10 +86,30 @@ function fetchImageAsDataUri(url) {
           response.on("end", () => {
             try {
               const buffer = Buffer.concat(chunks);
-              const contentType =
-                response.headers["content-type"] || "image/png"; // Default or guess
+              let responseContentType = response.headers["content-type"];
+              let finalContentType;
+
+              // *** START: Content-Type Correction Logic ***
+              if (
+                responseContentType &&
+                responseContentType.toLowerCase().includes("svg")
+              ) {
+                // If the content type explicitly mentions SVG, use image/svg+xml
+                finalContentType = "image/svg+xml";
+                console.log(
+                  `Detected SVG content type for ${url}. Using ${finalContentType}.`
+                );
+              } else {
+                // Otherwise, use the detected content type or fallback to png
+                finalContentType = responseContentType || "image/png";
+                console.log(
+                  `Using content type ${finalContentType} for ${url}.`
+                );
+              }
+              // *** END: Content-Type Correction Logic ***
+
               const base64 = buffer.toString("base64");
-              resolve(`data:${contentType};base64,${base64}`);
+              resolve(`data:${finalContentType};base64,${base64}`);
             } catch (e) {
               reject(
                 new Error(`Error processing data for ${url}: ${e.message}`)
@@ -96,13 +119,16 @@ function fetchImageAsDataUri(url) {
         }
       )
       .on("error", (err) => {
-        reject(new Error(`Error fetching ${url}: ${err.message}`));
+        // More specific error for network issues vs. processing issues
+        reject(new Error(`Network error fetching ${url}: ${err.message}`));
       });
   });
 }
 
 // Function to escape special characters for regex
 function escapeRegExp(string) {
+  // Handle potential null or undefined input
+  if (typeof string !== "string") return "";
   return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 }
 
@@ -110,44 +136,84 @@ async function buildSvg() {
   try {
     let templateContent = await fs.readFile(templatePath, "utf8");
 
-    // Create promises for all image fetches
     const fetchPromises = [];
-    const placeholderData = {};
+    const placeholderData = {}; // Stores results: { placeholder: dataUriOrOriginalUrl }
+
+    console.log("Starting image fetching and conversion...");
 
     for (const placeholder in placeholderMap) {
       const assetKey = placeholderMap[placeholder];
       const url = assetDict[assetKey];
+
       if (url) {
-        // Only fetch if URL exists
-        // Fetch image and store promise
+        console.log(`Processing placeholder: ${placeholder} for URL: ${url}`);
+        // Create a promise for each fetch operation
         const promise = fetchImageAsDataUri(url)
           .then((dataUri) => {
-            placeholderData[placeholder] = dataUri; // Store fetched data URI
+            if (dataUri) {
+              // Only store if fetch was successful
+              placeholderData[placeholder] = dataUri;
+              console.log(
+                `Successfully fetched and converted ${url} for ${placeholder}`
+              );
+            } else {
+              console.warn(
+                `Received empty data URI for ${placeholder}, likely skipped or failed fetch.`
+              );
+              placeholderData[placeholder] = ""; // Ensure placeholder exists even on failure
+            }
           })
           .catch((error) => {
             console.error(
-              `Failed to fetch asset for ${placeholder}: ${error.message}`
+              `Failed processing asset for ${placeholder} (${url}): ${error.message}`
             );
-            placeholderData[placeholder] = ""; // Use empty string on error
+            placeholderData[placeholder] = ""; // Use empty string on error to avoid breaking replacement
           });
         fetchPromises.push(promise);
+      } else {
+        console.warn(
+          `No URL found for asset key: ${assetKey} (placeholder: ${placeholder}). Skipping.`
+        );
+        placeholderData[placeholder] = ""; // Assign empty string if no URL
       }
     }
 
-    // Wait for all images to be fetched and converted
-    await Promise.all(fetchPromises);
+    // Wait for all image fetch/conversion promises to settle
+    console.log(
+      `Waiting for ${fetchPromises.length} fetch operations to complete...`
+    );
+    await Promise.allSettled(fetchPromises); // Use allSettled to continue even if some fetches fail
+    console.log("All fetch operations settled.");
 
-    // Replace placeholders with fetched Data URIs
+    // Replace placeholders with the results stored in placeholderData
+    console.log("Replacing placeholders in template...");
     for (const placeholder in placeholderData) {
-      const dataUri = placeholderData[placeholder];
-      const regex = new RegExp(escapeRegExp(placeholder), "g");
-      templateContent = templateContent.replace(regex, dataUri);
+      if (placeholderMap.hasOwnProperty(placeholder)) {
+        // Ensure it's a placeholder we intended to replace
+        const dataValue = placeholderData[placeholder];
+        // Escape the placeholder for use in RegExp
+        const escapedPlaceholder = escapeRegExp(placeholder);
+        if (escapedPlaceholder) {
+          // Only replace if placeholder is valid
+          const regex = new RegExp(escapedPlaceholder, "g");
+          templateContent = templateContent.replace(regex, dataValue);
+          console.log(`Replaced ${placeholder}`);
+        } else {
+          console.warn(
+            `Skipped replacement for invalid placeholder: ${placeholder}`
+          );
+        }
+      }
     }
+    console.log("Placeholder replacement complete.");
 
+    // Write the modified content to the output file
     await fs.writeFile(outputPath, templateContent, "utf8");
-    console.log(`Successfully built ${outputPath} with embedded images.`);
+    console.log(
+      `✅ Successfully built ${outputPath} with embedded or linked assets.`
+    );
   } catch (error) {
-    console.error("Error building SVG:", error);
+    console.error("❌ Error building SVG:", error);
     process.exit(1); // エラーが発生した場合は終了コード1で終了
   }
 }
