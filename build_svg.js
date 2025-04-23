@@ -66,7 +66,7 @@ async function buildSvg() {
 
       // プレースホルダーの正規表現を作成（エスケープ処理を含む）
       const regex = new RegExp(escapeRegExp(placeholder), "g");
-      templateContent = templateContent.replace(regex, url);
+      templateContent = templateContent.replace(regex, escapedUrl);
     }
     // 完成したSVGを出力ファイルに書き込む
     await fs.writeFile(outputPath, templateContent, "utf8");
