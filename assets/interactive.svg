@@ -65,118 +65,96 @@
     <body xmlns="http://www.w3.org/1999/xhtml">
       <script type="text/javascript">
       /* <![CDATA[ */
-        // Asset URL cache
-        let assetCache = {};
-        
-        // Function to request an asset URL from the parent page
-        function getAssetUrl(assetKey) {
-          return new Promise((resolve, reject) => {
-            // Check if URL is already in cache
-            if (assetCache[assetKey]) {
-              resolve(assetCache[assetKey]);
-              return;
-            }
-            
-            // Set up a listener for the response
-            const messageHandler = (event) => {
-              if (event.data && event.data.type === 'assetUrlResponse' && event.data.assetKey === assetKey) {
-                // Remove the event listener to avoid memory leaks
-                window.removeEventListener('message', messageHandler);
-                
-                if (event.data.assetUrl) {
-                  // Cache the URL for future use
-                  assetCache[assetKey] = event.data.assetUrl;
-                  resolve(event.data.assetUrl);
-                } else {
-                  console.error(`Asset URL not received for key: ${assetKey}`);
-                  // Optionally reject or resolve with a default/placeholder URL
-                  // reject(new Error(`Asset URL not found for key: ${assetKey}`)); 
-                   resolve(''); // Resolve with empty string to avoid breaking image elements
-                }
-              }
-            };
-            
-            // Listen for the response
-            window.addEventListener('message', messageHandler);
-            
-            // Send request to parent page
-            try {
-               window.parent.postMessage({
-                 type: 'getAssetUrl',
-                 assetKey: assetKey
-               }, '*'); // Consider specifying the target origin instead of '*' for security
-            } catch(e) {
-               console.error("postMessage failed: ", e);
-               window.removeEventListener('message', messageHandler); // Clean up listener
-               reject(new Error('Could not communicate with parent window'));
-            }
-            
-            // Set a timeout in case the parent doesn't respond
-            setTimeout(() => {
-              window.removeEventListener('message', messageHandler);
-              // Avoid rejecting here if we already resolved with empty string or if still waiting
-              if (!assetCache[assetKey]) {
-                 console.warn(`Timeout getting asset URL for key: ${assetKey}`);
-                 resolve(''); // Resolve with empty string on timeout
-              }
-            }, 5000); // 5 second timeout
-          });
+        // アセット辞書をSVG内に直接定義
+        const assetDict = {
+          profileViews: "https://komarev.com/ghpvc/?username=0xfab0131",
+          githubFollowers: "https://img.shields.io/github/followers/0xfab0131?style=flat&logo=github",
+          welcomeGif: "https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif",
+          react: "https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white",
+          nextjs: "https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=nextjs&logoColor=white",
+          typescript: "https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white",
+          javascript: "https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black",
+          threejs: "https://img.shields.io/badge/-Three.js-000000?style=flat-square&logo=threejs&logoColor=white",
+          tailwind: "https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white",
+          materialui: "https://img.shields.io/badge/-Material%20UI-0081CB?style=flat-square&logo=materialui&logoColor=white",
+          astro: "https://img.shields.io/badge/-Astro-FF5D01?style=flat-square&logo=astro&logoColor=white",
+          nodejs: "https://img.shields.io/badge/-Node.js-339933?style=flat-square&logo=nodejs&logoColor=white",
+          go: "https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white",
+          python: "https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white",
+          csharp: "https://img.shields.io/badge/-C%23-239120?style=flat-square&logo=csharp&logoColor=white",
+          dotnet: "https://img.shields.io/badge/-.NET-512BD4?style=flat-square&logo=dotnet&logoColor=white",
+          docker: "https://img.shields.io/badge/-Docker-46a2f1?style=flat-square&logo=docker&logoColor=white",
+          kubernetes: "https://img.shields.io/badge/-Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white",
+          graphql: "https://img.shields.io/badge/-GraphQL-E10098?style=flat-square&logo=graphql&logoColor=white",
+          postgresql: "https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white",
+          aws: "https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white",
+          azure: "https://img.shields.io/badge/-Azure-0089D6?style=flat-square&logo=microsoftazure&logoColor=white",
+          gcp: "https://img.shields.io/badge/-Google%20Cloud-4285F4?style=flat-square&logo=googlecloud&logoColor=white",
+          githubActions: "https://img.shields.io/badge/-GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white",
+          vercel: "https://img.shields.io/badge/-Vercel-000000?style=flat-square&logo=vercel&logoColor=white",
+          firebase: "https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black",
+          supabase: "https://img.shields.io/badge/-Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white",
+          cloudflare: "https://img.shields.io/badge/-Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white",
+          githubStats: "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=0xfab0131&theme=vue-dark&count_private=true&include_all_commits=true&rank_icon=github&show_icons=true",
+          topLanguages: "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&count_private=true&show_icons=true&layout=compact&include_all_commits=true&rank_icon=github&size_weight=0.5&count_weight=0.5&langs_count=8&card_width=300&hide=html,css,php",
+          streakStats: "https://github-readme-streak-stats-rust-eta.vercel.app/?user=0xfab0131&theme=vue-dark",
+          twitter: "https://img.shields.io/badge/-Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white",
+          github: "https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white"
+        };
+
+        // アセットURLを取得する関数 (辞書から直接取得)
+        function getAssetUrl(key) {
+          return assetDict[key] || ''; // 見つからない場合は空文字を返す
         }
         
-        // Function to update an image element with the correct URL
-        async function updateImageElement(elementId, assetKey) {
-          try {
-            const url = await getAssetUrl(assetKey);
-            const element = document.getElementById(elementId);
-            if (element) {
-              if (url) {
-                 element.setAttribute('src', url);
-              } else {
-                 // Handle cases where URL is empty (e.g., hide element or show placeholder)
-                 console.warn(`No URL found for ${elementId} (${assetKey})`);
-                 // element.style.display = 'none'; // Option: hide the element
-              }
-            }
-          } catch (error) {
-            console.error(`Failed to update image ${elementId}:`, error);
-          }
-        }
-        
-        // Initialize all assets once the body is loaded
-        window.onload = () => {
-          updateImageElement('profile-view-img', 'profileViews');
-          updateImageElement('github-followers-img', 'githubFollowers');
-          updateImageElement('welcome-gif', 'welcomeGif');
-          updateImageElement('react-img', 'react');
-          updateImageElement('nextjs-img', 'nextjs');
-          updateImageElement('typescript-img', 'typescript');
-          updateImageElement('javascript-img', 'javascript');
-          updateImageElement('threejs-img', 'threejs');
-          updateImageElement('tailwind-img', 'tailwind');
-          updateImageElement('materialui-img', 'materialui');
-          updateImageElement('astro-img', 'astro');
-          updateImageElement('nodejs-img', 'nodejs');
-          updateImageElement('go-img', 'go');
-          updateImageElement('python-img', 'python');
-          updateImageElement('csharp-img', 'csharp');
-          updateImageElement('dotnet-img', 'dotnet');
-          updateImageElement('docker-img', 'docker');
-          updateImageElement('kubernetes-img', 'kubernetes');
-          updateImageElement('graphql-img', 'graphql');
-          updateImageElement('postgresql-img', 'postgresql');
-          updateImageElement('aws-img', 'aws');
-          updateImageElement('azure-img', 'azure');
-          updateImageElement('gcp-img', 'gcp');
-          updateImageElement('github-actions-img', 'githubActions');
-          updateImageElement('vercel-img', 'vercel');
-          updateImageElement('firebase-img', 'firebase');
-          updateImageElement('supabase-img', 'supabase');
-          updateImageElement('cloudflare-img', 'cloudflare');
-          updateImageElement('github-stats-img', 'githubStats');
-          updateImageElement('top-langs-img', 'topLanguages');
-          updateImageElement('streak-stats-img', 'streakStats');
-          updateImageElement('twitter-img', 'twitter');
-          updateImageElement('github-img', 'github');
+        // 画像要素の属性を設定
+        window.onload = function() {
+          // プロフィールビューと GitHub フォロワー
+          document.getElementById('profile-view-img').src = getAssetUrl('profileViews');
+          document.getElementById('github-followers-img').src = getAssetUrl('githubFollowers');
+          
+          // ウェルカム GIF
+          document.getElementById('welcome-gif').src = getAssetUrl('welcomeGif');
+          
+          // フロントエンドバッジ
+          document.getElementById('react-img').src = getAssetUrl('react');
+          document.getElementById('nextjs-img').src = getAssetUrl('nextjs');
+          document.getElementById('typescript-img').src = getAssetUrl('typescript');
+          document.getElementById('javascript-img').src = getAssetUrl('javascript');
+          document.getElementById('threejs-img').src = getAssetUrl('threejs');
+          document.getElementById('tailwind-img').src = getAssetUrl('tailwind');
+          document.getElementById('materialui-img').src = getAssetUrl('materialui');
+          document.getElementById('astro-img').src = getAssetUrl('astro');
+          
+          // バックエンドバッジ
+          document.getElementById('nodejs-img').src = getAssetUrl('nodejs');
+          document.getElementById('go-img').src = getAssetUrl('go');
+          document.getElementById('python-img').src = getAssetUrl('python');
+          document.getElementById('csharp-img').src = getAssetUrl('csharp');
+          document.getElementById('dotnet-img').src = getAssetUrl('dotnet');
+          document.getElementById('docker-img').src = getAssetUrl('docker');
+          document.getElementById('kubernetes-img').src = getAssetUrl('kubernetes');
+          document.getElementById('graphql-img').src = getAssetUrl('graphql');
+          document.getElementById('postgresql-img').src = getAssetUrl('postgresql');
+          
+          // クラウド and DevOpsバッジ
+          document.getElementById('aws-img').src = getAssetUrl('aws');
+          document.getElementById('azure-img').src = getAssetUrl('azure');
+          document.getElementById('gcp-img').src = getAssetUrl('gcp');
+          document.getElementById('github-actions-img').src = getAssetUrl('githubActions');
+          document.getElementById('vercel-img').src = getAssetUrl('vercel');
+          document.getElementById('firebase-img').src = getAssetUrl('firebase');
+          document.getElementById('supabase-img').src = getAssetUrl('supabase');
+          document.getElementById('cloudflare-img').src = getAssetUrl('cloudflare');
+          
+          // GitHub統計
+          document.getElementById('github-stats-img').src = getAssetUrl('githubStats');
+          document.getElementById('top-langs-img').src = getAssetUrl('topLanguages');
+          document.getElementById('streak-stats-img').src = getAssetUrl('streakStats');
+          
+          // SNSリンク
+          document.getElementById('twitter-img').src = getAssetUrl('twitter');
+          document.getElementById('github-img').src = getAssetUrl('github');
         };
       /* ]]> */
       </script>
