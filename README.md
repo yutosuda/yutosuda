@@ -25,11 +25,8 @@
 <!-- ライトモート：theme=light, ダークモート：theme=vue-dark  -->
 ## 🏃‍♀️ Activities
 <div align="left"> 
-  <img alt="github stats" height="200px" src="https://gtihub-readme-stats-azure.vercel.app/api?username=0xfab0131&theme=vue-dark&count_private=true&include_all_commits=true&show_icons=true" />
-</div>
-
-<div align="left"> 
-  <img alt="Top Langs" height="200px" src="https://gtihub-readme-stats-azure.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&count_private=true&show_icons=true&layout=donut&include_all_commits=true&size_weight=0.5&count_weight=0.5&langs_count=8&hide=html,css,php" />
+  <img alt="github stats" height="170px" src="https://gtihub-readme-stats-azure.vercel.app/api?username=0xfab0131&theme=vue-dark&count_private=true&include_all_commits=true&rank_icon=github&show_icons=true" />
+  <img alt="Top Langs" height="170px" src="https://gtihub-readme-stats-azure.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&count_private=true&show_icons=true&layout=donut&include_all_commits=true&rank_icon=github&size_weight=0.5&count_weight=0.5&langs_count=8&hide=html,css,php" />
 </div>
 
 
