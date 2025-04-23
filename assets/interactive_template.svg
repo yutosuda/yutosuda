@@ -267,17 +267,17 @@
 
     /* CSS版の3Dアニメーション（JS非依存） */
     @keyframes css3dFloat {
-      0%, 100% { transform: translate3d(0, 0, 0); }
-      25% { transform: translate3d(-15px, 10px, 30px); }
-      50% { transform: translate3d(10px, -15px, -20px); }
-      75% { transform: translate3d(15px, 5px, 15px); }
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(-15px, 10px) scale(1.05); }
+      50% { transform: translate(10px, -15px) scale(0.95); }
+      75% { transform: translate(15px, 5px) scale(1.02); }
     }
 
     @keyframes css3dRotate {
-      0%, 100% { transform: rotateX(0deg) rotateY(0deg); }
-      25% { transform: rotateX(5deg) rotateY(3deg); }
-      50% { transform: rotateX(-3deg) rotateY(-5deg); }
-      75% { transform: rotateX(-5deg) rotateY(2deg); }
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(3deg); }
+      50% { transform: rotate(-5deg); }
+      75% { transform: rotate(2deg); }
     }
 
     @keyframes css3dPulse {
@@ -312,9 +312,9 @@
     
     @keyframes particleFloat {
       0%, 100% { transform: translate(0, 0); opacity: 0.8; }
-      25% { transform: translate(var(--tx1, 10px), var(--ty1, -10px)); opacity: 0.9; }
-      50% { transform: translate(var(--tx2, 15px), var(--ty2, 5px)); opacity: 1; }
-      75% { transform: translate(var(--tx3, 5px), var(--ty3, 15px)); opacity: 0.9; }
+      25% { transform: translate(10px, -10px); opacity: 0.9; }
+      50% { transform: translate(15px, 5px); opacity: 1; }
+      75% { transform: translate(5px, 15px); opacity: 0.9; }
     }
     
     @keyframes dimensionShift {
@@ -348,19 +348,15 @@
     
     /* 強化された3Dアニメーション - CSS のみ */
     @keyframes enhanced3dFloat {
-      0% { transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg); }
-      25% { transform: translate3d(var(--tx1, 15px), var(--ty1, -15px), 50px) rotateX(5deg) rotateY(3deg); }
-      50% { transform: translate3d(var(--tx2, 20px), var(--ty2, 10px), -30px) rotateX(-2deg) rotateY(5deg); }
-      75% { transform: translate3d(var(--tx3, 0px), var(--ty3, 20px), 20px) rotateX(4deg) rotateY(-2deg); }
-      100% { transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg); }
+      0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+      25% { transform: translate(15px, -15px) rotate(5deg) scale(1.08); }
+      50% { transform: translate(20px, 10px) rotate(-2deg) scale(0.92); }
+      75% { transform: translate(0px, 20px) rotate(4deg) scale(1.05); }
+      100% { transform: translate(0, 0) rotate(0deg) scale(1); }
     }
     
     /* 3D変換とパースペクティブ */
     .perspective-container {
-      transform-style: preserve-3d;
-      perspective: 2000px;
-      transform: translateZ(0);
-      backface-visibility: hidden;
       position: relative;
       overflow: hidden;
     }
@@ -371,7 +367,6 @@
       left: 0;
       width: 100%;
       height: 100%;
-      transform-style: preserve-3d;
       will-change: transform;
       animation: css3dFloat 20s ease-in-out infinite;
     }
@@ -398,23 +393,19 @@
       width: 100%;
       height: 100%;
       mix-blend-mode: screen;
-      transform-style: preserve-3d;
       will-change: transform;
     }
     
     .fluid-layer-1 {
       animation: fluidMove1 20s ease-in-out infinite, colorShift 25s linear infinite;
-      transform: translateZ(30px);
     }
     
     .fluid-layer-2 {
       animation: fluidMove2 25s ease-in-out infinite, colorShift 35s linear infinite reverse;
-      transform: translateZ(0px);
     }
     
     .fluid-layer-3 {
       animation: fluidMove3 22s ease-in-out infinite, colorShift 30s linear infinite;
-      transform: translateZ(-30px);
     }
 
     /* 拡張した下部の波アニメーション */
@@ -446,7 +437,6 @@
       height: 100%;
       animation: waveMotion 8s ease-in-out infinite, css3dRotate 30s ease-in-out infinite;
       opacity: 0.2;
-      transform-style: preserve-3d;
     }
     
     .dimension-portal {
@@ -485,7 +475,6 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      transform: translateZ(100px);
       will-change: transform;
       pointer-events: none;
       animation: css3dFloat 15s ease-in-out infinite;
@@ -495,7 +484,6 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      transform: translateZ(0);
       will-change: transform;
       pointer-events: none;
       animation: css3dFloat 25s ease-in-out infinite reverse;
@@ -505,16 +493,14 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      transform: translateZ(-100px);
       will-change: transform;
       pointer-events: none;
       animation: css3dFloat 35s ease-in-out infinite;
     }
     
-    /* 3D立体形状 - CSSアニメーションのみ */
+    /* 3D立体形状 - CSSアニメーションのみ（GitHub対応） */
     .shape3d {
       position: absolute;
-      transform-style: preserve-3d;
       animation: css3dRotate 30s ease-in-out infinite;
       opacity: 0.15;
       mix-blend-mode: screen;
@@ -523,6 +509,7 @@
     .cube3d {
       width: 100px;
       height: 100px;
+      position: relative;
     }
     
     .cube-face {
@@ -534,27 +521,46 @@
     }
     
     .cube-front {
-      transform: translateZ(50px);
+      /* 前面はそのまま表示 */
+      box-shadow: 0 0 10px rgba(100, 150, 255, 0.2);
     }
     
     .cube-back {
-      transform: rotateY(180deg) translateZ(50px);
+      /* 背面は薄く表示して奥行き感を出す */
+      opacity: 0.3;
+      transform: scale(0.9);
     }
     
     .cube-left {
-      transform: rotateY(-90deg) translateZ(50px);
+      /* 左面 */
+      transform: skewY(15deg);
+      transform-origin: left center;
+      width: 20px;
+      left: -20px;
     }
     
     .cube-right {
-      transform: rotateY(90deg) translateZ(50px);
+      /* 右面 */
+      transform: skewY(-15deg);
+      transform-origin: right center;
+      width: 20px;
+      right: -20px;
     }
     
     .cube-top {
-      transform: rotateX(90deg) translateZ(50px);
+      /* 上面 */
+      transform: skewX(15deg);
+      transform-origin: center top;
+      height: 20px;
+      top: -20px;
     }
     
     .cube-bottom {
-      transform: rotateX(-90deg) translateZ(50px);
+      /* 下面 */
+      transform: skewX(-15deg);
+      transform-origin: center bottom;
+      height: 20px;
+      bottom: -20px;
     }
 
     /* コンテンツの背景 */
@@ -575,6 +581,46 @@
       backdrop-filter: blur(0.5px);
       -webkit-backdrop-filter: blur(0.5px);
       z-index: -1;
+    }
+
+    .quantum-particle:nth-child(1) {
+      animation-delay: -2s;
+      animation-duration: 17s;
+    }
+    
+    .quantum-particle:nth-child(2) {
+      animation-delay: -5s;
+      animation-duration: 22s;
+    }
+    
+    .quantum-particle:nth-child(3) {
+      animation-delay: -8s;
+      animation-duration: 19s;
+    }
+    
+    .quantum-particle:nth-child(4) {
+      animation-delay: -3s;
+      animation-duration: 24s;
+    }
+    
+    .quantum-particle:nth-child(5) {
+      animation-delay: -7s;
+      animation-duration: 21s;
+    }
+    
+    .quantum-particle:nth-child(6) {
+      animation-delay: -4s;
+      animation-duration: 18s;
+    }
+    
+    .quantum-particle:nth-child(7) {
+      animation-delay: -9s;
+      animation-duration: 23s;
+    }
+    
+    .quantum-particle:nth-child(8) {
+      animation-delay: -6s;
+      animation-duration: 20s;
     }
   ]]></style>
 

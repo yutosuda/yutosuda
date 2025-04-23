@@ -10,6 +10,10 @@
 </div>
 
 <div align="center">
+  <img src="https://0xfab0131.github.io/0xfab0131/assets/interactive.svg" alt="Interactive Profile" width="800" />
+</div>
+
+<div align="center">
   <img src="https://github-readme-streak-stats-rust-eta.vercel.app/?user=0xfab0131&theme=vue-dark" alt="Interactive Profile" width="800" />
   https://github-readme-streak-stats-rust-eta.vercel.app/?user=0xfab0131&theme=vue-dark
 </div>
