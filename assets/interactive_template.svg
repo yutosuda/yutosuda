@@ -6,10 +6,114 @@
      preserveAspectRatio="xMidYMid meet"
      width="800" height="1500">
 
+  <defs>
+    <!-- 3D空間のための背景グラデーション -->
+    <linearGradient id="spaceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617" stop-opacity="1"/>
+      <stop offset="50%" stop-color="#0a192f" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#112240" stop-opacity="1"/>
+    </linearGradient>
+
+    <!-- 波形のためのグラデーション -->
+    <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.1"/>
+      <stop offset="50%" stop-color="#60a5fa" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.1"/>
+      <stop offset="50%" stop-color="#a78bfa" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <linearGradient id="waveGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity="0.1"/>
+      <stop offset="50%" stop-color="#f472b6" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- 波形のエッジ用グラデーション -->
+    <linearGradient id="waveEdge1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#60a5fa" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <linearGradient id="waveEdge2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#a78bfa" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <linearGradient id="waveEdge3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#f472b6" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <!-- 星空パターン -->
+    <pattern id="starPattern" patternUnits="userSpaceOnUse" width="600" height="600">
+      <rect width="600" height="600" fill="transparent"/>
+      <circle cx="50" cy="50" r="0.6" fill="white" opacity="0.5"/>
+      <circle cx="150" cy="250" r="0.4" fill="white" opacity="0.3"/>
+      <circle cx="250" cy="100" r="0.5" fill="white" opacity="0.4"/>
+      <circle cx="350" cy="350" r="0.7" fill="white" opacity="0.6"/>
+      <circle cx="450" cy="200" r="0.4" fill="white" opacity="0.3"/>
+      <circle cx="550" cy="500" r="0.5" fill="white" opacity="0.5"/>
+      <circle cx="100" cy="400" r="0.6" fill="white" opacity="0.6"/>
+      <circle cx="200" cy="550" r="0.4" fill="white" opacity="0.4"/>
+      <circle cx="300" cy="150" r="0.5" fill="white" opacity="0.5"/>
+      <circle cx="400" cy="450" r="0.4" fill="white" opacity="0.3"/>
+      <circle cx="500" cy="300" r="0.6" fill="white" opacity="0.6"/>
+      <animateTransform attributeName="patternTransform"
+                        type="translate"
+                        values="0 0; 0 -600"
+                        dur="180s"
+                        repeatCount="indefinite"
+                        additive="sum"/>
+      <animateTransform attributeName="patternTransform"
+                        type="rotate"
+                        from="0 300 300"
+                        to="360 300 300"
+                        dur="360s"
+                        repeatCount="indefinite"
+                        additive="sum"/>
+    </pattern>
+
+    <!-- 3D波形メッシュ生成用 -->
+    <path id="wavePath1" d="M0,0 C100,-40 200,-20 300,-50 S500,-30 600,0 S700,40 800,0">
+      <animate attributeName="d"
+               values="M0,0 C100,-40 200,-20 300,-50 S500,-30 600,0 S700,40 800,0;
+                      M0,0 C100,20 200,50 300,30 S500,10 600,0 S700,-40 800,0;
+                      M0,0 C100,-40 200,-20 300,-50 S500,-30 600,0 S700,40 800,0"
+               dur="20s"
+               repeatCount="indefinite"/>
+    </path>
+    <path id="wavePath2" d="M0,0 C100,40 200,20 300,50 S500,30 600,0 S700,-40 800,0">
+      <animate attributeName="d"
+               values="M0,0 C100,40 200,20 300,50 S500,30 600,0 S700,-40 800,0;
+                      M0,0 C100,-20 200,-50 300,-30 S500,-10 600,0 S700,40 800,0;
+                      M0,0 C100,40 200,20 300,50 S500,30 600,0 S700,-40 800,0"
+               dur="25s"
+               repeatCount="indefinite"/>
+    </path>
+    <path id="wavePath3" d="M0,0 C100,-50 200,50 300,-50 S500,50 600,-50 S700,50 800,0">
+      <animate attributeName="d"
+               values="M0,0 C100,-50 200,50 300,-50 S500,50 600,-50 S700,50 800,0;
+                      M0,0 C100,50 200,-50 300,50 S500,-50 600,50 S700,-50 800,0;
+                      M0,0 C100,-50 200,50 300,-50 S500,50 600,-50 S700,50 800,0"
+               dur="30s"
+               repeatCount="indefinite"/>
+    </path>
+  </defs>
+
   <style type="text/css"><![CDATA[
-    /* スタイル定義は変更なし */
+    /* ベースのスタイル定義 */
     svg {
+      background: url(#spaceGradient);
     }
+
     body {
       margin: 0;
       padding: 16px;
@@ -18,126 +122,438 @@
                    'Open Sans', 'Helvetica Neue', sans-serif;
       color: #fff;
       background: transparent;
+      position: relative;
+      z-index: 10;
     }
-    h1, h2, h3 { margin: 20px 0 12px 0; }
+
+    /* テキスト要素のスタイル強化 */
+    h1, h2, h3 {
+      margin: 20px 0 12px 0;
+      position: relative;
+      z-index: 20;
+      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+    }
+
     h2 {
       padding-bottom: 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.3);
       margin-top: 30px;
+      position: relative;
     }
-    ul { margin: 0 0 24px 20px; padding: 0; }
-    p { margin: 12px 0 24px 0; }
-    img { max-width: 100%; height: auto; vertical-align: middle; }
-    a { color: inherit; text-decoration: none; }
-    .center { text-align: center; }
-    .flex-center { 
-      display: flex; 
-      align-items: center; 
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(59, 130, 246, 0.7), rgba(139, 92, 246, 0.7));
+      animation: borderGlow 4s ease-in-out infinite alternate;
+    }
+
+    ul {
+      margin: 0 0 24px 20px;
+      padding: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    li {
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 10;
+      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+    }
+
+    p {
+      margin: 12px 0 24px 0;
+      position: relative;
+      z-index: 10;
+      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: middle;
+      position: relative;
+      z-index: 10;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      position: relative;
+      z-index: 10;
+    }
+
+    .center {
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .flex-center {
+      display: flex;
+      align-items: center;
       justify-content: center;
       flex-wrap: wrap;
       gap: 12px;
       margin-bottom: 24px;
+      position: relative;
+      z-index: 10;
     }
-    .badge-row { 
+
+    .badge-row {
       margin: 16px 0 24px 0;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-start; /* 左寄せに戻す */
     }
-    .badge-row img { 
-      margin: 4px; 
+
+    .badge-row img {
+      margin: 4px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+      z-index: 10;
+      transform-origin: center bottom; /* アニメーションの基点を下中央に */
+      will-change: transform; /* アニメーションの最適化ヒント */
     }
+
+    /* 波に乗るアイコンのアニメーション */
+    .badge-row img:nth-child(1) { animation: iconWave 6s cubic-bezier(0.5, 0, 0.5, 1) infinite; animation-delay: 0s; }
+    .badge-row img:nth-child(2) { animation: iconWave 6s cubic-bezier(0.5, 0, 0.5, 1) infinite; animation-delay: 0.2s; }
+    .badge-row img:nth-child(3) { animation: iconWave 6s cubic-bezier(0.5, 0, 0.5, 1) infinite; animation-delay: 0.4s; }
+    .badge-row img:nth-child(4) { animation: iconWave 6s cubic-bezier(0.5, 0, 0.5, 1) infinite; animation-delay: 0.6s; }
+    .badge-row img:nth-child(5) { animation: iconWave 6s cubic-bezier(0.5, 0, 0.5, 1) infinite; animation-delay: 0.8s; }
+    .badge-row img:nth-child(6) { animation: iconWave 6s cubic-bezier(0.5, 0, 0.5, 1) infinite; animation-delay: 1.0s; }
+    .badge-row img:nth-child(7) { animation: iconWave 6s cubic-bezier(0.5, 0, 0.5, 1) infinite; animation-delay: 1.2s; }
+    .badge-row img:nth-child(8) { animation: iconWave 6s cubic-bezier(0.5, 0, 0.5, 1) infinite; animation-delay: 1.4s; }
+    /* 必要に応じて他のアイコンにも適用 */
+
+    @keyframes iconWave {
+      0%, 100% { transform: translateY(0) scale(1); }
+      25% { transform: translateY(-8px) scale(1.05) rotateZ(-2deg); }
+      50% { transform: translateY(0) scale(1); }
+      75% { transform: translateY(-4px) scale(1.02) rotateZ(2deg); }
+    }
+
     .stats-card {
       height: 170px !important;
       width: auto;
+      position: relative;
+      z-index: 10;
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));
     }
+
     .stats-section {
       margin-bottom: 30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* 3D視覚効果のためのアニメーション */
+    @keyframes borderGlow {
+      0%, 100% { opacity: 0.7; transform: scaleX(1); }
+      50% { opacity: 1; transform: scaleX(1.03); }
+    }
+
+    /* コンテンツの背景強化 */
+    .content-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(10, 25, 47, 0.1), rgba(10, 25, 47, 0.5));
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    /* 3D空間コンテナ */
+    .space-3d {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      perspective: 1200px; /* より強い遠近感 */
+      transform-style: preserve-3d;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* 3D波形面 */
+    .wave-surface {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      will-change: transform; /* アニメーションの最適化ヒント */
+    }
+
+    .wave-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+    }
+
+    /* 波形面のスタイル */
+    .wave-mesh {
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill-rule: evenodd;
     }
   ]]></style>
 
+  <!-- 背景の基本レイヤー -->
+  <rect width="100%" height="100%" fill="url(#spaceGradient)"/>
+
+  <!-- 星空背景 -->
+  <rect width="100%" height="100%" fill="url(#starPattern)" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.5;0.8" dur="20s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- 3D空間コンテナ -->
+  <g class="space-3d">
+    <!-- 3D波形面1: 青色波 -->
+    <g class="wave-surface" transform="translate(0, 400) rotate3d(0.8, 0.2, -0.1, 20deg)">
+      <animateTransform attributeName="transform"
+                        type="translate"
+                        values="0 400; 0 350; 0 400"
+                        dur="30s"
+                        repeatCount="indefinite"
+                        additive="sum"/>
+      <animateTransform attributeName="transform"
+                        type="rotate3d"
+                        from="0.8 0.2 -0.1 20"
+                        to="0.8 0.2 -0.1 30"
+                        dur="40s"
+                        repeatCount="indefinite"
+                        additive="sum"/>
+      <!-- 複数の深度レイヤーで面を表現 -->
+      <g class="wave-layer" transform="translateZ(-150px)" opacity="0.4">
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="0.5" fill="url(#waveGradient1)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="0.5" fill="url(#waveGradient1)" transform="translate(0, 10)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="0.5" fill="url(#waveGradient1)" transform="translate(0, 20)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="0.5" fill="url(#waveGradient1)" transform="translate(0, 30)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="0.5" fill="url(#waveGradient1)" transform="translate(0, 40)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="0.5" fill="url(#waveGradient1)" transform="translate(0, 50)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="0.5" fill="url(#waveGradient1)" transform="translate(0, 60)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="0.5" fill="url(#waveGradient1)" transform="translate(0, 70)"/>
+      </g>
+      <g class="wave-layer" transform="translateZ(-100px)" opacity="0.6">
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="1" fill="url(#waveGradient1)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="1" fill="url(#waveGradient1)" transform="translate(0, 10)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="1" fill="url(#waveGradient1)" transform="translate(0, 20)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="1" fill="url(#waveGradient1)" transform="translate(0, 30)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="1" fill="url(#waveGradient1)" transform="translate(0, 40)"/>
+      </g>
+      <g class="wave-layer" transform="translateZ(-50px)" opacity="0.8">
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="1.5" fill="url(#waveGradient1)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="1.5" fill="url(#waveGradient1)" transform="translate(0, 10)"/>
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="1.5" fill="url(#waveGradient1)" transform="translate(0, 20)"/>
+      </g>
+      <g class="wave-layer" transform="translateZ(0px)" opacity="1">
+        <use xlink:href="#wavePath1" class="wave-mesh" stroke="url(#waveEdge1)" stroke-width="2" fill="url(#waveGradient1)"/>
+      </g>
+    </g>
+
+    <!-- 3D波形面2: 紫色波 -->
+    <g class="wave-surface" transform="translate(0, 700) rotate3d(-0.5, 0.8, 0.1, -15deg)">
+      <animateTransform attributeName="transform"
+                        type="translate"
+                        values="0 700; 0 650; 0 700"
+                        dur="35s"
+                        repeatCount="indefinite"
+                        additive="sum"/>
+      <animateTransform attributeName="transform"
+                        type="rotate3d"
+                        from="-0.5 0.8 0.1 -15"
+                        to="-0.5 0.8 0.1 -25"
+                        dur="45s"
+                        repeatCount="indefinite"
+                        additive="sum"/>
+      <!-- 複数の深度レイヤーで面を表現 -->
+      <g class="wave-layer" transform="translateZ(-180px)" opacity="0.4">
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="0.5" fill="url(#waveGradient2)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="0.5" fill="url(#waveGradient2)" transform="translate(0, 10)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="0.5" fill="url(#waveGradient2)" transform="translate(0, 20)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="0.5" fill="url(#waveGradient2)" transform="translate(0, 30)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="0.5" fill="url(#waveGradient2)" transform="translate(0, 40)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="0.5" fill="url(#waveGradient2)" transform="translate(0, 50)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="0.5" fill="url(#waveGradient2)" transform="translate(0, 60)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="0.5" fill="url(#waveGradient2)" transform="translate(0, 70)"/>
+      </g>
+      <g class="wave-layer" transform="translateZ(-120px)" opacity="0.6">
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="1" fill="url(#waveGradient2)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="1" fill="url(#waveGradient2)" transform="translate(0, 10)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="1" fill="url(#waveGradient2)" transform="translate(0, 20)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="1" fill="url(#waveGradient2)" transform="translate(0, 30)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="1" fill="url(#waveGradient2)" transform="translate(0, 40)"/>
+      </g>
+      <g class="wave-layer" transform="translateZ(-60px)" opacity="0.8">
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="1.5" fill="url(#waveGradient2)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="1.5" fill="url(#waveGradient2)" transform="translate(0, 10)"/>
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="1.5" fill="url(#waveGradient2)" transform="translate(0, 20)"/>
+      </g>
+      <g class="wave-layer" transform="translateZ(0px)" opacity="1">
+        <use xlink:href="#wavePath2" class="wave-mesh" stroke="url(#waveEdge2)" stroke-width="2" fill="url(#waveGradient2)"/>
+      </g>
+    </g>
+
+    <!-- 3D波形面3: ピンク色波 -->
+    <g class="wave-surface" transform="translate(0, 1000) rotate3d(0.2, -0.9, 0.3, 25deg)">
+      <animateTransform attributeName="transform"
+                        type="translate"
+                        values="0 1000; 0 950; 0 1000"
+                        dur="40s"
+                        repeatCount="indefinite"
+                        additive="sum"/>
+      <animateTransform attributeName="transform"
+                        type="rotate3d"
+                        from="0.2 -0.9 0.3 25"
+                        to="0.2 -0.9 0.3 35"
+                        dur="50s"
+                        repeatCount="indefinite"
+                        additive="sum"/>
+      <!-- 複数の深度レイヤーで面を表現 -->
+      <g class="wave-layer" transform="translateZ(-210px)" opacity="0.4">
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="0.5" fill="url(#waveGradient3)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="0.5" fill="url(#waveGradient3)" transform="translate(0, 10)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="0.5" fill="url(#waveGradient3)" transform="translate(0, 20)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="0.5" fill="url(#waveGradient3)" transform="translate(0, 30)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="0.5" fill="url(#waveGradient3)" transform="translate(0, 40)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="0.5" fill="url(#waveGradient3)" transform="translate(0, 50)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="0.5" fill="url(#waveGradient3)" transform="translate(0, 60)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="0.5" fill="url(#waveGradient3)" transform="translate(0, 70)"/>
+      </g>
+      <g class="wave-layer" transform="translateZ(-140px)" opacity="0.6">
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="1" fill="url(#waveGradient3)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="1" fill="url(#waveGradient3)" transform="translate(0, 10)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="1" fill="url(#waveGradient3)" transform="translate(0, 20)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="1" fill="url(#waveGradient3)" transform="translate(0, 30)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="1" fill="url(#waveGradient3)" transform="translate(0, 40)"/>
+      </g>
+      <g class="wave-layer" transform="translateZ(-70px)" opacity="0.8">
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="1.5" fill="url(#waveGradient3)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="1.5" fill="url(#waveGradient3)" transform="translate(0, 10)"/>
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="1.5" fill="url(#waveGradient3)" transform="translate(0, 20)"/>
+      </g>
+      <g class="wave-layer" transform="translateZ(0px)" opacity="1">
+        <use xlink:href="#wavePath3" class="wave-mesh" stroke="url(#waveEdge3)" stroke-width="2" fill="url(#waveGradient3)"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- コンテンツの背景強化 -->
+  <rect class="content-backdrop" width="100%" height="100%" fill="transparent"/>
+
+  <!-- コンテンツ (foreignObjectは一つだけにする) -->
   <foreignObject x="0" y="0" width="800" height="1500">
     <body xmlns="http://www.w3.org/1999/xhtml">
-      <!-- JavaScriptブロックは削除 -->
-
       <!-- ウェルカム見出し -->
-      <h1 class="flex-center">
-        <img id="welcome-gif" width="28" height="28" alt="Welcome GIF" src="{{WELCOME_GIF_URL}}"/>
-        <span style="margin-left:8px;">Welcome to my profile!</span>
-      </h1>
+      <div class="section-bg">
+        <h1 class="flex-center">
+          <img id="welcome-gif" width="28" height="28" alt="Welcome GIF" src="{{WELCOME_GIF_URL}}"/>
+          <span style="margin-left:8px;">Welcome to my profile!</span>
+        </h1>
+      </div>
 
       <!-- About Me -->
-      <h2>👨‍💻 About Me</h2>
-      <ul>
-        <li>🧑‍💻 Full Stack Engineer with a passion for creating user-friendly applications</li>
-        <li>🚀 Currently focusing on cloud-native architecture and microservices</li>
-        <li>🔭 Working on building innovative services and solutions</li>
-        <li>🌱 Learning more about AI/ML integration in web applications</li>
-        <li>💡 Interested in open source contribution and community projects</li>
-      </ul>
+      <div class="section-bg">
+        <h2>👨‍💻 About Me</h2>
+        <ul>
+          <li>🧑‍💻 Full Stack Engineer with a passion for creating user-friendly applications</li>
+          <li>🚀 Currently focusing on cloud-native architecture and microservices</li>
+          <li>🔭 Working on building innovative services and solutions</li>
+          <li>🌱 Learning more about AI/ML integration in web applications</li>
+          <li>💡 Interested in open source contribution and community projects</li>
+        </ul>
+      </div>
 
       <!-- Skills and Technologies -->
-      <h2>🛠️ Skills and Technologies</h2>
+      <div class="section-bg">
+        <h2>🛠️ Skills and Technologies</h2>
 
-      <h3>Frontend</h3>
-      <p class="badge-row">
-        <img id="react-img" alt="React" src="{{REACT_URL}}"/>
-        <img id="nextjs-img" alt="Next.js" src="{{NEXTJS_URL}}"/>
-        <img id="typescript-img" alt="TypeScript" src="{{TYPESCRIPT_URL}}"/>
-        <img id="javascript-img" alt="JavaScript" src="{{JAVASCRIPT_URL}}"/>
-        <img id="threejs-img" alt="Three.js" src="{{THREEJS_URL}}"/>
-        <img id="tailwind-img" alt="Tailwind CSS" src="{{TAILWIND_URL}}"/>
-        <img id="materialui-img" alt="Material UI" src="{{MATERIALUI_URL}}"/>
-        <img id="astro-img" alt="Astro" src="{{ASTRO_URL}}"/>
-      </p>
+        <h3>Frontend</h3>
+        <p class="badge-row">
+          <img id="react-img" alt="React" src="{{REACT_URL}}"/>
+          <img id="nextjs-img" alt="Next.js" src="{{NEXTJS_URL}}"/>
+          <img id="typescript-img" alt="TypeScript" src="{{TYPESCRIPT_URL}}"/>
+          <img id="javascript-img" alt="JavaScript" src="{{JAVASCRIPT_URL}}"/>
+          <img id="threejs-img" alt="Three.js" src="{{THREEJS_URL}}"/>
+          <img id="tailwind-img" alt="Tailwind CSS" src="{{TAILWIND_URL}}"/>
+          <img id="materialui-img" alt="Material UI" src="{{MATERIALUI_URL}}"/>
+          <img id="astro-img" alt="Astro" src="{{ASTRO_URL}}"/>
+        </p>
 
-      <h3>Backend and Infrastructure</h3>
-      <p class="badge-row">
-        <img id="nodejs-img" alt="Node.js" src="{{NODEJS_URL}}"/>
-        <img id="go-img" alt="Go" src="{{GO_URL}}"/>
-        <img id="python-img" alt="Python" src="{{PYTHON_URL}}"/>
-        <img id="csharp-img" alt="C#" src="{{CSHARP_URL}}"/>
-        <img id="dotnet-img" alt=".NET" src="{{DOTNET_URL}}"/>
-        <img id="docker-img" alt="Docker" src="{{DOCKER_URL}}"/>
-        <img id="kubernetes-img" alt="Kubernetes" src="{{KUBERNETES_URL}}"/>
-        <img id="graphql-img" alt="GraphQL" src="{{GRAPHQL_URL}}"/>
-        <img id="postgresql-img" alt="PostgreSQL" src="{{POSTGRESQL_URL}}"/>
-      </p>
+        <h3>Backend and Infrastructure</h3>
+        <p class="badge-row">
+          <img id="nodejs-img" alt="Node.js" src="{{NODEJS_URL}}"/>
+          <img id="go-img" alt="Go" src="{{GO_URL}}"/>
+          <img id="python-img" alt="Python" src="{{PYTHON_URL}}"/>
+          <img id="csharp-img" alt="C#" src="{{CSHARP_URL}}"/>
+          <img id="dotnet-img" alt=".NET" src="{{DOTNET_URL}}"/>
+          <img id="docker-img" alt="Docker" src="{{DOCKER_URL}}"/>
+          <img id="kubernetes-img" alt="Kubernetes" src="{{KUBERNETES_URL}}"/>
+          <img id="graphql-img" alt="GraphQL" src="{{GRAPHQL_URL}}"/>
+          <img id="postgresql-img" alt="PostgreSQL" src="{{POSTGRESQL_URL}}"/>
+        </p>
 
-      <!-- Cloud and DevOps -->
-      <h3>Cloud and DevOps</h3>
-      <p class="badge-row">
-        <img id="aws-img" alt="AWS" src="{{AWS_URL}}"/>
-        <img id="azure-img" alt="Azure" src="{{AZURE_URL}}"/>
-        <img id="gcp-img" alt="GCP" src="{{GCP_URL}}"/>
-        <img id="github-actions-img" alt="GitHub Actions" src="{{GITHUB_ACTIONS_URL}}"/>
-        <img id="vercel-img" alt="Vercel" src="{{VERCEL_URL}}"/>
-        <img id="firebase-img" alt="Firebase" src="{{FIREBASE_URL}}"/>
-        <img id="supabase-img" alt="Supabase" src="{{SUPABASE_URL}}"/>
-        <img id="cloudflare-img" alt="Cloudflare" src="{{CLOUDFLARE_URL}}"/>
-      </p>
+        <!-- Cloud and DevOps -->
+        <h3>Cloud and DevOps</h3>
+        <p class="badge-row">
+          <img id="aws-img" alt="AWS" src="{{AWS_URL}}"/>
+          <img id="azure-img" alt="Azure" src="{{AZURE_URL}}"/>
+          <img id="gcp-img" alt="GCP" src="{{GCP_URL}}"/>
+          <img id="github-actions-img" alt="GitHub Actions" src="{{GITHUB_ACTIONS_URL}}"/>
+          <img id="vercel-img" alt="Vercel" src="{{VERCEL_URL}}"/>
+          <img id="firebase-img" alt="Firebase" src="{{FIREBASE_URL}}"/>
+          <img id="supabase-img" alt="Supabase" src="{{SUPABASE_URL}}"/>
+          <img id="cloudflare-img" alt="Cloudflare" src="{{CLOUDFLARE_URL}}"/>
+        </p>
+      </div>
 
       <!-- Featured Projects -->
-      <h2>📂 Featured Projects</h2>
-      <p>Coming soon…</p>
+      <div class="section-bg">
+        <h2>📂 Featured Projects</h2>
+        <p>Coming soon…</p>
+      </div>
 
       <!-- GitHub Stats -->
-      <h2>📊 GitHub Stats</h2>
-      <div class="center flex-center stats-section">
-        <img id="github-stats-img" alt="GitHub Stats" class="stats-card" src="{{GITHUB_STATS_URL}}"/>
-        <img id="top-langs-img" alt="Top Languages" class="stats-card" src="{{TOP_LANGUAGES_URL}}"/>
-      </div>
-      <div class="center stats-section">
-        <img id="streak-stats-img" alt="GitHub Streak Stats" src="{{STREAK_STATS_URL}}"/>
+      <div class="section-bg">
+        <h2>📊 GitHub Stats</h2>
+        <div class="center flex-center stats-section">
+          <img id="github-stats-img" alt="GitHub Stats" class="stats-card" src="{{GITHUB_STATS_URL}}"/>
+          <img id="top-langs-img" alt="Top Languages" class="stats-card" src="{{TOP_LANGUAGES_URL}}"/>
+        </div>
+        <div class="center stats-section">
+          <img id="streak-stats-img" alt="GitHub Streak Stats" src="{{STREAK_STATS_URL}}"/>
+        </div>
       </div>
 
       <!-- Connect with Me -->
-      <h2>📫 Connect with Me</h2>
-      <div class="center">
-        <a href="https://twitter.com/fab_for_fab">
-          <img id="twitter-img" alt="Twitter" src="{{TWITTER_URL}}"/>
-        </a>
-        <a href="https://github.com/0xfab0131">
-          <img id="github-img" alt="GitHub" src="{{GITHUB_URL}}"/>
-        </a>
+      <div class="section-bg">
+        <h2>📫 Connect with Me</h2>
+        <div class="center">
+          <a href="https://twitter.com/fab_for_fab">
+            <img id="twitter-img" alt="Twitter" src="{{TWITTER_URL}}"/>
+          </a>
+          <a href="https://github.com/0xfab0131">
+            <img id="github-img" alt="GitHub" src="{{GITHUB_URL}}"/>
+          </a>
+        </div>
       </div>
     </body>
   </foreignObject>
-</svg> 
+</svg>

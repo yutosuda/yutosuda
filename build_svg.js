@@ -99,6 +99,15 @@ function fetchImageAsDataUri(url) {
                 console.log(
                   `Detected SVG content type for ${url}. Using ${finalContentType}.`
                 );
+              } else if (
+                responseContentType &&
+                responseContentType.toLowerCase().includes("gif")
+              ) {
+                // Explicitly handle GIF content type
+                finalContentType = "image/gif";
+                console.log(
+                  `Detected GIF content type for ${url}. Using ${finalContentType}.`
+                );
               } else {
                 // Otherwise, use the detected content type or fallback to png
                 finalContentType = responseContentType || "image/png";
@@ -108,14 +117,21 @@ function fetchImageAsDataUri(url) {
               }
               // *** END: Content-Type Correction Logic ***
 
-              // *** START: UTF-8 Aware Base64 Encoding ***
-              // 1. Convert buffer to UTF-8 string first
-              const utf8String = buffer.toString("utf-8");
-              // 2. Encode the UTF-8 string to Base64
-              const base64 = Buffer.from(utf8String, "utf-8").toString(
-                "base64"
-              );
-              // *** END: UTF-8 Aware Base64 Encoding ***
+              let base64;
+              // Handle binary data correctly
+              if (
+                finalContentType.includes("image/") &&
+                !finalContentType.includes("svg")
+              ) {
+                // For binary images (gif, png, jpg, etc.), directly convert buffer to base64
+                base64 = buffer.toString("base64");
+                console.log(`Processed binary image data for ${url}`);
+              } else {
+                // For SVG and other text-based formats, use UTF-8 conversion
+                const utf8String = buffer.toString("utf-8");
+                base64 = Buffer.from(utf8String, "utf-8").toString("base64");
+                console.log(`Processed text-based data for ${url}`);
+              }
 
               resolve(`data:${finalContentType};base64,${base64}`);
             } catch (e) {
