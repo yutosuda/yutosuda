@@ -8,92 +8,123 @@
 
   <!-- 高度なフィルター定義 -->
   <defs>
-    <!-- 量子場効果フィルター -->
-    <filter id="quantumField" x="-50%" y="-50%" width="200%" height="200%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="5" seed="3" stitchTiles="stitch" result="noise"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="20" xChannelSelector="R" yChannelSelector="G"/>
-      <feGaussianBlur stdDeviation="1.5" result="blur"/>
-      <feBlend in="SourceGraphic" in2="blur" mode="multiply"/>
+    <!-- テキスト視認性向上のためのグロー効果 -->
+    <filter id="textGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
     </filter>
     
-    <!-- 光の屈折フィルター -->
-    <filter id="lightRefraction" x="-50%" y="-50%" width="200%" height="200%">
-      <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" seed="5" result="turbulence"/>
-      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="10" xChannelSelector="R" yChannelSelector="G"/>
-      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.7 0" result="colored"/>
-      <feComposite in="SourceGraphic" in2="colored" operator="arithmetic" k1="0.5" k2="0.5" k3="0.5" k4="0"/>
+    <!-- コンテンツ背景の明るさ調整フィルター -->
+    <filter id="contentBrightness" x="-10%" y="-10%" width="120%" height="120%">
+      <feComponentTransfer>
+        <feFuncR type="linear" slope="1.2"/>
+        <feFuncG type="linear" slope="1.2"/>
+        <feFuncB type="linear" slope="1.2"/>
+      </feComponentTransfer>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
     </filter>
     
-    <!-- 深度マップフィルター -->
+    <!-- 3D深度マップフィルター -->
     <filter id="depthMap" x="-50%" y="-50%" width="200%" height="200%">
       <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" seed="2" result="noise"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0" result="darkness"/>
-      <feGaussianBlur in="darkness" stdDeviation="2" result="blur"/>
-      <feBlend in="SourceGraphic" in2="blur" mode="multiply"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="20" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
     
-    <!-- 次元間干渉フィルター -->
-    <filter id="dimensionalInterference" x="-50%" y="-50%" width="200%" height="200%">
-      <feTurbulence type="turbulence" baseFrequency="0.03 0.05" numOctaves="4" seed="10" result="turbulence"/>
+    <!-- ホログラフィック効果フィルター -->
+    <filter id="holographic" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" seed="3" result="turbulence"/>
+      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="10" xChannelSelector="R" yChannelSelector="G"/>
+      <feColorMatrix type="hueRotate" values="0">
+        <animate attributeName="values" from="0" to="360" dur="10s" repeatCount="indefinite"/>
+      </feColorMatrix>
+      <feGaussianBlur stdDeviation="1"/>
+      <feComposite in="SourceGraphic" operator="arithmetic" k1="0.5" k2="0.5" k3="0.5" k4="0"/>
+    </filter>
+    
+    <!-- 光の屈折と透明効果 -->
+    <filter id="lightRefraction" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="5" seed="5" result="turbulence"/>
       <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="15" xChannelSelector="R" yChannelSelector="G"/>
-      <feColorMatrix type="hueRotate" values="90" result="hueShift"/>
-      <feBlend in="SourceGraphic" in2="hueShift" mode="screen"/>
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.7 0" result="colored"/>
+      <feBlend in="SourceGraphic" in2="colored" mode="screen"/>
     </filter>
     
-    <!-- 流体力学シミュレーションのためのグラデーション -->
-    <linearGradient id="fluidGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0f2350" stop-opacity="0.8"/>
-      <stop offset="25%" stop-color="#1e3a8a" stop-opacity="0.9"/>
-      <stop offset="50%" stop-color="#2563eb" stop-opacity="0.95"/>
-      <stop offset="75%" stop-color="#1e40af" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#172554" stop-opacity="0.8"/>
+    <!-- 3D深度グラデーション -->
+    <linearGradient id="depthGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617" stop-opacity="1"/>
+      <stop offset="20%" stop-color="#0f172a" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#1e3a8a" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#1e40af" stop-opacity="0.7"/>
+      <stop offset="80%" stop-color="#3b82f6" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#60a5fa" stop-opacity="0.5"/>
     </linearGradient>
     
-    <linearGradient id="fluidGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#0c4a6e" stop-opacity="0.7"/>
-      <stop offset="30%" stop-color="#0369a1" stop-opacity="0.8"/>
-      <stop offset="70%" stop-color="#0284c7" stop-opacity="0.8"/>
-      <stop offset="100%" stop-color="#075985" stop-opacity="0.7"/>
+    <linearGradient id="depthGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0c0a3e" stop-opacity="1"/>
+      <stop offset="25%" stop-color="#2e1065" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#4c1d95" stop-opacity="0.8"/>
+      <stop offset="75%" stop-color="#7e22ce" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0.6"/>
     </linearGradient>
     
-    <linearGradient id="fluidGradient3" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#312e81" stop-opacity="0.6"/>
-      <stop offset="40%" stop-color="#4338ca" stop-opacity="0.7"/>
-      <stop offset="60%" stop-color="#4f46e5" stop-opacity="0.7"/>
-      <stop offset="100%" stop-color="#3730a3" stop-opacity="0.6"/>
+    <linearGradient id="depthGradient3" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#0f0f30" stop-opacity="1"/>
+      <stop offset="30%" stop-color="#1a1a4a" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#312e81" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#4338ca" stop-opacity="0.7"/>
     </linearGradient>
     
-    <!-- 量子パーティクルのためのフィルター -->
-    <filter id="quantumParticle" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 15 -2" result="glow"/>
-      <feBlend in="SourceGraphic" in2="glow" mode="screen"/>
-    </filter>
+    <!-- コンテンツ背景用グラデーション -->
+    <linearGradient id="contentBgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#000428" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#004e92" stop-opacity="0.85"/>
+    </linearGradient>
     
-    <!-- 波動関数の干渉パターン用マスク -->
-    <mask id="waveMask">
-      <rect width="100%" height="100%" fill="white"/>
-      <rect width="100%" height="100%" fill="url(#wavePattern)" opacity="0.3"/>
-    </mask>
+    <!-- バッジ背景用グラデーション -->
+    <linearGradient id="badgeBgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0.9"/>
+    </linearGradient>
     
-    <pattern id="wavePattern" patternUnits="userSpaceOnUse" width="200" height="200" patternTransform="scale(0.5)">
-      <path d="M0,100 C20,140 50,60 70,100 S100,140 150,100 S180,60 200,100" fill="none" stroke="black" stroke-width="5"/>
-      <path d="M0,50 C30,90 60,10 90,50 S120,90 150,50 S180,10 200,50" fill="none" stroke="black" stroke-width="5" transform="translate(0,20)"/>
-      <path d="M0,150 C30,190 60,110 90,150 S120,190 150,150 S180,110 200,150" fill="none" stroke="black" stroke-width="5" transform="translate(10,-20)"/>
+    <!-- クリスタル効果用パターン -->
+    <pattern id="crystalPattern" patternUnits="userSpaceOnUse" width="200" height="200" patternTransform="scale(0.5) rotate(30)">
+      <path d="M0,50 L50,0 L100,50 L50,100 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <path d="M100,50 L150,0 L200,50 L150,100 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <path d="M50,100 L100,50 L150,100 L100,150 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <path d="M-50,50 L0,0 L50,50 L0,100 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <path d="M50,0 L100,-50 L150,0 L100,50 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
     </pattern>
+    
+    <!-- 3Dグリッド用パターン -->
+    <pattern id="gridPattern" patternUnits="userSpaceOnUse" width="100" height="100" patternTransform="scale(0.5)">
+      <rect width="100" height="100" fill="none" stroke="rgba(100,149,237,0.1)" stroke-width="0.5"/>
+      <line x1="25" y1="0" x2="25" y2="100" stroke="rgba(100,149,237,0.05)" stroke-width="0.5"/>
+      <line x1="50" y1="0" x2="50" y2="100" stroke="rgba(100,149,237,0.05)" stroke-width="0.5"/>
+      <line x1="75" y1="0" x2="75" y2="100" stroke="rgba(100,149,237,0.05)" stroke-width="0.5"/>
+      <line x1="0" y1="25" x2="100" y2="25" stroke="rgba(100,149,237,0.05)" stroke-width="0.5"/>
+      <line x1="0" y1="50" x2="100" y2="50" stroke="rgba(100,149,237,0.05)" stroke-width="0.5"/>
+      <line x1="0" y1="75" x2="100" y2="75" stroke="rgba(100,149,237,0.05)" stroke-width="0.5"/>
+    </pattern>
+    
+    <!-- 光線効果 -->
+    <radialGradient id="lightRay" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.3)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    
+    <!-- 動的なマスク用のフィルター -->
+    <filter id="dynamicMask" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" seed="10" result="noise">
+        <animate attributeName="baseFrequency" from="0.01" to="0.02" dur="30s" repeatCount="indefinite" />
+      </feTurbulence>
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0" result="coloredNoise"/>
+      <feComposite in="SourceGraphic" in2="coloredNoise" operator="in"/>
+    </filter>
   </defs>
 
   <style type="text/css"><![CDATA[
     /* ベースのスタイル定義 */
-    @keyframes bgScroll {
-      from { background-position: 0 0; }
-      to { background-position: -800px 0; }
-    }
-    
-    svg {
-      background: #0a1128;
-    }
-    
     body {
       margin: 0;
       padding: 16px;
@@ -102,19 +133,90 @@
                    'Open Sans', 'Helvetica Neue', sans-serif;
       color: #fff;
       background: transparent;
+      position: relative;
+      z-index: 10;
     }
     
-    h1, h2, h3 { margin: 20px 0 12px 0; }
+    h1, h2, h3 { 
+      margin: 20px 0 12px 0; 
+      position: relative;
+      z-index: 10;
+      text-shadow: 0 0 10px rgba(0,0,0,0.8);
+    }
+    
     h2 {
       padding-bottom: 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.3);
       margin-top: 30px;
+      position: relative;
     }
-    ul { margin: 0 0 24px 20px; padding: 0; }
-    p { margin: 12px 0 24px 0; }
-    img { max-width: 100%; height: auto; vertical-align: middle; }
-    a { color: inherit; text-decoration: none; }
-    .center { text-align: center; }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(59, 130, 246, 0.7), rgba(139, 92, 246, 0.7));
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: borderSlide 2s ease-out forwards;
+    }
+    
+    @keyframes borderSlide {
+      to { transform: scaleX(1); }
+    }
+    
+    ul { 
+      margin: 0 0 24px 20px; 
+      padding: 0; 
+      position: relative;
+      z-index: 10;
+    }
+    
+    li {
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 10;
+      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+    }
+    
+    p { 
+      margin: 12px 0 24px 0; 
+      position: relative;
+      z-index: 10;
+      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+    }
+    
+    img { 
+      max-width: 100%; 
+      height: auto; 
+      vertical-align: middle; 
+      position: relative;
+      z-index: 10;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    
+    img:hover {
+      transform: translateY(-2px) scale(1.05);
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,0.7));
+    }
+    
+    a { 
+      color: inherit; 
+      text-decoration: none; 
+      position: relative;
+      z-index: 10;
+    }
+    
+    .center { 
+      text-align: center; 
+      position: relative;
+      z-index: 10;
+    }
+    
     .flex-center { 
       display: flex; 
       align-items: center; 
@@ -122,203 +224,417 @@
       flex-wrap: wrap;
       gap: 12px;
       margin-bottom: 24px;
+      position: relative;
+      z-index: 10;
     }
+    
     .badge-row { 
       margin: 16px 0 24px 0;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-start;
     }
+    
     .badge-row img { 
       margin: 4px; 
+      transition: transform 0.3s ease, filter 0.3s ease;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+      z-index: 10;
     }
+    
+    .badge-row img:hover {
+      transform: translateY(-3px) scale(1.1);
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.7)) brightness(1.1);
+    }
+    
     .stats-card {
       height: 170px !important;
       width: auto;
+      position: relative;
+      z-index: 10;
+      transition: transform 0.3s ease, filter 0.3s ease;
     }
+    
+    .stats-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.8));
+    }
+    
     .stats-section {
       margin-bottom: 30px;
+      position: relative;
+      z-index: 10;
     }
     
-    /* アニメーション定義 */
-    @keyframes fluidMove1 {
-      0% { transform: translate(0, 0) scale(1.05); opacity: 0.7; }
-      25% { transform: translate(-20px, 10px) scale(1); opacity: 0.9; }
-      50% { transform: translate(-10px, -15px) scale(0.95); opacity: 0.8; }
-      75% { transform: translate(15px, -5px) scale(1.02); opacity: 0.7; }
-      100% { transform: translate(0, 0) scale(1.05); opacity: 0.7; }
+    /* コンテンツ背景効果 */
+    .content-section {
+      position: relative;
+      margin-bottom: 30px;
+      padding: 20px;
+      border-radius: 10px;
+      background: url(#contentBgGradient);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      overflow: hidden;
+      z-index: 5;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      transform-style: preserve-3d;
+      transform: perspective(1000px) translateZ(0px);
+      transition: transform 0.5s ease;
     }
     
-    @keyframes fluidMove2 {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-      33% { transform: translate(15px, -10px) scale(1.05); opacity: 0.8; }
-      66% { transform: translate(-15px, 5px) scale(0.98); opacity: 0.7; }
-      100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+    .content-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url(#crystalPattern);
+      opacity: 0.1;
+      z-index: -1;
+      transform: translateZ(-10px);
     }
     
-    @keyframes fluidMove3 {
-      0% { transform: translate(0, 0) rotate(0deg) scale(1.02); opacity: 0.5; }
-      20% { transform: translate(-5px, 10px) rotate(1deg) scale(1); opacity: 0.7; }
-      40% { transform: translate(-15px, -5px) rotate(-1deg) scale(0.98); opacity: 0.6; }
-      60% { transform: translate(10px, -15px) rotate(-2deg) scale(1.03); opacity: 0.7; }
-      80% { transform: translate(5px, 5px) rotate(1deg) scale(1.01); opacity: 0.6; }
-      100% { transform: translate(0, 0) rotate(0deg) scale(1.02); opacity: 0.5; }
+    .content-section::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      right: -50%;
+      bottom: -50%;
+      background: radial-gradient(circle at center, rgba(59, 130, 246, 0.2), transparent 70%);
+      opacity: 0.5;
+      z-index: -2;
+      transform: translateZ(-20px);
+      animation: pulseGlow 8s infinite alternate ease-in-out;
     }
     
-    @keyframes particleFloat {
-      0%, 100% { transform: translate(0, 0); opacity: 0.8; }
-      25% { transform: translate(var(--tx1, 10px), var(--ty1, -10px)); opacity: 0.9; }
-      50% { transform: translate(var(--tx2, 15px), var(--ty2, 5px)); opacity: 1; }
-      75% { transform: translate(var(--tx3, 5px), var(--ty3, 15px)); opacity: 0.9; }
+    @keyframes pulseGlow {
+      0% { opacity: 0.3; transform: translateZ(-20px) scale(0.8); }
+      100% { opacity: 0.6; transform: translateZ(-20px) scale(1.2); }
     }
     
-    @keyframes dimensionShift {
-      0% { filter: hue-rotate(0deg) blur(0px); transform: scale(1) rotate(0deg); }
-      25% { filter: hue-rotate(90deg) blur(1px); transform: scale(1.05) rotate(1deg); }
-      50% { filter: hue-rotate(180deg) blur(0px); transform: scale(0.98) rotate(-1deg); }
-      75% { filter: hue-rotate(270deg) blur(1px); transform: scale(1.02) rotate(0.5deg); }
-      100% { filter: hue-rotate(360deg) blur(0px); transform: scale(1) rotate(0deg); }
+    .badge-container {
+      position: relative;
+      background: url(#badgeBgGradient);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transform-style: preserve-3d;
+      transform: perspective(1000px) translateZ(0px);
+      z-index: 5;
     }
     
-    @keyframes quantumFluctuation {
-      0%, 100% { opacity: 0.1; }
-      50% { opacity: 0.3; }
+    .badge-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+      z-index: -1;
     }
     
-    @keyframes waveMotion {
-      0% { transform: translateY(0) scaleY(1); }
-      50% { transform: translateY(-5px) scaleY(1.05); }
-      100% { transform: translateY(0) scaleY(1); }
+    /* 3Dアニメーション効果 */
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0) translateZ(0); }
+      50% { transform: translateY(-15px) translateZ(50px); }
+    }
+    
+    @keyframes floatX {
+      0%, 100% { transform: translateX(0) translateZ(0); }
+      50% { transform: translateX(15px) translateZ(30px); }
+    }
+    
+    @keyframes rotateSlowly {
+      0% { transform: rotate(0deg) translateZ(0); }
+      100% { transform: rotate(360deg) translateZ(0); }
+    }
+    
+    @keyframes breathe {
+      0%, 100% { transform: scale(1) translateZ(0); }
+      50% { transform: scale(1.05) translateZ(20px); }
     }
     
     @keyframes depthPulse {
-      0%, 100% { filter: brightness(1) contrast(1); }
-      50% { filter: brightness(1.2) contrast(1.1); }
+      0%, 100% { transform: translateZ(0); }
+      50% { transform: translateZ(50px); }
     }
     
-    @keyframes colorShift {
+    @keyframes colorCycle {
       0% { filter: hue-rotate(0deg); }
       100% { filter: hue-rotate(360deg); }
     }
     
-    /* 3D変換とパースペクティブ */
-    .perspective-container {
-      transform-style: preserve-3d;
-      perspective: 1000px;
-      transform: translateZ(0);
-      backface-visibility: hidden;
+    @keyframes opacityPulse {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.5; }
     }
     
-    .fluid-layer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      mix-blend-mode: screen;
-    }
-    
-    .fluid-layer-1 {
-      animation: fluidMove1 20s ease-in-out infinite, colorShift 30s linear infinite;
-    }
-    
-    .fluid-layer-2 {
-      animation: fluidMove2 25s ease-in-out infinite, colorShift 40s linear infinite reverse;
-    }
-    
-    .fluid-layer-3 {
-      animation: fluidMove3 22s ease-in-out infinite, colorShift 35s linear infinite;
-    }
-    
-    .quantum-particle {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%);
-      mix-blend-mode: screen;
-      filter: url(#quantumParticle);
-      animation: particleFloat 15s ease-in-out infinite;
-      transform-origin: center center;
-    }
-    
-    .wave-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      animation: waveMotion 8s ease-in-out infinite;
-      opacity: 0.2;
-    }
-    
-    .dimension-portal {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(65,105,225,0.7) 0%, rgba(65,105,225,0) 70%);
-      mix-blend-mode: screen;
-      animation: dimensionShift 20s linear infinite;
-      filter: url(#dimensionalInterference);
-    }
-    
-    .quantum-field {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url(#quantumField);
-      opacity: 0.1;
-      animation: quantumFluctuation 10s ease-in-out infinite;
-    }
-    
+    /* 3D層の基本スタイル */
     .depth-layer {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      animation: depthPulse 15s ease-in-out infinite;
+      pointer-events: none;
+    }
+    
+    /* 3D空間の定義 */
+    .space-3d {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      perspective: 1000px;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .space-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+    
+    /* 星空効果 */
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      transform-style: preserve-3d;
+    }
+    
+    /* 3Dグリッド */
+    .grid-3d {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: url(#gridPattern);
+      transform-style: preserve-3d;
+      transform: rotateX(60deg) translateZ(-200px);
+      opacity: 0.3;
+      animation: gridMove 30s linear infinite;
+    }
+    
+    @keyframes gridMove {
+      0% { transform: rotateX(60deg) translateZ(-200px) translateY(0); }
+      100% { transform: rotateX(60deg) translateZ(-200px) translateY(100%); }
+    }
+    
+    /* 光の柱 */
+    .light-pillar {
+      position: absolute;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(100,149,237,0), rgba(100,149,237,0.7), rgba(100,149,237,0));
+      transform-style: preserve-3d;
+      animation: pillarFloat 15s ease-in-out infinite;
+    }
+    
+    @keyframes pillarFloat {
+      0%, 100% { transform: translateY(0) translateX(0) translateZ(0); }
+      25% { transform: translateY(-50px) translateX(20px) translateZ(100px); }
+      50% { transform: translateY(-100px) translateX(0) translateZ(200px); }
+      75% { transform: translateY(-50px) translateX(-20px) translateZ(100px); }
+    }
+    
+    /* 3D雲効果 */
+    .cloud-3d {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1), rgba(255,255,255,0));
+      transform-style: preserve-3d;
+      animation: cloudFloat 20s ease-in-out infinite;
+    }
+    
+    @keyframes cloudFloat {
+      0%, 100% { transform: translateZ(50px) scale(1); opacity: 0.3; }
+      50% { transform: translateZ(150px) scale(1.2); opacity: 0.5; }
+    }
+    
+    /* ホログラム効果 */
+    .hologram {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url(#crystalPattern);
+      opacity: 0.1;
+      transform-style: preserve-3d;
+      animation: hologramShift 15s linear infinite;
+    }
+    
+    @keyframes hologramShift {
+      0% { transform: translateZ(0) rotate(0deg); opacity: 0.05; }
+      25% { transform: translateZ(50px) rotate(5deg); opacity: 0.1; }
+      50% { transform: translateZ(100px) rotate(0deg); opacity: 0.15; }
+      75% { transform: translateZ(50px) rotate(-5deg); opacity: 0.1; }
+      100% { transform: translateZ(0) rotate(0deg); opacity: 0.05; }
+    }
+    
+    /* 光線効果 */
+    .light-ray {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: url(#lightRay);
+      transform-style: preserve-3d;
+      animation: rayRotate 30s linear infinite;
+      opacity: 0.3;
+      mix-blend-mode: screen;
+    }
+    
+    @keyframes rayRotate {
+      0% { transform: rotate(0deg) translateZ(0) scale(1); }
+      50% { transform: rotate(180deg) translateZ(100px) scale(1.5); }
+      100% { transform: rotate(360deg) translateZ(0) scale(1); }
+    }
+    
+    /* パーティクル効果 */
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+      transform-style: preserve-3d;
+      animation: particleFloat 20s ease-in-out infinite;
+    }
+    
+    @keyframes particleFloat {
+      0%, 100% { transform: translateX(0) translateY(0) translateZ(0); opacity: 0.3; }
+      25% { transform: translateX(var(--tx1)) translateY(var(--ty1)) translateZ(var(--tz1)); opacity: 0.7; }
+      50% { transform: translateX(var(--tx2)) translateY(var(--ty2)) translateZ(var(--tz2)); opacity: 1; }
+      75% { transform: translateX(var(--tx3)) translateY(var(--ty3)) translateZ(var(--tz3)); opacity: 0.7; }
+    }
+    
+    /* 深度感のあるグラデーション背景 */
+    .depth-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #020617, #1e3a8a, #1e40af);
+      transform-style: preserve-3d;
+      animation: gradientShift 20s ease-in-out infinite;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { transform: translateZ(-300px); }
+      50% { transform: translateZ(-350px); }
+    }
+    
+    /* 透明な結晶構造 */
+    .crystal-structure {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url(#crystalPattern);
+      opacity: 0.1;
+      transform-style: preserve-3d;
+      animation: crystalRotate 60s linear infinite;
+    }
+    
+    @keyframes crystalRotate {
+      0% { transform: translateZ(-200px) rotate(0deg); }
+      100% { transform: translateZ(-200px) rotate(360deg); }
+    }
+    
+    /* コンテンツホバー効果 */
+    .content-section:hover {
+      transform: perspective(1000px) translateZ(10px) scale(1.01);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    }
+    
+    /* 背景のぼかし効果（コンテンツの視認性向上） */
+    .content-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .content-section:hover + .content-backdrop {
+      opacity: 1;
+    }
+    
+    /* テキストの視認性向上のためのグロー効果 */
+    .text-glow {
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+      position: relative;
+      z-index: 10;
     }
   ]]></style>
 
-  <!-- 背景レイヤー -->
-  <rect width="100%" height="100%" fill="#0a1128"/>
+  <!-- 背景の基本レイヤー -->
+  <rect width="100%" height="100%" fill="#020617"/>
   
-  <!-- 量子場効果レイヤー -->
-  <rect class="quantum-field" width="100%" height="100%" fill="url(#fluidGradient1)" opacity="0.05" filter="url(#quantumField)"/>
-  
-  <!-- 深度レイヤー -->
-  <g class="depth-layer" filter="url(#depthMap)">
-    <rect width="100%" height="100%" fill="url(#fluidGradient2)" opacity="0.1"/>
+  <!-- 3D空間コンテナ -->
+  <g class="space-3d">
+    <g class="space-container" id="spaceContainer">
+      <!-- 深度感のあるグラデーション背景 -->
+      <rect class="depth-gradient" width="100%" height="100%" fill="url(#depthGradient1)"/>
+      
+      <!-- 3Dグリッド -->
+      <rect class="grid-3d" width="100%" height="100%" fill="url(#gridPattern)"/>
+      
+      <!-- 透明な結晶構造 -->
+      <rect class="crystal-structure" width="100%" height="100%" fill="url(#crystalPattern)"/>
+      
+      <!-- ホログラム効果 -->
+      <rect class="hologram" width="100%" height="100%" fill="url(#crystalPattern)" filter="url(#holographic)"/>
+      
+      <!-- 動的な光の柱 -->
+      <rect class="light-pillar" x="100" y="0" width="2" height="1500" fill="rgba(100,149,237,0.3)" style="--delay: 0s;"/>
+      <rect class="light-pillar" x="300" y="0" width="2" height="1500" fill="rgba(100,149,237,0.3)" style="--delay: 2s;"/>
+      <rect class="light-pillar" x="500" y="0" width="2" height="1500" fill="rgba(100,149,237,0.3)" style="--delay: 4s;"/>
+      <rect class="light-pillar" x="700" y="0" width="2" height="1500" fill="rgba(100,149,237,0.3)" style="--delay: 6s;"/>
+      
+      <!-- 3D雲効果 -->
+      <circle class="cloud-3d" cx="200" cy="300" r="150" fill="url(#lightRay)"/>
+      <circle class="cloud-3d" cx="600" cy="800" r="200" fill="url(#lightRay)"/>
+      <circle class="cloud-3d" cx="400" cy="1200" r="180" fill="url(#lightRay)"/>
+      
+      <!-- 光線効果 -->
+      <circle class="light-ray" cx="150" cy="400" r="150" fill="url(#lightRay)"/>
+      <circle class="light-ray" cx="650" cy="700" r="200" fill="url(#lightRay)"/>
+      <circle class="light-ray" cx="350" cy="1100" r="180" fill="url(#lightRay)"/>
+      
+      <!-- パーティクル効果 -->
+      <circle class="particle" cx="100" cy="200" r="2" fill="#fff" style="--tx1: 50px; --ty1: -30px; --tz1: 100px; --tx2: 100px; --ty2: -60px; --tz2: 200px; --tx3: 50px; --ty3: -90px; --tz3: 100px;"/>
+      <circle class="particle" cx="300" cy="400" r="2" fill="#fff" style="--tx1: -70px; --ty1: 40px; --tz1: 150px; --tx2: -140px; --ty2: 80px; --tz2: 300px; --tx3: -70px; --ty3: 120px; --tz3: 150px;"/>
+      <circle class="particle" cx="500" cy="600" r="2" fill="#fff" style="--tx1: 60px; --ty1: 50px; --tz1: 120px; --tx2: 120px; --ty2: 100px; --tz2: 240px; --tx3: 60px; --ty3: 150px; --tz3: 120px;"/>
+      <circle class="particle" cx="700" cy="800" r="2" fill="#fff" style="--tx1: -40px; --ty1: -60px; --tz1: 80px; --tx2: -80px; --ty2: -120px; --tz2: 160px; --tx3: -40px; --ty3: -180px; --tz3: 80px;"/>
+      <circle class="particle" cx="200" cy="1000" r="2" fill="#fff" style="--tx1: 30px; --ty1: -40px; --tz1: 90px; --tx2: 60px; --ty2: -80px; --tz2: 180px; --tx3: 30px; --ty3: -120px; --tz3: 90px;"/>
+      <circle class="particle" cx="400" cy="1200" r="2" fill="#fff" style="--tx1: -50px; --ty1: 30px; --tz1: 110px; --tx2: -100px; --ty2: 60px; --tz2: 220px; --tx3: -50px; --ty3: 90px; --tz3: 110px;"/>
+      <circle class="particle" cx="600" cy="1400" r="2" fill="#fff" style="--tx1: 45px; --ty1: 35px; --tz1: 130px; --tx2: 90px; --ty2: 70px; --tz2: 260px; --tx3: 45px; --ty3: 105px; --tz3: 130px;"/>
+      
+      <!-- 星空効果 -->
+      <g id="starsContainer"></g>
+    </g>
   </g>
-  
-  <!-- 流体力学シミュレーションレイヤー -->
-  <g class="perspective-container">
-    <path class="fluid-layer fluid-layer-1" d="M0,300 C100,250 200,350 300,300 S400,250 500,300 S600,350 700,300 S800,250 900,300 V600 H0 Z" fill="url(#fluidGradient1)" opacity="0.6" filter="url(#lightRefraction)"/>
-    
-    <path class="fluid-layer fluid-layer-2" d="M0,400 C150,350 250,450 400,400 S550,350 700,400 S850,450 1000,400 V700 H0 Z" fill="url(#fluidGradient2)" opacity="0.5" filter="url(#lightRefraction)"/>
-    
-    <path class="fluid-layer fluid-layer-3" d="M0,500 C200,450 300,550 500,500 S700,450 900,500 S1100,550 1300,500 V800 H0 Z" fill="url(#fluidGradient3)" opacity="0.4" filter="url(#lightRefraction)"/>
-  </g>
-  
-  <!-- 波動関数の干渉パターン -->
-  <g class="wave-container" mask="url(#waveMask)">
-    <rect width="100%" height="100%" fill="#4338ca" opacity="0.15"/>
-  </g>
-  
-  <!-- 量子パーティクル -->
-  <circle class="quantum-particle" cx="200" cy="300" r="5" style="--tx1: 30px; --ty1: -20px; --tx2: 50px; --ty2: 10px; --tx3: 20px; --ty3: 40px;"/>
-  <circle class="quantum-particle" cx="600" cy="200" r="8" style="--tx1: -40px; --ty1: -30px; --tx2: -20px; --ty2: 20px; --tx3: -50px; --ty3: 30px;"/>
-  <circle class="quantum-particle" cx="400" cy="500" r="6" style="--tx1: 20px; --ty1: 40px; --tx2: -30px; --ty2: 20px; --tx3: -10px; --ty3: -30px;"/>
-  <circle class="quantum-particle" cx="700" cy="600" r="4" style="--tx1: -20px; --ty1: 30px; --tx2: -40px; --ty2: -10px; --tx3: -10px; --ty3: 20px;"/>
-  <circle class="quantum-particle" cx="300" cy="800" r="7" style="--tx1: 40px; --ty1: 20px; --tx2: 10px; --ty2: -30px; --tx3: 30px; --ty3: -10px;"/>
-  <circle class="quantum-particle" cx="500" cy="1000" r="5" style="--tx1: -30px; --ty1: -20px; --tx2: 20px; --ty2: -40px; --tx3: 40px; --ty3: 10px;"/>
-  <circle class="quantum-particle" cx="200" cy="1200" r="6" style="--tx1: 20px; --ty1: -40px; --tx2: 40px; --ty2: 10px; --tx3: 10px; --ty3: 30px;"/>
-  <circle class="quantum-particle" cx="600" cy="1400" r="8" style="--tx1: -40px; --ty1: 10px; --tx2: -10px; --ty2: 30px; --tx3: -30px; --ty3: -20px;"/>
-  
-  <!-- 次元間干渉ポータル -->
-  <circle class="dimension-portal" cx="150" cy="400" r="100" opacity="0.2"/>
-  <circle class="dimension-portal" cx="650" cy="300" r="80" opacity="0.15"/>
-  <circle class="dimension-portal" cx="400" cy="700" r="120" opacity="0.1"/>
-  <circle class="dimension-portal" cx="700" cy="900" r="90" opacity="0.2"/>
-  <circle class="dimension-portal" cx="200" cy="1100" r="110" opacity="0.15"/>
-  <circle class="dimension-portal" cx="600" cy="1300" r="100" opacity="0.1"/>
 
   <!-- 高度なJavaScriptアニメーション -->
   <script type="text/javascript"><![CDATA[
@@ -329,394 +645,431 @@
                               window.mozRequestAnimationFrame || 
                               function(callback) { window.setTimeout(callback, 1000/60); };
       
-      // キャンバス作成関数
-      function createCanvas(width, height) {
+      // デバイスのパフォーマンスに基づいて効果の複雑さを調整する
+      let performanceLevel = 'high'; // 'low', 'medium', 'high'
+      
+      // パフォーマンスチェック
+      function checkPerformance() {
+        const start = performance.now();
+        let count = 0;
+        
+        // 簡単な計算を繰り返し実行
+        for (let i = 0; i < 1000000; i++) {
+          count += i;
+        }
+        
+        const end = performance.now();
+        const duration = end - start;
+        
+        // 実行時間に基づいてパフォーマンスレベルを設定
+        if (duration > 100) {
+          performanceLevel = 'low';
+        } else if (duration > 50) {
+          performanceLevel = 'medium';
+        } else {
+          performanceLevel = 'high';
+        }
+        
+        console.log(`Performance level: ${performanceLevel} (benchmark: ${duration.toFixed(2)}ms)`);
+        return performanceLevel;
+      }
+      
+      // 星を生成する関数
+      function createStars() {
+        const starsContainer = document.getElementById('starsContainer');
+        const starCount = performanceLevel === 'high' ? 200 : 
+                         performanceLevel === 'medium' ? 100 : 50;
+        
+        for (let i = 0; i < starCount; i++) {
+          const star = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          const size = Math.random() * 2 + 1;
+          const x = Math.random() * 800;
+          const y = Math.random() * 1500;
+          const z = Math.random() * 500 - 250;
+          
+          star.setAttribute("class", "star");
+          star.setAttribute("cx", x);
+          star.setAttribute("cy", y);
+          star.setAttribute("r", size);
+          star.setAttribute("fill", `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.5})`);
+          
+          // 3D位置を設定
+          star.style.transform = `translateZ(${z}px)`;
+          
+          // 点滅アニメーション
+          const animationDuration = Math.random() * 3 + 2;
+          const animationDelay = Math.random() * 5;
+          star.style.animation = `opacityPulse ${animationDuration}s ease-in-out ${animationDelay}s infinite`;
+          
+          starsContainer.appendChild(star);
+        }
+      }
+      
+      // 3D視差効果を追加
+      function addParallaxEffect() {
+        const spaceContainer = document.getElementById('spaceContainer');
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+        
+        // マウス移動イベントリスナー
+        document.addEventListener('mousemove', (e) => {
+          // ビューポート内のマウス位置を-1から1の範囲に正規化
+          mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+          mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+        });
+        
+        // デバイスの傾きイベントリスナー（モバイル用）
+        window.addEventListener('deviceorientation', (e) => {
+          if (e.beta && e.gamma) {
+            // デバイスの傾きを-1から1の範囲に正規化
+            mouseX = (e.gamma / 45) * 1;
+            mouseY = (e.beta / 45) * 1;
+          }
+        });
+        
+        // アニメーションループ
+        function updateParallax() {
+          // 目標値にゆっくり近づける（イージング）
+          targetX += (mouseX - targetX) * 0.05;
+          targetY += (mouseY - targetY) * 0.05;
+          
+          // 3D空間を回転
+          spaceContainer.style.transform = `rotateY(${targetX * 10}deg) rotateX(${-targetY * 10}deg)`;
+          
+          // コンテンツセクションにも微妙な3D効果を適用
+          const contentSections = document.querySelectorAll('.content-section');
+          contentSections.forEach((section) => {
+            section.style.transform = `perspective(1000px) translateZ(0px) rotateY(${targetX * 3}deg) rotateX(${-targetY * 3}deg)`;
+          });
+          
+          requestAnimFrame(updateParallax);
+        }
+        
+        updateParallax();
+      }
+      
+      // WebGLを使用した高度な3D効果（パフォーマンスが高い場合のみ）
+      function initWebGL() {
+        if (performanceLevel !== 'high') return;
+        
+        // キャンバス作成
         const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
         canvas.style.position = 'absolute';
         canvas.style.top = '0';
         canvas.style.left = '0';
         canvas.style.width = '100%';
         canvas.style.height = '100%';
         canvas.style.pointerEvents = 'none';
-        canvas.style.zIndex = '-1';
-        canvas.style.opacity = '0.3';
+        canvas.style.zIndex = '1';
+        canvas.style.opacity = '0.7';
         canvas.style.mixBlendMode = 'screen';
-        document.querySelector('body').appendChild(canvas);
-        return canvas;
+        
+        // SVGの最初の子要素として挿入
+        const svg = document.querySelector('svg');
+        svg.parentNode.insertBefore(canvas, svg);
+        
+        // WebGL初期化
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) return;
+        
+        // シェーダーソース
+        const vertexShaderSource = `
+          attribute vec2 a_position;
+          varying vec2 v_texCoord;
+          
+          void main() {
+            gl_Position = vec4(a_position, 0, 1);
+            v_texCoord = a_position * 0.5 + 0.5;
+          }
+        `;
+        
+        const fragmentShaderSource = `
+          precision mediump float;
+          varying vec2 v_texCoord;
+          uniform float u_time;
+          
+          // 3Dノイズ関数
+          vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+          vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+          vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+          vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+          
+          float snoise(vec3 v) {
+            const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+            const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+            
+            // 格子の頂点を計算
+            vec3 i  = floor(v + dot(v, C.yyy));
+            vec3 x0 = v - i + dot(i, C.xxx);
+            
+            // その他の頂点を計算
+            vec3 g = step(x0.yzx, x0.xyz);
+            vec3 l = 1.0 - g;
+            vec3 i1 = min(g.xyz, l.zxy);
+            vec3 i2 = max(g.xyz, l.zxy);
+            
+            vec3 x1 = x0 - i1 + C.xxx;
+            vec3 x2 = x0 - i2 + C.yyy;
+            vec3 x3 = x0 - D.yyy;
+            
+            // 格子の頂点に乱数値を割り当て
+            i = mod289(i);
+            vec4 p = permute(permute(permute(
+                     i.z + vec4(0.0, i1.z, i2.z, 1.0))
+                   + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+                   + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+                   
+            // 勾配ノイズの計算
+            float n_ = 0.142857142857;
+            vec3 ns = n_ * D.wyz - D.xzx;
+            
+            vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+            
+            vec4 x_ = floor(j * ns.z);
+            vec4 y_ = floor(j - 7.0 * x_);
+            
+            vec4 x = x_ *ns.x + ns.yyyy;
+            vec4 y = y_ *ns.x + ns.yyyy;
+            vec4 h = 1.0 - abs(x) - abs(y);
+            
+            vec4 b0 = vec4(x.xy, y.xy);
+            vec4 b1 = vec4(x.zw, y.zw);
+            
+            vec4 s0 = floor(b0)*2.0 + 1.0;
+            vec4 s1 = floor(b1)*2.0 + 1.0;
+            vec4 sh = -step(h, vec4(0.0));
+            
+            vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
+            vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+            
+            vec3 p0 = vec3(a0.xy, h.x);
+            vec3 p1 = vec3(a0.zw, h.y);
+            vec3 p2 = vec3(a1.xy, h.z);
+            vec3 p3 = vec3(a1.zw, h.w);
+            
+            // 勾配の正規化
+            vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+            p0 *= norm.x;
+            p1 *= norm.y;
+            p2 *= norm.z;
+            p3 *= norm.w;
+            
+            // 勾配ノイズの混合
+            vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+            m = m * m;
+            return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+          }
+          
+          void main() {
+            // 時間に基づいて変化するノイズ
+            float n = snoise(vec3(v_texCoord * 5.0, u_time * 0.1)) * 0.5 + 0.5;
+            
+            // 深度効果のための色の計算
+            vec3 color1 = vec3(0.05, 0.1, 0.2); // 深い青
+            vec3 color2 = vec3(0.1, 0.2, 0.5);  // 中間の青
+            vec3 color3 = vec3(0.2, 0.4, 0.8);  // 明るい青
+            
+            // ノイズに基づいて色を混合
+            vec3 color = mix(color1, color2, n);
+            color = mix(color, color3, pow(n, 3.0));
+            
+            // 光の効果を追加
+            float light = pow(n, 5.0) * 2.0;
+            color += vec3(light);
+            
+            // 中心からの距離に基づくビネット効果
+            vec2 center = vec2(0.5, 0.5);
+            float dist = distance(v_texCoord, center);
+            float vignette = smoothstep(0.5, 0.2, dist);
+            
+            // 最終的な色
+            gl_FragColor = vec4(color * vignette, n * 0.7);
+          }
+        `;
+        
+        // シェーダーのコンパイル
+        function compileShader(gl, source, type) {
+          const shader = gl.createShader(type);
+          gl.shaderSource(shader, source);
+          gl.compileShader(shader);
+          
+          if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            console.error('シェーダーのコンパイルに失敗しました:', gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+            return null;
+          }
+          
+          return shader;
+        }
+        
+        // シェーダープログラムの作成
+        const vertexShader = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);
+        const fragmentShader = compileShader(gl, fragmentShaderSource, gl.FRAGMENT_SHADER);
+        
+        const program = gl.createProgram();
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+        
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+          console.error('プログラムのリンクに失敗しました:', gl.getProgramInfoLog(program));
+          return;
+        }
+        
+        // 頂点データ
+        const positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        
+        const positions = [
+          -1.0, -1.0,
+           1.0, -1.0,
+          -1.0,  1.0,
+           1.0,  1.0
+        ];
+        
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+        
+        // 属性とユニフォームの取得
+        const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
+        const timeUniformLocation = gl.getUniformLocation(program, 'u_time');
+        
+        // 描画関数
+        function render() {
+          // キャンバスのサイズをウィンドウに合わせる
+          if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+          }
+          
+          // クリア
+          gl.clearColor(0, 0, 0, 0);
+          gl.clear(gl.COLOR_BUFFER_BIT);
+          
+          // プログラムの使用
+          gl.useProgram(program);
+          
+          // 頂点属性の設定
+          gl.enableVertexAttribArray(positionAttributeLocation);
+          gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+          gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+          
+          // 時間ユニフォームの更新
+          gl.uniform1f(timeUniformLocation, performance.now() / 1000);
+          
+          // 描画
+          gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+          
+          // 次のフレームを要求
+          requestAnimFrame(render);
+        }
+        
+        // レンダリング開始
+        render();
       }
       
-      // 流体シミュレーション
-      class FluidSimulation {
-        constructor(width, height) {
-          this.canvas = createCanvas(width, height);
-          this.ctx = this.canvas.getContext('2d');
-          this.width = width;
-          this.height = height;
-          this.particles = [];
-          this.flowField = [];
-          this.init();
-        }
+      // コンテンツセクションの3D効果を強化
+      function enhance3DContentSections() {
+        // コンテンツセクションを3Dコンテナで包む
+        const sections = document.querySelectorAll('h2, ul, p, .badge-row, .flex-center, .stats-section');
         
-        init() {
-          // 流体場の初期化
-          for (let y = 0; y < this.height; y += 20) {
-            for (let x = 0; x < this.width; x += 20) {
-              this.flowField.push({
-                x: x,
-                y: y,
-                angle: Math.random() * Math.PI * 2,
-                strength: Math.random() * 0.5 + 0.1
-              });
-            }
+        sections.forEach((section, index) => {
+          // 元の要素を保存
+          const parent = section.parentNode;
+          const nextSibling = section.nextSibling;
+          
+          // 3Dコンテナを作成
+          const container = document.createElement('div');
+          container.className = 'content-section';
+          container.style.animationDelay = `${index * 0.1}s`;
+          
+          // 要素を3Dコンテナに移動
+          parent.removeChild(section);
+          container.appendChild(section);
+          
+          // 3Dコンテナを元の位置に挿入
+          if (nextSibling) {
+            parent.insertBefore(container, nextSibling);
+          } else {
+            parent.appendChild(container);
           }
           
-          // パーティクルの初期化
-          for (let i = 0; i < 100; i++) {
-            this.particles.push({
-              x: Math.random() * this.width,
-              y: Math.random() * this.height,
-              size: Math.random() * 3 + 1,
-              speedX: 0,
-              speedY: 0,
-              color: `hsla(${Math.random() * 60 + 200}, 100%, 70%, 0.3)`
-            });
-          }
-          
-          this.animate();
-        }
+          // 背景のぼかし効果用の要素を追加
+          const backdrop = document.createElement('div');
+          backdrop.className = 'content-backdrop';
+          parent.insertBefore(backdrop, container.nextSibling);
+        });
         
-        // 最も近い流体場のインデックスを取得
-        getClosestFlowField(x, y) {
-          let closestIndex = 0;
-          let closestDist = Number.MAX_VALUE;
+        // バッジコンテナを作成
+        const badgeRows = document.querySelectorAll('.badge-row');
+        badgeRows.forEach((row) => {
+          const parent = row.parentNode;
+          const container = document.createElement('div');
+          container.className = 'badge-container';
           
-          for (let i = 0; i < this.flowField.length; i++) {
-            const field = this.flowField[i];
-            const dx = field.x - x;
-            const dy = field.y - y;
-            const dist = dx * dx + dy * dy;
-            
-            if (dist < closestDist) {
-              closestDist = dist;
-              closestIndex = i;
-            }
-          }
-          
-          return this.flowField[closestIndex];
-        }
-        
-        // パーティクルの更新
-        updateParticles() {
-          for (let i = 0; i < this.particles.length; i++) {
-            const p = this.particles[i];
-            
-            // 最も近い流体場を取得
-            const field = this.getClosestFlowField(p.x, p.y);
-            
-            // 流体場に基づいて速度を更新
-            p.speedX += Math.cos(field.angle) * field.strength;
-            p.speedY += Math.sin(field.angle) * field.strength;
-            
-            // 速度の減衰
-            p.speedX *= 0.95;
-            p.speedY *= 0.95;
-            
-            // 位置の更新
-            p.x += p.speedX;
-            p.y += p.speedY;
-            
-            // 画面外に出た場合の処理
-            if (p.x < 0) p.x = this.width;
-            if (p.x > this.width) p.x = 0;
-            if (p.y < 0) p.y = this.height;
-            if (p.y > this.height) p.y = 0;
-          }
-        }
-        
-        // 流体場の更新
-        updateFlowField() {
-          const time = Date.now() * 0.001;
-          
-          for (let i = 0; i < this.flowField.length; i++) {
-            const field = this.flowField[i];
-            field.angle = (Math.sin(time * 0.1 + field.x * 0.01) + Math.cos(time * 0.15 + field.y * 0.01)) * Math.PI;
-            field.strength = (Math.sin(time * 0.2 + field.x * 0.005 + field.y * 0.005) + 1) * 0.3 + 0.1;
-          }
-        }
-        
-        // 描画
-        draw() {
-          this.ctx.clearRect(0, 0, this.width, this.height);
-          
-          // パーティクルの描画
-          for (let i = 0; i < this.particles.length; i++) {
-            const p = this.particles[i];
-            
-            this.ctx.beginPath();
-            const gradient = this.ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 3);
-            gradient.addColorStop(0, p.color);
-            gradient.addColorStop(1, 'transparent');
-            this.ctx.fillStyle = gradient;
-            this.ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
-            this.ctx.fill();
-          }
-          
-          // パーティクル間の接続線
-          this.ctx.strokeStyle = 'rgba(100, 150, 255, 0.05)';
-          this.ctx.lineWidth = 0.5;
-          
-          for (let i = 0; i < this.particles.length; i++) {
-            const p1 = this.particles[i];
-            
-            for (let j = i + 1; j < this.particles.length; j++) {
-              const p2 = this.particles[j];
-              const dx = p1.x - p2.x;
-              const dy = p1.y - p2.y;
-              const dist = Math.sqrt(dx * dx + dy * dy);
-              
-              if (dist < 100) {
-                this.ctx.beginPath();
-                this.ctx.moveTo(p1.x, p1.y);
-                this.ctx.lineTo(p2.x, p2.y);
-                this.ctx.globalAlpha = 1 - dist / 100;
-                this.ctx.stroke();
-                this.ctx.globalAlpha = 1;
-              }
-            }
-          }
-        }
-        
-        // アニメーションループ
-        animate() {
-          this.updateFlowField();
-          this.updateParticles();
-          this.draw();
-          
-          requestAnimFrame(() => this.animate());
-        }
+          // バッジ行をコンテナに移動
+          parent.insertBefore(container, row);
+          container.appendChild(row);
+        });
       }
       
-      // 量子波動効果
-      class QuantumWaveEffect {
-        constructor(width, height) {
-          this.canvas = createCanvas(width, height);
-          this.ctx = this.canvas.getContext('2d');
-          this.width = width;
-          this.height = height;
-          this.waves = [];
-          this.init();
-        }
+      // マウス位置に基づく動的な光の効果
+      function addDynamicLightEffect() {
+        const svg = document.querySelector('svg');
+        const lightEffect = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         
-        init() {
-          // 波の初期化
-          for (let i = 0; i < 5; i++) {
-            this.waves.push({
-              amplitude: Math.random() * 20 + 10,
-              wavelength: Math.random() * 200 + 100,
-              speed: Math.random() * 0.02 + 0.01,
-              phase: Math.random() * Math.PI * 2
-            });
-          }
-          
-          this.animate();
-        }
+        lightEffect.setAttribute("cx", "0");
+        lightEffect.setAttribute("cy", "0");
+        lightEffect.setAttribute("r", "300");
+        lightEffect.setAttribute("fill", "url(#lightRay)");
+        lightEffect.style.opacity = "0.2";
+        lightEffect.style.mixBlendMode = "screen";
+        lightEffect.style.filter = "blur(20px)";
+        lightEffect.style.pointerEvents = "none";
         
-        // 波の高さを計算
-        getWaveHeight(x, y, time) {
-          let height = 0;
-          
-          for (let i = 0; i < this.waves.length; i++) {
-            const wave = this.waves[i];
-            const angle = (x / wave.wavelength + time * wave.speed + wave.phase);
-            height += Math.sin(angle) * wave.amplitude;
-          }
-          
-          return height;
-        }
+        svg.appendChild(lightEffect);
         
-        // 描画
-        draw() {
-          const time = Date.now() * 0.001;
-          this.ctx.clearRect(0, 0, this.width, this.height);
+        // マウス移動イベントリスナー
+        document.addEventListener('mousemove', (e) => {
+          // SVG内の座標に変換
+          const rect = svg.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
           
-          // グラデーションの設定
-          const gradient = this.ctx.createLinearGradient(0, 0, this.width, this.height);
-          gradient.addColorStop(0, 'rgba(30, 64, 175, 0.1)');
-          gradient.addColorStop(0.5, 'rgba(37, 99, 235, 0.1)');
-          gradient.addColorStop(1, 'rgba(30, 58, 138, 0.1)');
-          
-          this.ctx.fillStyle = gradient;
-          
-          // 波の描画
-          this.ctx.beginPath();
-          this.ctx.moveTo(0, this.height / 2);
-          
-          for (let x = 0; x < this.width; x += 5) {
-            const y = this.height / 2 + this.getWaveHeight(x, 0, time);
-            this.ctx.lineTo(x, y);
-          }
-          
-          this.ctx.lineTo(this.width, this.height);
-          this.ctx.lineTo(0, this.height);
-          this.ctx.closePath();
-          this.ctx.fill();
-          
-          // 干渉パターンの描画
-          this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-          this.ctx.lineWidth = 1;
-          
-          for (let y = 0; y < this.height; y += 40) {
-            this.ctx.beginPath();
-            
-            for (let x = 0; x < this.width; x += 5) {
-              const waveHeight = this.getWaveHeight(x, y, time) * 0.3;
-              const yPos = y + waveHeight;
-              
-              if (x === 0) {
-                this.ctx.moveTo(x, yPos);
-              } else {
-                this.ctx.lineTo(x, yPos);
-              }
-            }
-            
-            this.ctx.stroke();
-          }
-        }
-        
-        // アニメーションループ
-        animate() {
-          this.draw();
-          requestAnimFrame(() => this.animate());
-        }
+          // 光の位置を更新
+          lightEffect.setAttribute("cx", x);
+          lightEffect.setAttribute("cy", y);
+        });
       }
       
-      // 3D空間歪み効果
-      class SpaceDistortionEffect {
-        constructor(width, height) {
-          this.canvas = createCanvas(width, height);
-          this.ctx = this.canvas.getContext('2d');
-          this.width = width;
-          this.height = height;
-          this.points = [];
-          this.init();
-        }
+      // 初期化関数
+      function init() {
+        // パフォーマンスチェック
+        checkPerformance();
         
-        init() {
-          // 3D点の初期化
-          for (let i = 0; i < 100; i++) {
-            this.points.push({
-              x: Math.random() * this.width,
-              y: Math.random() * this.height,
-              z: Math.random() * 500 - 250,
-              size: Math.random() * 3 + 1,
-              color: `hsla(${Math.random() * 60 + 210}, 100%, 70%, 0.2)`
-            });
-          }
-          
-          this.animate();
-        }
+        // 星を生成
+        createStars();
         
-        // 3D点の更新
-        updatePoints() {
-          const time = Date.now() * 0.001;
-          
-          for (let i = 0; i < this.points.length; i++) {
-            const point = this.points[i];
-            
-            // Z座標の更新（奥行き方向の移動）
-            point.z += Math.sin(time * 0.5 + i * 0.1) * 2;
-            
-            // 画面外に出た場合の処理
-            if (point.z > 250) point.z = -250;
-            if (point.z < -250) point.z = 250;
-          }
-        }
+        // 3D視差効果を追加
+        addParallaxEffect();
         
-        // 描画
-        draw() {
-          this.ctx.clearRect(0, 0, this.width, this.height);
-          
-          // 点の描画（Z座標に基づいてサイズと透明度を変更）
-          for (let i = 0; i < this.points.length; i++) {
-            const point = this.points[i];
-            const scale = 500 / (500 + point.z); // 遠近感の計算
-            const x = (point.x - this.width / 2) * scale + this.width / 2;
-            const y = (point.y - this.height / 2) * scale + this.height / 2;
-            const size = point.size * scale;
-            const alpha = (point.z + 250) / 500; // Z座標に基づく透明度
-            
-            this.ctx.beginPath();
-            const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, size * 3);
-            gradient.addColorStop(0, point.color.replace('0.2', alpha.toFixed(2)));
-            gradient.addColorStop(1, 'transparent');
-            this.ctx.fillStyle = gradient;
-            this.ctx.arc(x, y, size * 3, 0, Math.PI * 2);
-            this.ctx.fill();
-          }
-          
-          // 点間の接続線（Z座標が近い点同士を接続）
-          this.ctx.strokeStyle = 'rgba(100, 150, 255, 0.05)';
-          this.ctx.lineWidth = 0.5;
-          
-          for (let i = 0; i < this.points.length; i++) {
-            const p1 = this.points[i];
-            const scale1 = 500 / (500 + p1.z);
-            const x1 = (p1.x - this.width / 2) * scale1 + this.width / 2;
-            const y1 = (p1.y - this.height / 2) * scale1 + this.height / 2;
-            
-            for (let j = i + 1; j < this.points.length; j++) {
-              const p2 = this.points[j];
-              const scale2 = 500 / (500 + p2.z);
-              const x2 = (p2.x - this.width / 2) * scale2 + this.width / 2;
-              const y2 = (p2.y - this.height / 2) * scale2 + this.height / 2;
-              
-              const dx = x1 - x2;
-              const dy = y1 - y2;
-              const dz = p1.z - p2.z;
-              const dist = Math.sqrt(dx * dx + dy * dy);
-              const zDist = Math.abs(dz);
-              
-              if (dist < 100 && zDist < 100) {
-                this.ctx.beginPath();
-                this.ctx.moveTo(x1, y1);
-                this.ctx.lineTo(x2, y2);
-                this.ctx.globalAlpha = (1 - dist / 100) * (1 - zDist / 100) * 0.5;
-                this.ctx.stroke();
-                this.ctx.globalAlpha = 1;
-              }
-            }
-          }
-        }
+        // コンテンツセクションの3D効果を強化
+        enhance3DContentSections();
         
-        // アニメーションループ
-        animate() {
-          this.updatePoints();
-          this.draw();
-          requestAnimFrame(() => this.animate());
-        }
-      }
-      
-      // 効果の初期化
-      function initEffects() {
-        // ウィンドウサイズの取得
-        const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        const height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        // マウス位置に基づく動的な光の効果
+        addDynamicLightEffect();
         
-        // 各効果の初期化
-        setTimeout(() => {
-          new FluidSimulation(width, height);
-          new QuantumWaveEffect(width, height);
-          new SpaceDistortionEffect(width, height);
-        }, 100);
+        // WebGL効果を初期化（パフォーマンスが高い場合のみ）
+        initWebGL();
       }
       
       // DOMContentLoadedイベントで初期化
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initEffects);
+        document.addEventListener('DOMContentLoaded', init);
       } else {
-        initEffects();
+        init();
       }
     })();
   ]]></script>
@@ -724,13 +1077,13 @@
   <foreignObject x="0" y="0" width="800" height="1500">
     <body xmlns="http://www.w3.org/1999/xhtml">
       <!-- ウェルカム見出し -->
-      <h1 class="flex-center">
+      <h1 class="flex-center text-glow">
         <img id="welcome-gif" width="28" height="28" alt="Welcome GIF" src="{{WELCOME_GIF_URL}}"/>
         <span style="margin-left:8px;">Welcome to my profile!</span>
       </h1>
 
       <!-- About Me -->
-      <h2>👨‍💻 About Me</h2>
+      <h2 class="text-glow">👨‍💻 About Me</h2>
       <ul>
         <li>🧑‍💻 Full Stack Engineer with a passion for creating user-friendly applications</li>
         <li>🚀 Currently focusing on cloud-native architecture and microservices</li>
@@ -740,7 +1093,7 @@
       </ul>
 
       <!-- Skills and Technologies -->
-      <h2>🛠️ Skills and Technologies</h2>
+      <h2 class="text-glow">🛠️ Skills and Technologies</h2>
 
       <h3>Frontend</h3>
       <p class="badge-row">
@@ -781,11 +1134,11 @@
       </p>
 
       <!-- Featured Projects -->
-      <h2>📂 Featured Projects</h2>
+      <h2 class="text-glow">📂 Featured Projects</h2>
       <p>Coming soon…</p>
 
       <!-- GitHub Stats -->
-      <h2>📊 GitHub Stats</h2>
+      <h2 class="text-glow">📊 GitHub Stats</h2>
       <div class="center flex-center stats-section">
         <img id="github-stats-img" alt="GitHub Stats" class="stats-card" src="{{GITHUB_STATS_URL}}"/>
         <img id="top-langs-img" alt="Top Languages" class="stats-card" src="{{TOP_LANGUAGES_URL}}"/>
@@ -795,7 +1148,7 @@
       </div>
 
       <!-- Connect with Me -->
-      <h2>📫 Connect with Me</h2>
+      <h2 class="text-glow">📫 Connect with Me</h2>
       <div class="center">
         <a href="https://twitter.com/fab_for_fab">
           <img id="twitter-img" alt="Twitter" src="{{TWITTER_URL}}"/>
