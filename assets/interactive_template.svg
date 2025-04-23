@@ -13,7 +13,7 @@
       <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="5" seed="3" stitchTiles="stitch" result="noise"/>
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="20" xChannelSelector="R" yChannelSelector="G"/>
       <feGaussianBlur stdDeviation="1.5" result="blur"/>
-      <feBlend in="SourceGraphic" in2="blur" mode="multiply"/>
+      <feBlend in="SourceGraphic" in2="blur" mode="soft-light"/>
     </filter>
     
     <!-- 光の屈折フィルター -->
@@ -61,27 +61,45 @@
       <feComposite in="SourceGraphic" in2="diffuse" operator="arithmetic" k1="1" k2="0" k3="0.5" k4="0"/>
     </filter>
     
+    <!-- テキスト影フィルター -->
+    <filter id="textShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    
+    <!-- コンテンツ背景フィルター -->
+    <filter id="contentBgBlur" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 15 -6" result="glow"/>
+    </filter>
+    
     <!-- 流体力学シミュレーションのためのグラデーション -->
     <linearGradient id="fluidGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0f2350" stop-opacity="0.8"/>
-      <stop offset="25%" stop-color="#1e3a8a" stop-opacity="0.9"/>
-      <stop offset="50%" stop-color="#2563eb" stop-opacity="0.95"/>
-      <stop offset="75%" stop-color="#1e40af" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#172554" stop-opacity="0.8"/>
+      <stop offset="0%" stop-color="#0f2350" stop-opacity="0.7"/>
+      <stop offset="25%" stop-color="#1e3a8a" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#2563eb" stop-opacity="0.85"/>
+      <stop offset="75%" stop-color="#1e40af" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#172554" stop-opacity="0.7"/>
     </linearGradient>
     
     <linearGradient id="fluidGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#0c4a6e" stop-opacity="0.7"/>
-      <stop offset="30%" stop-color="#0369a1" stop-opacity="0.8"/>
-      <stop offset="70%" stop-color="#0284c7" stop-opacity="0.8"/>
-      <stop offset="100%" stop-color="#075985" stop-opacity="0.7"/>
+      <stop offset="0%" stop-color="#0c4a6e" stop-opacity="0.6"/>
+      <stop offset="30%" stop-color="#0369a1" stop-opacity="0.7"/>
+      <stop offset="70%" stop-color="#0284c7" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#075985" stop-opacity="0.6"/>
     </linearGradient>
     
     <linearGradient id="fluidGradient3" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#312e81" stop-opacity="0.6"/>
-      <stop offset="40%" stop-color="#4338ca" stop-opacity="0.7"/>
-      <stop offset="60%" stop-color="#4f46e5" stop-opacity="0.7"/>
-      <stop offset="100%" stop-color="#3730a3" stop-opacity="0.6"/>
+      <stop offset="0%" stop-color="#312e81" stop-opacity="0.5"/>
+      <stop offset="40%" stop-color="#4338ca" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#4f46e5" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#3730a3" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <!-- 下部までのグラデーション波用 -->
+    <linearGradient id="extendedWaveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3730a3" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#4f46e5" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#312e81" stop-opacity="0.2"/>
     </linearGradient>
     
     <!-- 量子パーティクルのためのフィルター -->
@@ -125,17 +143,76 @@
       background: transparent;
     }
     
-    h1, h2, h3 { margin: 20px 0 12px 0; }
+    h1, h2, h3 { 
+      margin: 20px 0 12px 0; 
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      filter: url(#textShadow);
+      position: relative;
+      z-index: 2;
+    }
+    
     h2 {
       padding-bottom: 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.3);
       margin-top: 30px;
     }
+
+    h3 {
+      position: relative;
+      display: inline-block;
+    }
+
+    h3:after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(37, 99, 235, 0.5), rgba(79, 70, 229, 0.5));
+      border-radius: 1px;
+    }
+    
     ul { margin: 0 0 24px 20px; padding: 0; }
-    p { margin: 12px 0 24px 0; }
-    img { max-width: 100%; height: auto; vertical-align: middle; }
-    a { color: inherit; text-decoration: none; }
+
+    li {
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+      position: relative;
+      z-index: 2;
+      margin-bottom: 5px;
+    }
+    
+    p { 
+      margin: 12px 0 24px 0; 
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+      position: relative;
+      z-index: 2;
+    }
+    
+    img { 
+      max-width: 100%; 
+      height: auto; 
+      vertical-align: middle; 
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));
+    }
+    
+    a { 
+      color: inherit; 
+      text-decoration: none; 
+      position: relative;
+      z-index: 2;
+    }
+
+    a:hover img {
+      transform: translateY(-2px);
+      filter: drop-shadow(0 4px 5px rgba(0,0,0,0.2));
+      transition: all 0.3s ease;
+    }
+    
     .center { text-align: center; }
+    
     .flex-center { 
       display: flex; 
       align-items: center; 
@@ -143,19 +220,69 @@
       flex-wrap: wrap;
       gap: 12px;
       margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
     }
+    
     .badge-row { 
       margin: 16px 0 24px 0;
+      position: relative;
+      z-index: 2;
     }
+    
     .badge-row img { 
       margin: 4px; 
+      transition: transform 0.2s ease;
     }
+
+    .badge-row img:hover {
+      transform: scale(1.1);
+    }
+    
     .stats-card {
       height: 170px !important;
       width: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
+    
     .stats-section {
       margin-bottom: 30px;
+      position: relative;
+    }
+
+    .stats-section:before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: calc(100% + 20px);
+      background: rgba(10,17,40,0.176);
+      border-radius: 12px;
+      filter: url(#contentBgBlur);
+      z-index: 1;
+    }
+
+    /* CSS版の3Dアニメーション（JS非依存） */
+    @keyframes css3dFloat {
+      0%, 100% { transform: translate3d(0, 0, 0); }
+      25% { transform: translate3d(-15px, 10px, 30px); }
+      50% { transform: translate3d(10px, -15px, -20px); }
+      75% { transform: translate3d(15px, 5px, 15px); }
+    }
+
+    @keyframes css3dRotate {
+      0%, 100% { transform: rotateX(0deg) rotateY(0deg); }
+      25% { transform: rotateX(5deg) rotateY(3deg); }
+      50% { transform: rotateX(-3deg) rotateY(-5deg); }
+      75% { transform: rotateX(-5deg) rotateY(2deg); }
+    }
+
+    @keyframes css3dPulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
     }
     
     /* アニメーション定義 */
@@ -219,29 +346,13 @@
       100% { filter: hue-rotate(360deg); }
     }
     
-    /* 強化された3Dアニメーション */
+    /* 強化された3Dアニメーション - CSS のみ */
     @keyframes enhanced3dFloat {
       0% { transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg); }
       25% { transform: translate3d(var(--tx1, 15px), var(--ty1, -15px), 50px) rotateX(5deg) rotateY(3deg); }
       50% { transform: translate3d(var(--tx2, 20px), var(--ty2, 10px), -30px) rotateX(-2deg) rotateY(5deg); }
       75% { transform: translate3d(var(--tx3, 0px), var(--ty3, 20px), 20px) rotateX(4deg) rotateY(-2deg); }
       100% { transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg); }
-    }
-    
-    @keyframes parallaxShift {
-      0% { transform: translate3d(0, 0, 0); }
-      25% { transform: translate3d(var(--shift-x, -10px), var(--shift-y, 5px), var(--shift-z, 0)); }
-      50% { transform: translate3d(calc(var(--shift-x, -10px) * -0.5), calc(var(--shift-y, 5px) * -1), calc(var(--shift-z, 0) * -1)); }
-      75% { transform: translate3d(calc(var(--shift-x, -10px) * 0.7), calc(var(--shift-y, 5px) * 0.3), calc(var(--shift-z, 0) * 0.5)); }
-      100% { transform: translate3d(0, 0, 0); }
-    }
-    
-    @keyframes depthRotation {
-      0% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0); }
-      25% { transform: perspective(1000px) rotateX(5deg) rotateY(3deg) translateZ(50px); }
-      50% { transform: perspective(1000px) rotateX(-3deg) rotateY(-5deg) translateZ(-20px); }
-      75% { transform: perspective(1000px) rotateX(-5deg) rotateY(2deg) translateZ(20px); }
-      100% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0); }
     }
     
     /* 3D変換とパースペクティブ */
@@ -262,27 +373,22 @@
       height: 100%;
       transform-style: preserve-3d;
       will-change: transform;
+      animation: css3dFloat 20s ease-in-out infinite;
     }
     
     .parallax-layer-1 {
-      animation: parallaxShift 25s ease-in-out infinite;
-      --shift-x: -20px;
-      --shift-y: 10px;
-      --shift-z: 50px;
+      animation-duration: 25s;
+      animation-delay: -5s;
     }
     
     .parallax-layer-2 {
-      animation: parallaxShift 20s ease-in-out infinite;
-      --shift-x: 15px;
-      --shift-y: -15px;
-      --shift-z: -20px;
+      animation-duration: 20s;
+      animation-delay: -2s;
     }
     
     .parallax-layer-3 {
-      animation: parallaxShift 30s ease-in-out infinite;
-      --shift-x: -10px;
-      --shift-y: -20px;
-      --shift-z: 30px;
+      animation-duration: 30s;
+      animation-delay: -8s;
     }
     
     .fluid-layer {
@@ -297,18 +403,23 @@
     }
     
     .fluid-layer-1 {
-      animation: fluidMove1 20s ease-in-out infinite, colorShift 25s linear infinite, depthRotation 35s ease-in-out infinite;
+      animation: fluidMove1 20s ease-in-out infinite, colorShift 25s linear infinite;
       transform: translateZ(30px);
     }
     
     .fluid-layer-2 {
-      animation: fluidMove2 25s ease-in-out infinite, colorShift 35s linear infinite reverse, depthRotation 40s ease-in-out infinite reverse;
+      animation: fluidMove2 25s ease-in-out infinite, colorShift 35s linear infinite reverse;
       transform: translateZ(0px);
     }
     
     .fluid-layer-3 {
-      animation: fluidMove3 22s ease-in-out infinite, colorShift 30s linear infinite, depthRotation 45s ease-in-out infinite;
+      animation: fluidMove3 22s ease-in-out infinite, colorShift 30s linear infinite;
       transform: translateZ(-30px);
+    }
+
+    /* 拡張した下部の波アニメーション */
+    .extended-wave {
+      animation: fluidMove2 30s ease-in-out infinite, waveMotion 15s ease-in-out infinite;
     }
     
     .quantum-particle {
@@ -333,7 +444,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      animation: waveMotion 8s ease-in-out infinite, depthRotation 30s ease-in-out infinite;
+      animation: waveMotion 8s ease-in-out infinite, css3dRotate 30s ease-in-out infinite;
       opacity: 0.2;
       transform-style: preserve-3d;
     }
@@ -343,7 +454,7 @@
       border-radius: 50%;
       background: radial-gradient(circle, rgba(65,105,225,0.7) 0%, rgba(65,105,225,0) 70%);
       mix-blend-mode: screen;
-      animation: dimensionShift 20s linear infinite, depthRotation 40s ease-in-out infinite;
+      animation: dimensionShift 20s linear infinite, css3dRotate 40s ease-in-out infinite;
       filter: url(#dimensionalInterference);
       transform-style: preserve-3d;
       will-change: transform;
@@ -377,6 +488,7 @@
       transform: translateZ(100px);
       will-change: transform;
       pointer-events: none;
+      animation: css3dFloat 15s ease-in-out infinite;
     }
     
     .midground-layer {
@@ -386,6 +498,7 @@
       transform: translateZ(0);
       will-change: transform;
       pointer-events: none;
+      animation: css3dFloat 25s ease-in-out infinite reverse;
     }
     
     .background-layer {
@@ -395,13 +508,14 @@
       transform: translateZ(-100px);
       will-change: transform;
       pointer-events: none;
+      animation: css3dFloat 35s ease-in-out infinite;
     }
     
-    /* 3D立体形状 */
+    /* 3D立体形状 - CSSアニメーションのみ */
     .shape3d {
       position: absolute;
       transform-style: preserve-3d;
-      animation: depthRotation 30s ease-in-out infinite;
+      animation: css3dRotate 30s ease-in-out infinite;
       opacity: 0.15;
       mix-blend-mode: screen;
     }
@@ -442,6 +556,26 @@
     .cube-bottom {
       transform: rotateX(-90deg) translateZ(50px);
     }
+
+    /* コンテンツの背景 */
+    .content-section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .content-section:before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background-color: rgba(10, 20, 50, 0.25);
+      border-radius: 12px;
+      backdrop-filter: blur(0.5px);
+      -webkit-backdrop-filter: blur(0.5px);
+      z-index: -1;
+    }
   ]]></style>
 
   <!-- 背景レイヤー -->
@@ -463,13 +597,18 @@
   <!-- 流体力学シミュレーションレイヤー -->
   <g class="perspective-container">
     <!-- 背景流体レイヤー -->
-    <path class="fluid-layer fluid-layer-3" d="M0,500 C200,450 300,550 500,500 S700,450 900,500 S1100,550 1300,500 V800 H0 Z" fill="url(#fluidGradient3)" opacity="0.4" filter="url(#lightRefraction)"/>
+    <path class="fluid-layer fluid-layer-3" d="M0,500 C200,450 300,550 500,500 S700,450 900,500 S1100,550 1300,500 V1500 H0 Z" fill="url(#fluidGradient3)" opacity="0.4" filter="url(#lightRefraction)"/>
     
     <!-- 中間流体レイヤー -->
-    <path class="fluid-layer fluid-layer-2" d="M0,400 C150,350 250,450 400,400 S550,350 700,400 S850,450 1000,400 V700 H0 Z" fill="url(#fluidGradient2)" opacity="0.5" filter="url(#lightRefraction)"/>
+    <path class="fluid-layer fluid-layer-2" d="M0,400 C150,350 250,450 400,400 S550,350 700,400 S850,450 1000,400 V1500 H0 Z" fill="url(#fluidGradient2)" opacity="0.5" filter="url(#lightRefraction)"/>
     
     <!-- 前景流体レイヤー -->
-    <path class="fluid-layer fluid-layer-1" d="M0,300 C100,250 200,350 300,300 S400,250 500,300 S600,350 700,300 S800,250 900,300 V600 H0 Z" fill="url(#fluidGradient1)" opacity="0.6" filter="url(#enhanced3dDepth)"/>
+    <path class="fluid-layer fluid-layer-1" d="M0,300 C100,250 200,350 300,300 S400,250 500,300 S600,350 700,300 S800,250 900,300 V1500 H0 Z" fill="url(#fluidGradient1)" opacity="0.6" filter="url(#enhanced3dDepth)"/>
+
+    <!-- 下部まで広がる追加の波 -->
+    <path class="extended-wave" d="M0,800 C150,750 300,850 450,800 S600,750 750,800 S900,850 1050,800 V1500 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.4" filter="url(#lightRefraction)"/>
+    <path class="extended-wave" d="M0,1000 C200,950 400,1050 600,1000 S800,950 1000,1000 S1200,1050 1400,1000 V1500 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.3" filter="url(#lightRefraction)"/>
+    <path class="extended-wave" d="M0,1200 C250,1150 500,1250 750,1200 S1000,1150 1250,1200 S1500,1250 1750,1200 V1500 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.2" filter="url(#lightRefraction)"/>
     
     <!-- 3Dキューブオブジェクト -->
     <g class="shape3d cube3d" style="left: 150px; top: 250px;">
@@ -520,435 +659,6 @@
     <circle class="dimension-portal" cx="600" cy="1300" r="100" opacity="0.1" filter="url(#enhanced3dDepth)"/>
   </g>
 
-  <!-- 高度なJavaScriptアニメーション -->
-  <script type="text/javascript"><![CDATA[
-    (function() {
-      // requestAnimationFrameのポリフィル
-      const requestAnimFrame = window.requestAnimationFrame || 
-                              window.webkitRequestAnimationFrame || 
-                              window.mozRequestAnimationFrame || 
-                              function(callback) { window.setTimeout(callback, 1000/60); };
-      
-      // マウスポジショントラッキング
-      let mouseX = 0;
-      let mouseY = 0;
-      let windowWidth = window.innerWidth || document.documentElement.clientWidth;
-      let windowHeight = window.innerHeight || document.documentElement.clientHeight;
-      
-      // マウス移動イベントリスナー
-      document.addEventListener('mousemove', function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        updateParallaxEffect();
-      });
-      
-      // リサイズイベントリスナー
-      window.addEventListener('resize', function() {
-        windowWidth = window.innerWidth || document.documentElement.clientWidth;
-        windowHeight = window.innerHeight || document.documentElement.clientHeight;
-      });
-      
-      // パララックス効果の更新
-      function updateParallaxEffect() {
-        const parallaxLayers = document.querySelectorAll('.parallax-layer');
-        
-        // マウス位置を正規化（-1 から 1 の範囲）
-        const normalizedX = (mouseX / windowWidth) * 2 - 1;
-        const normalizedY = (mouseY / windowHeight) * 2 - 1;
-        
-        parallaxLayers.forEach((layer, index) => {
-          // 各レイヤーに異なる強度のパララックス効果を適用
-          const depthFactor = 0.05 * (index + 1);
-          const moveX = normalizedX * 50 * depthFactor;
-          const moveY = normalizedY * 50 * depthFactor;
-          
-          // 3D変換を適用
-          layer.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
-        });
-        
-        // 3Dキューブと量子パーティクルのマウス追従回転
-        const shapes = document.querySelectorAll('.shape3d');
-        shapes.forEach((shape) => {
-          shape.style.transform = `rotateY(${normalizedX * 20}deg) rotateX(${normalizedY * -20}deg)`;
-        });
-        
-        // 量子パーティクルも若干マウスに反応させる
-        const particles = document.querySelectorAll('.quantum-particle');
-        particles.forEach((particle) => {
-          const randomOffset = Math.random() * 5;
-          particle.style.transform = `translate3d(${normalizedX * 10 + randomOffset}px, ${normalizedY * 10 + randomOffset}px, 0)`;
-        });
-      }
-      
-      // キャンバス作成関数
-      function createCanvas(width, height) {
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        canvas.style.position = 'absolute';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-        canvas.style.pointerEvents = 'none';
-        canvas.style.zIndex = '-1';
-        canvas.style.opacity = '0.3';
-        canvas.style.mixBlendMode = 'screen';
-        document.querySelector('body').appendChild(canvas);
-        return canvas;
-      }
-      
-      // 流体シミュレーション
-      class FluidSimulation {
-        constructor(width, height) {
-          this.canvas = createCanvas(width, height);
-          this.ctx = this.canvas.getContext('2d');
-          this.width = width;
-          this.height = height;
-          this.particles = [];
-          this.flowField = [];
-          this.mouseInfluence = { x: 0, y: 0, active: false, strength: 100 };
-          this.init();
-          
-          // マウス影響のイベントリスナー
-          document.addEventListener('mousemove', this.handleMouseMove.bind(this));
-          document.addEventListener('mousedown', () => { this.mouseInfluence.active = true; });
-          document.addEventListener('mouseup', () => { this.mouseInfluence.active = false; });
-        }
-        
-        handleMouseMove(e) {
-          // キャンバス内の相対座標に変換
-          const rect = this.canvas.getBoundingClientRect();
-          this.mouseInfluence.x = (e.clientX - rect.left) * (this.width / rect.width);
-          this.mouseInfluence.y = (e.clientY - rect.top) * (this.height / rect.height);
-        }
-        
-        init() {
-          // 流体場の初期化 - より細かく
-          for (let y = 0; y < this.height; y += 15) {
-            for (let x = 0; x < this.width; x += 15) {
-              this.flowField.push({
-                x: x,
-                y: y,
-                angle: Math.random() * Math.PI * 2,
-                strength: Math.random() * 0.5 + 0.1,
-                z: Math.random() * 200 - 100 // Z座標を追加
-              });
-            }
-          }
-          
-          // パーティクルの初期化 - より多く、3D属性を追加
-          for (let i = 0; i < 150; i++) {
-            this.particles.push({
-              x: Math.random() * this.width,
-              y: Math.random() * this.height,
-              z: Math.random() * 200 - 100, // Z座標（奥行き）
-              size: Math.random() * 3 + 1,
-              speedX: 0,
-              speedY: 0,
-              speedZ: 0, // Z方向の速度
-              color: `hsla(${Math.random() * 60 + 200}, 100%, 70%, 0.3)`
-            });
-          }
-          
-          this.animate();
-        }
-        
-        // 最も近い流体場のインデックスを取得
-        getClosestFlowField(x, y, z) {
-          let closestIndex = 0;
-          let closestDist = Number.MAX_VALUE;
-          
-          for (let i = 0; i < this.flowField.length; i++) {
-            const field = this.flowField[i];
-            const dx = field.x - x;
-            const dy = field.y - y;
-            const dz = field.z - z;
-            const dist = dx * dx + dy * dy + dz * dz; // 3D距離
-            
-            if (dist < closestDist) {
-              closestDist = dist;
-              closestIndex = i;
-            }
-          }
-          
-          return this.flowField[closestIndex];
-        }
-        
-        // パーティクルの更新
-        updateParticles() {
-          for (let i = 0; i < this.particles.length; i++) {
-            const p = this.particles[i];
-            
-            // 最も近い流体場を取得
-            const field = this.getClosestFlowField(p.x, p.y, p.z);
-            
-            // 流体場に基づいて速度を更新
-            p.speedX += Math.cos(field.angle) * field.strength;
-            p.speedY += Math.sin(field.angle) * field.strength;
-            p.speedZ += (Math.sin(field.angle + Math.PI/4) * field.strength) * 0.3; // Z方向の動きを追加
-            
-            // マウスの影響（3D空間での吸引または反発）
-            if (this.mouseInfluence.active) {
-              const dx = this.mouseInfluence.x - p.x;
-              const dy = this.mouseInfluence.y - p.y;
-              const dist = Math.sqrt(dx * dx + dy * dy);
-              
-              if (dist < this.mouseInfluence.strength) {
-                const force = (this.mouseInfluence.strength - dist) / this.mouseInfluence.strength;
-                p.speedX += dx * force * 0.02;
-                p.speedY += dy * force * 0.02;
-                p.speedZ += Math.sin(Date.now() * 0.001) * force * 0.01; // Z方向にも影響
-              }
-            }
-            
-            // 速度の減衰
-            p.speedX *= 0.95;
-            p.speedY *= 0.95;
-            p.speedZ *= 0.97; // Z方向はより緩やかに減衰
-            
-            // 位置の更新
-            p.x += p.speedX;
-            p.y += p.speedY;
-            p.z += p.speedZ;
-            
-            // 画面外に出た場合の処理（3D空間）
-            if (p.x < 0) p.x = this.width;
-            if (p.x > this.width) p.x = 0;
-            if (p.y < 0) p.y = this.height;
-            if (p.y > this.height) p.y = 0;
-            if (p.z < -100) p.z = 100;
-            if (p.z > 100) p.z = -100;
-          }
-        }
-        
-        // 流体場の更新
-        updateFlowField() {
-          const time = Date.now() * 0.001;
-          
-          for (let i = 0; i < this.flowField.length; i++) {
-            const field = this.flowField[i];
-            // より複雑な時間変動パターン
-            field.angle = (Math.sin(time * 0.1 + field.x * 0.01 + field.z * 0.005) + 
-                         Math.cos(time * 0.15 + field.y * 0.01 - field.z * 0.003)) * Math.PI;
-            field.strength = (Math.sin(time * 0.2 + field.x * 0.005 + field.y * 0.005 + field.z * 0.002) + 1) * 0.3 + 0.1;
-            
-            // Z座標も時間とともに変動
-            field.z += Math.sin(time * 0.05 + i * 0.01) * 0.5;
-            if (field.z < -100) field.z = 100;
-            if (field.z > 100) field.z = -100;
-          }
-        }
-        
-        // 描画
-        draw() {
-          this.ctx.clearRect(0, 0, this.width, this.height);
-          
-          // パーティクルの描画（Z座標による大きさと透明度の変更）
-          for (let i = 0; i < this.particles.length; i++) {
-            const p = this.particles[i];
-            
-            // Z座標に基づく奥行き表現
-            const scale = 1000 / (1000 + p.z * 2); // 奥行きに基づくスケーリング
-            const size = p.size * scale * 3;
-            const x = p.x;
-            const y = p.y;
-            const alpha = (p.z + 100) / 200 * 0.6 + 0.2; // Z座標に基づく透明度
-            
-            // 立体感のある描画
-            this.ctx.beginPath();
-            const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, size);
-            gradient.addColorStop(0, p.color.replace('0.3', alpha.toFixed(2)));
-            gradient.addColorStop(1, 'transparent');
-            this.ctx.fillStyle = gradient;
-            this.ctx.arc(x, y, size, 0, Math.PI * 2);
-            this.ctx.fill();
-            
-            // 光の効果（ハイライト）
-            this.ctx.beginPath();
-            const highlightSize = size * 0.3;
-            const highlightGradient = this.ctx.createRadialGradient(
-              x - size * 0.2, y - size * 0.2, 0,
-              x - size * 0.2, y - size * 0.2, highlightSize
-            );
-            highlightGradient.addColorStop(0, `rgba(255, 255, 255, ${alpha * 0.8})`);
-            highlightGradient.addColorStop(1, 'transparent');
-            this.ctx.fillStyle = highlightGradient;
-            this.ctx.arc(x - size * 0.2, y - size * 0.2, highlightSize, 0, Math.PI * 2);
-            this.ctx.fill();
-          }
-          
-          // 3D空間内のパーティクル間の接続線
-          this.ctx.strokeStyle = 'rgba(100, 150, 255, 0.05)';
-          this.ctx.lineWidth = 0.5;
-          
-          for (let i = 0; i < this.particles.length; i++) {
-            const p1 = this.particles[i];
-            
-            for (let j = i + 1; j < this.particles.length; j++) {
-              const p2 = this.particles[j];
-              const dx = p1.x - p2.x;
-              const dy = p1.y - p2.y;
-              const dz = p1.z - p2.z; // Z座標の差も考慮
-              const dist = Math.sqrt(dx * dx + dy * dy);
-              const dist3d = Math.sqrt(dx * dx + dy * dy + dz * dz); // 3D距離
-              
-              // 3D空間で近い場合のみ線を描画
-              if (dist3d < 120) {
-                const alpha = (1 - dist3d / 120) * 0.1;
-                
-                this.ctx.beginPath();
-                this.ctx.moveTo(p1.x, p1.y);
-                this.ctx.lineTo(p2.x, p2.y);
-                this.ctx.globalAlpha = alpha;
-                this.ctx.stroke();
-              }
-            }
-          }
-          
-          this.ctx.globalAlpha = 1;
-        }
-        
-        // アニメーションループ
-        animate() {
-          this.updateFlowField();
-          this.updateParticles();
-          this.draw();
-          
-          requestAnimFrame(() => this.animate());
-        }
-      }
-      
-      // 量子波動効果の強化クラス
-      class EnhancedQuantumWaveEffect extends QuantumWaveEffect {
-        constructor(width, height) {
-          super(width, height);
-          this.zOffset = 0; // Z軸のオフセット（奥行き）
-          this.mouseInfluence = { x: 0, y: 0, active: false };
-          
-          // マウス影響のイベントリスナー
-          document.addEventListener('mousemove', this.handleMouseMove.bind(this));
-        }
-        
-        handleMouseMove(e) {
-          const rect = this.canvas.getBoundingClientRect();
-          this.mouseInfluence.x = (e.clientX - rect.left) * (this.width / rect.width);
-          this.mouseInfluence.y = (e.clientY - rect.top) * (this.height / rect.height);
-        }
-        
-        // 波の高さを計算（3D効果を強化）
-        getWaveHeight(x, y, time) {
-          let height = 0;
-          
-          for (let i = 0; i < this.waves.length; i++) {
-            const wave = this.waves[i];
-            // より複雑な3Dのような波動パターン
-            const angle = (x / wave.wavelength + y / (wave.wavelength * 2) + time * wave.speed + wave.phase);
-            height += Math.sin(angle) * wave.amplitude;
-            
-            // Z軸の変動も追加
-            this.zOffset = Math.sin(time * 0.2) * 50;
-          }
-          
-          // マウス位置による波の歪み
-          const dx = x - this.mouseInfluence.x;
-          const dy = y - this.mouseInfluence.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          
-          if (dist < 150) {
-            height += (150 - dist) / 10 * Math.sin(time * 5);
-          }
-          
-          return height;
-        }
-        
-        // 描画メソッドのオーバーライド
-        draw() {
-          const time = Date.now() * 0.001;
-          this.ctx.clearRect(0, 0, this.width, this.height);
-          
-          // より洗練されたグラデーション
-          const gradient = this.ctx.createLinearGradient(0, 0, this.width, this.height);
-          gradient.addColorStop(0, 'rgba(30, 64, 175, 0.08)');
-          gradient.addColorStop(0.3, 'rgba(37, 99, 235, 0.1)');
-          gradient.addColorStop(0.7, 'rgba(59, 130, 246, 0.08)');
-          gradient.addColorStop(1, 'rgba(30, 58, 138, 0.06)');
-          
-          this.ctx.fillStyle = gradient;
-          
-          // 3D効果のある波の描画
-          this.ctx.beginPath();
-          this.ctx.moveTo(0, this.height / 2);
-          
-          // 波の密度を上げて滑らかに
-          for (let x = 0; x < this.width; x += 3) {
-            const y = this.height / 2 + this.getWaveHeight(x, 0, time);
-            this.ctx.lineTo(x, y);
-          }
-          
-          this.ctx.lineTo(this.width, this.height);
-          this.ctx.lineTo(0, this.height);
-          this.ctx.closePath();
-          this.ctx.fill();
-          
-          // 複数の層による3D感の強化
-          for (let layer = 1; layer <= 3; layer++) {
-            const layerOffset = layer * 40;
-            const alpha = 0.05 - layer * 0.01;
-            
-            this.ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-            this.ctx.lineWidth = 1;
-            
-            // 各レイヤーの波線
-            for (let y = 0; y < this.height; y += 40) {
-              this.ctx.beginPath();
-              
-              for (let x = 0; x < this.width; x += 3) {
-                const waveHeight = this.getWaveHeight(x, y + layerOffset, time + layer * 0.2) * 0.3;
-                const yPos = y + waveHeight + this.zOffset / layer;
-                
-                if (x === 0) {
-                  this.ctx.moveTo(x, yPos);
-                } else {
-                  this.ctx.lineTo(x, yPos);
-                }
-              }
-              
-              this.ctx.stroke();
-            }
-          }
-        }
-      }
-      
-      // 既存の3D空間歪み効果クラス
-      // ... existing code ...
-      
-      // 効果の初期化
-      function initEffects() {
-        // ウィンドウサイズの取得
-        const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        const height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-        
-        // 各効果の初期化
-        setTimeout(() => {
-          new FluidSimulation(width, height);
-          new EnhancedQuantumWaveEffect(width, height);
-          new SpaceDistortionEffect(width, height);
-          
-          // マウスパララックス効果の初期セットアップ
-          setInterval(updateParallaxEffect, 1000/30); // 30fps更新
-        }, 100);
-      }
-      
-      // DOMContentLoadedイベントで初期化
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initEffects);
-      } else {
-        initEffects();
-      }
-    })();
-  ]]></script>
-
   <foreignObject x="0" y="0" width="800" height="1500">
     <body xmlns="http://www.w3.org/1999/xhtml">
       <!-- ウェルカム見出し -->
@@ -958,80 +668,90 @@
       </h1>
 
       <!-- About Me -->
-      <h2>👨‍💻 About Me</h2>
-      <ul>
-        <li>🧑‍💻 Full Stack Engineer with a passion for creating user-friendly applications</li>
-        <li>🚀 Currently focusing on cloud-native architecture and microservices</li>
-        <li>🔭 Working on building innovative services and solutions</li>
-        <li>🌱 Learning more about AI/ML integration in web applications</li>
-        <li>💡 Interested in open source contribution and community projects</li>
-      </ul>
+      <section class="content-section">
+        <h2>👨‍💻 About Me</h2>
+        <ul>
+          <li>🧑‍💻 Full Stack Engineer with a passion for creating user-friendly applications</li>
+          <li>🚀 Currently focusing on cloud-native architecture and microservices</li>
+          <li>🔭 Working on building innovative services and solutions</li>
+          <li>🌱 Learning more about AI/ML integration in web applications</li>
+          <li>💡 Interested in open source contribution and community projects</li>
+        </ul>
+      </section>
 
       <!-- Skills and Technologies -->
-      <h2>🛠️ Skills and Technologies</h2>
+      <section class="content-section">
+        <h2>🛠️ Skills and Technologies</h2>
 
-      <h3>Frontend</h3>
-      <p class="badge-row">
-        <img id="react-img" alt="React" src="{{REACT_URL}}"/>
-        <img id="nextjs-img" alt="Next.js" src="{{NEXTJS_URL}}"/>
-        <img id="typescript-img" alt="TypeScript" src="{{TYPESCRIPT_URL}}"/>
-        <img id="javascript-img" alt="JavaScript" src="{{JAVASCRIPT_URL}}"/>
-        <img id="threejs-img" alt="Three.js" src="{{THREEJS_URL}}"/>
-        <img id="tailwind-img" alt="Tailwind CSS" src="{{TAILWIND_URL}}"/>
-        <img id="materialui-img" alt="Material UI" src="{{MATERIALUI_URL}}"/>
-        <img id="astro-img" alt="Astro" src="{{ASTRO_URL}}"/>
-      </p>
+        <h3>Frontend</h3>
+        <p class="badge-row">
+          <img id="react-img" alt="React" src="{{REACT_URL}}"/>
+          <img id="nextjs-img" alt="Next.js" src="{{NEXTJS_URL}}"/>
+          <img id="typescript-img" alt="TypeScript" src="{{TYPESCRIPT_URL}}"/>
+          <img id="javascript-img" alt="JavaScript" src="{{JAVASCRIPT_URL}}"/>
+          <img id="threejs-img" alt="Three.js" src="{{THREEJS_URL}}"/>
+          <img id="tailwind-img" alt="Tailwind CSS" src="{{TAILWIND_URL}}"/>
+          <img id="materialui-img" alt="Material UI" src="{{MATERIALUI_URL}}"/>
+          <img id="astro-img" alt="Astro" src="{{ASTRO_URL}}"/>
+        </p>
 
-      <h3>Backend and Infrastructure</h3>
-      <p class="badge-row">
-        <img id="nodejs-img" alt="Node.js" src="{{NODEJS_URL}}"/>
-        <img id="go-img" alt="Go" src="{{GO_URL}}"/>
-        <img id="python-img" alt="Python" src="{{PYTHON_URL}}"/>
-        <img id="csharp-img" alt="C#" src="{{CSHARP_URL}}"/>
-        <img id="dotnet-img" alt=".NET" src="{{DOTNET_URL}}"/>
-        <img id="docker-img" alt="Docker" src="{{DOCKER_URL}}"/>
-        <img id="kubernetes-img" alt="Kubernetes" src="{{KUBERNETES_URL}}"/>
-        <img id="graphql-img" alt="GraphQL" src="{{GRAPHQL_URL}}"/>
-        <img id="postgresql-img" alt="PostgreSQL" src="{{POSTGRESQL_URL}}"/>
-      </p>
+        <h3>Backend and Infrastructure</h3>
+        <p class="badge-row">
+          <img id="nodejs-img" alt="Node.js" src="{{NODEJS_URL}}"/>
+          <img id="go-img" alt="Go" src="{{GO_URL}}"/>
+          <img id="python-img" alt="Python" src="{{PYTHON_URL}}"/>
+          <img id="csharp-img" alt="C#" src="{{CSHARP_URL}}"/>
+          <img id="dotnet-img" alt=".NET" src="{{DOTNET_URL}}"/>
+          <img id="docker-img" alt="Docker" src="{{DOCKER_URL}}"/>
+          <img id="kubernetes-img" alt="Kubernetes" src="{{KUBERNETES_URL}}"/>
+          <img id="graphql-img" alt="GraphQL" src="{{GRAPHQL_URL}}"/>
+          <img id="postgresql-img" alt="PostgreSQL" src="{{POSTGRESQL_URL}}"/>
+        </p>
 
-      <!-- Cloud and DevOps -->
-      <h3>Cloud and DevOps</h3>
-      <p class="badge-row">
-        <img id="aws-img" alt="AWS" src="{{AWS_URL}}"/>
-        <img id="azure-img" alt="Azure" src="{{AZURE_URL}}"/>
-        <img id="gcp-img" alt="GCP" src="{{GCP_URL}}"/>
-        <img id="github-actions-img" alt="GitHub Actions" src="{{GITHUB_ACTIONS_URL}}"/>
-        <img id="vercel-img" alt="Vercel" src="{{VERCEL_URL}}"/>
-        <img id="firebase-img" alt="Firebase" src="{{FIREBASE_URL}}"/>
-        <img id="supabase-img" alt="Supabase" src="{{SUPABASE_URL}}"/>
-        <img id="cloudflare-img" alt="Cloudflare" src="{{CLOUDFLARE_URL}}"/>
-      </p>
+        <!-- Cloud and DevOps -->
+        <h3>Cloud and DevOps</h3>
+        <p class="badge-row">
+          <img id="aws-img" alt="AWS" src="{{AWS_URL}}"/>
+          <img id="azure-img" alt="Azure" src="{{AZURE_URL}}"/>
+          <img id="gcp-img" alt="GCP" src="{{GCP_URL}}"/>
+          <img id="github-actions-img" alt="GitHub Actions" src="{{GITHUB_ACTIONS_URL}}"/>
+          <img id="vercel-img" alt="Vercel" src="{{VERCEL_URL}}"/>
+          <img id="firebase-img" alt="Firebase" src="{{FIREBASE_URL}}"/>
+          <img id="supabase-img" alt="Supabase" src="{{SUPABASE_URL}}"/>
+          <img id="cloudflare-img" alt="Cloudflare" src="{{CLOUDFLARE_URL}}"/>
+        </p>
+      </section>
 
       <!-- Featured Projects -->
-      <h2>📂 Featured Projects</h2>
-      <p>Coming soon…</p>
+      <section class="content-section">
+        <h2>📂 Featured Projects</h2>
+        <p>Coming soon…</p>
+      </section>
 
       <!-- GitHub Stats -->
-      <h2>📊 GitHub Stats</h2>
-      <div class="center flex-center stats-section">
-        <img id="github-stats-img" alt="GitHub Stats" class="stats-card" src="{{GITHUB_STATS_URL}}"/>
-        <img id="top-langs-img" alt="Top Languages" class="stats-card" src="{{TOP_LANGUAGES_URL}}"/>
-      </div>
-      <div class="center stats-section">
-        <img id="streak-stats-img" alt="GitHub Streak Stats" src="{{STREAK_STATS_URL}}"/>
-      </div>
+      <section class="content-section">
+        <h2>📊 GitHub Stats</h2>
+        <div class="center flex-center stats-section">
+          <img id="github-stats-img" alt="GitHub Stats" class="stats-card" src="{{GITHUB_STATS_URL}}"/>
+          <img id="top-langs-img" alt="Top Languages" class="stats-card" src="{{TOP_LANGUAGES_URL}}"/>
+        </div>
+        <div class="center stats-section">
+          <img id="streak-stats-img" alt="GitHub Streak Stats" src="{{STREAK_STATS_URL}}"/>
+        </div>
+      </section>
 
       <!-- Connect with Me -->
-      <h2>📫 Connect with Me</h2>
-      <div class="center">
-        <a href="https://twitter.com/fab_for_fab">
-          <img id="twitter-img" alt="Twitter" src="{{TWITTER_URL}}"/>
-        </a>
-        <a href="https://github.com/0xfab0131">
-          <img id="github-img" alt="GitHub" src="{{GITHUB_URL}}"/>
-        </a>
-      </div>
+      <section class="content-section">
+        <h2>📫 Connect with Me</h2>
+        <div class="center">
+          <a href="https://twitter.com/fab_for_fab">
+            <img id="twitter-img" alt="Twitter" src="{{TWITTER_URL}}"/>
+          </a>
+          <a href="https://github.com/0xfab0131">
+            <img id="github-img" alt="GitHub" src="{{GITHUB_URL}}"/>
+          </a>
+        </div>
+      </section>
     </body>
   </foreignObject>
 </svg>
