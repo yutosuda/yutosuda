@@ -778,7 +778,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">0xfab's GitHub Stats, Rank: B+</title>
-        <desc id="descId">Total Stars Earned: 3, Total Commits  : 2138, Total PRs: 451, Total Issues: 42, Contributed to (last year): 23</desc>
+        <desc id="descId">Total Stars Earned: 3, Total Commits  : 2125, Total PRs: 451, Total Issues: 42, Contributed to (last year): 23</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -842,7 +842,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 121.02238936978112;
+        stroke-dashoffset: 121.1085310733348;
       }
     }
   
@@ -1131,7 +1131,7 @@
           data-testid="lang-progress"
           x="0"
           y="0"
-          width="107.68"
+          width="107.56"
           height="8"
           fill="#f1e05a"
         />
@@ -1139,9 +1139,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="107.68"
+          x="107.56"
           y="0"
-          width="53.35"
+          width="53.4"
           height="8"
           fill="#3178c6"
         />
@@ -1149,9 +1149,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="161.03"
+          x="160.96"
           y="0"
-          width="28.69"
+          width="28.71"
           height="8"
           fill="#178600"
         />
@@ -1159,9 +1159,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="189.72"
+          x="189.67000000000002"
           y="0"
-          width="16.34"
+          width="16.35"
           height="8"
           fill="#3572A5"
         />
@@ -1169,9 +1169,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="206.06"
+          x="206.02"
           y="0"
-          width="13.74"
+          width="13.75"
           height="8"
           fill="#3D6117"
         />
@@ -1179,9 +1179,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="219.8"
+          x="219.77"
           y="0"
-          width="13.63"
+          width="13.64"
           height="8"
           fill="#555555"
         />
@@ -1189,9 +1189,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="233.43"
+          x="233.41000000000003"
           y="0"
-          width="18.560000000000002"
+          width="18.57"
           height="8"
           fill="#00ADD8"
         />
@@ -1199,7 +1199,7 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="241.99"
+          x="241.98000000000002"
           y="0"
           width="18.009999999999998"
           height="8"
@@ -1212,21 +1212,21 @@
     <g class="stagger" style="animation-delay: 450ms">
       <circle cx="5" cy="6" r="5" fill="#f1e05a" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        JavaScript 43.07%
+        JavaScript 43.02%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
       <circle cx="5" cy="6" r="5" fill="#3178c6" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        TypeScript 21.34%
+        TypeScript 21.36%
       </text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms">
       <circle cx="5" cy="6" r="5" fill="#178600" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        C# 11.48%
+        C# 11.49%
       </text>
     </g>
   </g><g transform="translate(0, 75)">
@@ -1247,7 +1247,7 @@
     <g class="stagger" style="animation-delay: 600ms">
       <circle cx="5" cy="6" r="5" fill="#555555" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        C 5.45%
+        C 5.46%
       </text>
     </g>
   </g><g transform="translate(0, 50)">
@@ -1261,7 +1261,7 @@
     <g class="stagger" style="animation-delay: 900ms">
       <circle cx="5" cy="6" r="5" fill="#89e051" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Shell 3.20%
+        Shell 3.21%
       </text>
     </g>
   </g></g>
@@ -1393,7 +1393,7 @@
       <section class="content-section">
         <h2>📫 Connect with Me</h2>
         <div class="center">
-          <a href="https://twitter.com/fab_for_fab">
+          <a href="https://x.com/fab_for_fab">
             <img id="twitter-img" alt="Twitter" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4My43NSIgaGVpZ2h0PSIyOCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJUV0lUVEVSIj48dGl0bGU+VFdJVFRFUjwvdGl0bGU+PGcgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48cmVjdCB3aWR0aD0iODMuNzUiIGhlaWdodD0iMjgiIGZpbGw9IiMxZGExZjIiLz48L2c+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IlZlcmRhbmEsR2VuZXZhLERlamFWdSBTYW5zLHNhbnMtc2VyaWYiIHRleHQtcmVuZGVyaW5nPSJnZW9tZXRyaWNQcmVjaXNpb24iIGZvbnQtc2l6ZT0iMTAwIj48dGV4dCB0cmFuc2Zvcm09InNjYWxlKC4xKSIgeD0iNDE4Ljc1IiB5PSIxNzUiIHRleHRMZW5ndGg9IjU5Ny41IiBmaWxsPSIjZmZmIiBmb250LXdlaWdodD0iYm9sZCI+VFdJVFRFUjwvdGV4dD48L2c+PC9zdmc+"/>
           </a>
           <a href="https://github.com/0xfab0131">
