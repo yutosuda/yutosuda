@@ -6,7 +6,7 @@ on:
       - main # またはデプロイに使用するブランチ
     # Avoid triggering the workflow on commits made by the bot itself
     paths-ignore:
-      - "assets/interactive.svg"
+      - "assets/**"
   workflow_dispatch: # 手動実行も可能にする
 
 # Add permissions block here
