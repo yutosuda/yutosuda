@@ -63,22 +63,14 @@
   <foreignObject x="0" y="0" width="800" height="1500">
     <body xmlns="http://www.w3.org/1999/xhtml">
       <!-- JavaScriptブロックは削除 -->
-      
-      <!-- 1. プロフィールビュー・フォロワー -->
-      <div class="center">
-        <img id="profile-view-img" alt="Profile views" src="{{PROFILE_VIEWS_URL}}"/>
-        <a href="https://github.com/0xfab0131?tab=followers">
-          <img id="github-followers-img" alt="GitHub followers" src="{{GITHUB_FOLLOWERS_URL}}"/>
-        </a>
-      </div>
 
-      <!-- 2. ウェルカム見出し -->
+      <!-- ウェルカム見出し -->
       <h1 class="flex-center">
         <img id="welcome-gif" width="28" height="28" alt="Welcome GIF" src="{{WELCOME_GIF_URL}}"/>
         <span style="margin-left:8px;">Welcome to my profile!</span>
       </h1>
 
-      <!-- 3. About Me -->
+      <!-- About Me -->
       <h2>👨‍💻 About Me</h2>
       <ul>
         <li>🧑‍💻 Full Stack Engineer with a passion for creating user-friendly applications</li>
@@ -88,7 +80,7 @@
         <li>💡 Interested in open source contribution and community projects</li>
       </ul>
 
-      <!-- 4. Skills and Technologies -->
+      <!-- Skills and Technologies -->
       <h2>🛠️ Skills and Technologies</h2>
 
       <h3>Frontend</h3>
@@ -116,7 +108,7 @@
         <img id="postgresql-img" alt="PostgreSQL" src="{{POSTGRESQL_URL}}"/>
       </p>
 
-      <!-- 5. Cloud and DevOps -->
+      <!-- Cloud and DevOps -->
       <h3>Cloud and DevOps</h3>
       <p class="badge-row">
         <img id="aws-img" alt="AWS" src="{{AWS_URL}}"/>
@@ -129,11 +121,11 @@
         <img id="cloudflare-img" alt="Cloudflare" src="{{CLOUDFLARE_URL}}"/>
       </p>
 
-      <!-- 6. Featured Projects -->
+      <!-- Featured Projects -->
       <h2>📂 Featured Projects</h2>
       <p>Coming soon…</p>
 
-      <!-- 7. GitHub Stats -->
+      <!-- GitHub Stats -->
       <h2>📊 GitHub Stats</h2>
       <div class="center flex-center stats-section">
         <img id="github-stats-img" alt="GitHub Stats" class="stats-card" src="{{GITHUB_STATS_URL}}"/>
@@ -143,7 +135,7 @@
         <img id="streak-stats-img" alt="GitHub Streak Stats" src="{{STREAK_STATS_URL}}"/>
       </div>
 
-      <!-- 8. Connect with Me -->
+      <!-- Connect with Me -->
       <h2>📫 Connect with Me</h2>
       <div class="center">
         <a href="https://twitter.com/fab_for_fab">

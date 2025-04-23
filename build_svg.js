@@ -8,8 +8,6 @@ const outputPath = path.join(__dirname, "assets", "interactive.svg");
 // プレースホルダーとassetDictのキーのマッピング
 // (必要に応じて調整してください。プレースホルダー名をキーに合わせます)
 const placeholderMap = {
-  "{{PROFILE_VIEWS_URL}}": "profileViews",
-  "{{GITHUB_FOLLOWERS_URL}}": "githubFollowers",
   "{{WELCOME_GIF_URL}}": "welcomeGif",
   "{{REACT_URL}}": "react",
   "{{NEXTJS_URL}}": "nextjs",
@@ -59,6 +57,17 @@ function fetchImageAsDataUri(url) {
         { headers: { "User-Agent": "Node.js-Build-Script" } },
         (response) => {
           if (response.statusCode < 200 || response.statusCode >= 300) {
+            // Handle redirects
+            if (
+              response.statusCode >= 300 &&
+              response.statusCode < 400 &&
+              response.headers.location
+            ) {
+              console.log(`Redirecting to ${response.headers.location}`);
+              return fetchImageAsDataUri(response.headers.location)
+                .then(resolve)
+                .catch(reject);
+            }
             return reject(
               new Error(
                 `Failed to fetch ${url}: Status Code ${response.statusCode}`
