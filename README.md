@@ -10,15 +10,6 @@
 </div>
 
 <div align="center">
-  <img src="https://0xfab0131.github.io/0xfab0131/assets/interactive.svg" alt="Interactive Profile" width="800" />
-</div>
-
-<div align="center">
-  <img src="https://github-readme-streak-stats-rust-eta.vercel.app/?user=0xfab0131&theme=vue-dark" alt="Interactive Profile" width="800" />
-  https://github-readme-streak-stats-rust-eta.vercel.app/?user=0xfab0131&theme=vue-dark
-</div>
-
-<div align="center">
   <img src="https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=0xfab0131&theme=vue-dark&count_private=true&include_all_commits=true&rank_icon=github&show_icons=true" alt="Interactive Profile" width="800" />
   https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=0xfab0131&theme=vue-dark&count_private=true&include_all_commits=true&rank_icon=github&show_icons=true
 </div>
