@@ -19,10 +19,6 @@ jobs:
         with:
           node-version: "20" # 必要に応じてバージョンを調整
 
-      # package.json があれば依存関係をインストール
-      # - name: Install dependencies
-      #   run: npm ci
-
       - name: Build SVG
         run: node build_svg.js
 

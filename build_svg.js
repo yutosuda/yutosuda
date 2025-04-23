@@ -2,8 +2,8 @@ const fs = require("fs").promises;
 const path = require("path");
 const { assetDict } = require("./index.js"); // index.jsからassetDictをインポート
 // テンプレートファイルと出力ファイルのパス
-const templatePath = path.join(dirname, "assets", "interactive_template.svg");
-const outputPath = path.join(dirname, "assets", "interactive.svg");
+const templatePath = path.join(__dirname, "assets", "interactive_template.svg");
+const outputPath = path.join(__dirname, "assets", "interactive.svg");
 // プレースホルダーとassetDictのキーのマッピング
 // (必要に応じて調整してください。プレースホルダー名をキーに合わせます)
 const placeholderMap = {
@@ -41,6 +41,13 @@ const placeholderMap = {
   "{{TWITTER_URL}}": "twitter",
   "{{GITHUB_URL}}": "github",
 };
+
+// 文字列中の特殊文字をエスケープする関数
+function escapeRegExp(string) {
+  // $& はマッチした部分文字列全体を意味します
+  return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+}
+
 async function buildSvg() {
   try {
     // テンプレートファイルを読み込む
@@ -49,11 +56,9 @@ async function buildSvg() {
     for (const placeholder in placeholderMap) {
       const assetKey = placeholderMap[placeholder];
       const url = assetDict[assetKey] || ""; // 見つからない場合は空文字
-      // 正規表現でプレースホルダーを全て置換 (gフラグ)
-      const regex = new RegExp(
-        placeholder.replace(/[-\/\\^$+?.()|[\]{}]/g, "\\$&"),
-        "g"
-      );
+
+      // プレースホルダーの正規表現を作成（エスケープ処理を含む）
+      const regex = new RegExp(escapeRegExp(placeholder), "g");
       templateContent = templateContent.replace(regex, url);
     }
     // 完成したSVGを出力ファイルに書き込む
