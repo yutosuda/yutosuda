@@ -108,7 +108,15 @@ function fetchImageAsDataUri(url) {
               }
               // *** END: Content-Type Correction Logic ***
 
-              const base64 = buffer.toString("base64");
+              // *** START: UTF-8 Aware Base64 Encoding ***
+              // 1. Convert buffer to UTF-8 string first
+              const utf8String = buffer.toString("utf-8");
+              // 2. Encode the UTF-8 string to Base64
+              const base64 = Buffer.from(utf8String, "utf-8").toString(
+                "base64"
+              );
+              // *** END: UTF-8 Aware Base64 Encoding ***
+
               resolve(`data:${finalContentType};base64,${base64}`);
             } catch (e) {
               reject(
