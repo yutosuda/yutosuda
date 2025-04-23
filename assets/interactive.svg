@@ -1,275 +1,219 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap');
-    
-    :root {
-      --primary-color: #38bdf8;
-      --text-color: #e2e8f0;
-      --dark-bg: #0f172a;
-      --card-bg: #1e293b;
-      --hover-color: #60a5fa;
-    }
-    
-    * {
-      font-family: 'Space Grotesk', sans-serif;
-    }
-    
-    #bg {
-      fill: var(--dark-bg);
-    }
-    
-    .card {
-      fill: var(--card-bg);
-      rx: 10;
-      ry: 10;
-    }
-    
-    .text-primary {
-      fill: var(--primary-color);
-    }
-    
-    .text-default {
-      fill: var(--text-color);
-    }
-    
-    .tech-badge {
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    
-    .tech-badge:hover {
-      transform: translateY(-5px);
-    }
-    
-    .stats-title {
-      font-size: 16px;
-      font-weight: 600;
-    }
-    
-    .stats-value {
-      font-size: 24px;
-      font-weight: 700;
-    }
-    
-    .link-btn {
-      cursor: pointer;
-      transition: fill 0.3s ease;
-    }
-    
-    .link-btn:hover {
-      fill: var(--hover-color);
-    }
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     version="1.1" baseProfile="full"
+     viewBox="0 0 800 1500"
+     preserveAspectRatio="xMidYMid meet"
+     width="800" height="1500">
 
-    /* Animation for the avatar */
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
+  <style type="text/css"><![CDATA[
+    /* 背景アニメーション */
+    @keyframes bgScroll {
+      from { background-position:   0 0; }
+      to   { background-position: -800px 0; }
     }
-    
-    #avatar {
-      animation: float 3s ease-in-out infinite;
+    svg {
+      background: linear-gradient(90deg, #1e3a8a, #2563eb, #1e40af);
+      background-size: 1600px 100%;
+      animation: bgScroll 10s linear infinite;
     }
-  </style>
+    /* 埋め込み HTML の基本整形 */
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                   Roboto, Oxygen, Ubuntu, Cantarell,
+                   'Open Sans', 'Helvetica Neue', sans-serif;
+      color: #fff;
+      background: transparent;
+    }
+    h1, h2, h3 { margin: 20px 0 12px 0; }
+    h2 {
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      margin-top: 30px;
+    }
+    ul { margin: 0 0 24px 20px; padding: 0; }
+    p { margin: 12px 0 24px 0; }
+    img { max-width: 100%; height: auto; vertical-align: middle; }
+    a { color: inherit; text-decoration: none; }
+    .center { text-align: center; }
+    .flex-center { 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .badge-row { 
+      margin: 16px 0 24px 0;
+    }
+    .badge-row img { 
+      margin: 4px; 
+    }
+    .stats-card {
+      height: 170px !important;
+      width: auto;
+    }
+    .stats-section {
+      margin-bottom: 30px;
+    }
+  ]]></style>
 
-  <script>
-    // Asset URL cache
-    let assetCache = {};
-    
-    // Function to request an asset URL from the parent page
-    function getAssetUrl(assetKey) {
-      return new Promise((resolve, reject) => {
-        // Check if URL is already in cache
-        if (assetCache[assetKey]) {
-          resolve(assetCache[assetKey]);
-          return;
+  <foreignObject x="0" y="0" width="800" height="1500">
+    <body xmlns="http://www.w3.org/1999/xhtml">
+      <script type="text/javascript">
+      /* <![CDATA[ */
+        // GitHub PagesのURL
+        const baseUrl = "https://0xfab0131.github.io/0xfab0131";
+        
+        // アセットURLを生成する関数
+        function getAssetUrl(key) {
+          return `${baseUrl}?asset=${key}`;
         }
         
-        // Set up a listener for the response
-        const messageHandler = (event) => {
-          if (event.data && event.data.type === 'assetUrlResponse' && event.data.assetKey === assetKey) {
-            // Remove the event listener to avoid memory leaks
-            window.removeEventListener('message', messageHandler);
-            
-            if (event.data.assetUrl) {
-              // Cache the URL for future use
-              assetCache[assetKey] = event.data.assetUrl;
-              resolve(event.data.assetUrl);
-            } else {
-              reject(new Error(`Asset URL not found for key: ${assetKey}`));
-            }
-          }
+        // 画像要素の属性を設定
+        window.onload = function() {
+          // プロフィールビューと GitHub フォロワー
+          document.getElementById('profile-view-img').src = getAssetUrl('profileViews');
+          document.getElementById('github-followers-img').src = getAssetUrl('githubFollowers');
+          
+          // ウェルカム GIF
+          document.getElementById('welcome-gif').src = getAssetUrl('welcomeGif');
+          
+          // フロントエンドバッジ
+          document.getElementById('react-img').src = getAssetUrl('react');
+          document.getElementById('nextjs-img').src = getAssetUrl('nextjs');
+          document.getElementById('typescript-img').src = getAssetUrl('typescript');
+          document.getElementById('javascript-img').src = getAssetUrl('javascript');
+          document.getElementById('threejs-img').src = getAssetUrl('threejs');
+          document.getElementById('tailwind-img').src = getAssetUrl('tailwind');
+          document.getElementById('materialui-img').src = getAssetUrl('materialui');
+          document.getElementById('astro-img').src = getAssetUrl('astro');
+          
+          // バックエンドバッジ
+          document.getElementById('nodejs-img').src = getAssetUrl('nodejs');
+          document.getElementById('go-img').src = getAssetUrl('go');
+          document.getElementById('python-img').src = getAssetUrl('python');
+          document.getElementById('csharp-img').src = getAssetUrl('csharp');
+          document.getElementById('dotnet-img').src = getAssetUrl('dotnet');
+          document.getElementById('docker-img').src = getAssetUrl('docker');
+          document.getElementById('kubernetes-img').src = getAssetUrl('kubernetes');
+          document.getElementById('graphql-img').src = getAssetUrl('graphql');
+          document.getElementById('postgresql-img').src = getAssetUrl('postgresql');
+          
+          // クラウド and DevOpsバッジ
+          document.getElementById('aws-img').src = getAssetUrl('aws');
+          document.getElementById('azure-img').src = getAssetUrl('azure');
+          document.getElementById('gcp-img').src = getAssetUrl('gcp');
+          document.getElementById('github-actions-img').src = getAssetUrl('githubActions');
+          document.getElementById('vercel-img').src = getAssetUrl('vercel');
+          document.getElementById('firebase-img').src = getAssetUrl('firebase');
+          document.getElementById('supabase-img').src = getAssetUrl('supabase');
+          document.getElementById('cloudflare-img').src = getAssetUrl('cloudflare');
+          
+          // GitHub統計
+          document.getElementById('github-stats-img').src = getAssetUrl('githubStats');
+          document.getElementById('top-langs-img').src = getAssetUrl('topLanguages');
+          document.getElementById('streak-stats-img').src = getAssetUrl('streakStats');
+          
+          // SNSリンク
+          document.getElementById('twitter-img').src = getAssetUrl('twitter');
+          document.getElementById('github-img').src = getAssetUrl('github');
         };
-        
-        // Listen for the response
-        window.addEventListener('message', messageHandler);
-        
-        // Send request to parent page
-        window.parent.postMessage({
-          type: 'getAssetUrl',
-          assetKey: assetKey
-        }, '*');
-        
-        // Set a timeout in case the parent doesn't respond
-        setTimeout(() => {
-          window.removeEventListener('message', messageHandler);
-          reject(new Error(`Timeout getting asset URL for key: ${assetKey}`));
-        }, 5000);
-      });
-    }
-    
-    // Function to update an image element with the correct URL
-    async function updateImageElement(elementId, assetKey) {
-      try {
-        const url = await getAssetUrl(assetKey);
-        const element = document.getElementById(elementId);
-        if (element) {
-          element.setAttribute('href', url);
-        }
-      } catch (error) {
-        console.error(`Failed to update image ${elementId}:`, error);
-      }
-    }
-    
-    // Function to update a link element with the correct URL
-    async function updateLinkElement(elementId, assetKey) {
-      try {
-        const url = await getAssetUrl(assetKey);
-        const element = document.getElementById(elementId);
-        if (element) {
-          element.setAttribute('xlink:href', url);
-        }
-      } catch (error) {
-        console.error(`Failed to update link ${elementId}:`, error);
-      }
-    }
-    
-    // Initialize all assets once the SVG is loaded
-    window.addEventListener('load', () => {
-      // Stats
-      updateImageElement('profile-views-img', 'profile-views');
-      updateImageElement('github-followers-img', 'github-followers');
+      /* ]]> */
+      </script>
       
-      // Tech stack badges
-      updateImageElement('typescript-badge', 'typescript-badge');
-      updateImageElement('react-badge', 'react-badge');
-      updateImageElement('nextjs-badge', 'nextjs-badge');
-      updateImageElement('nodejs-badge', 'nodejs-badge');
-      updateImageElement('tailwind-badge', 'tailwind-badge');
-      updateImageElement('prisma-badge', 'prisma-badge');
-      
-      // GitHub stats
-      updateImageElement('github-stats-img', 'github-stats');
-      updateImageElement('github-langs-img', 'github-langs');
-      
-      // Avatar
-      updateImageElement('avatar-img', 'avatar');
-      
-      // Links
-      updateLinkElement('github-link', 'github-profile');
-      updateLinkElement('twitter-link', 'twitter-profile');
-      updateLinkElement('linkedin-link', 'linkedin-profile');
-    });
-  </script>
+      <!-- 1. プロフィールビュー・フォロワー -->
+      <div class="center">
+        <img id="profile-view-img" alt="Profile views" />
+        <a href="https://github.com/0xfab0131?tab=followers">
+          <img id="github-followers-img" alt="GitHub followers" />
+        </a>
+      </div>
 
-  <!-- Background -->
-  <rect id="bg" width="800" height="400" />
-  
-  <!-- Header Section -->
-  <text x="50" y="50" class="text-primary" font-size="24" font-weight="700">0xfab0131</text>
-  <text x="50" y="80" class="text-default" font-size="16">Full Stack Developer | Building with TypeScript and React</text>
-  
-  <!-- Avatar -->
-  <g id="avatar" transform="translate(650, 80)">
-    <circle cx="50" cy="50" r="50" fill="#1e293b" />
-    <image id="avatar-img" x="0" y="0" width="100" height="100" xlink:href="" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatar-clip)" />
-    <clipPath id="avatar-clip">
-      <circle cx="50" cy="50" r="50" />
-    </clipPath>
-  </g>
-  
-  <!-- Stats Section -->
-  <g transform="translate(50, 120)">
-    <rect class="card" width="200" height="80" />
-    <text x="20" y="30" class="stats-title">Profile Views</text>
-    <image id="profile-views-img" x="20" y="40" width="160" height="30" xlink:href="" />
-  </g>
-  
-  <g transform="translate(270, 120)">
-    <rect class="card" width="200" height="80" />
-    <text x="20" y="30" class="stats-title">GitHub Followers</text>
-    <image id="github-followers-img" x="20" y="40" width="160" height="30" xlink:href="" />
-  </g>
-  
-  <!-- Tech Stack Section -->
-  <text x="50" y="230" class="text-primary" font-size="20" font-weight="600">Tech Stack</text>
-  
-  <g class="tech-badge" transform="translate(50, 250)">
-    <rect class="card" width="80" height="80" />
-    <image id="typescript-badge" x="15" y="15" width="50" height="50" xlink:href="" />
-  </g>
-  
-  <g class="tech-badge" transform="translate(140, 250)">
-    <rect class="card" width="80" height="80" />
-    <image id="react-badge" x="15" y="15" width="50" height="50" xlink:href="" />
-  </g>
-  
-  <g class="tech-badge" transform="translate(230, 250)">
-    <rect class="card" width="80" height="80" />
-    <image id="nextjs-badge" x="15" y="15" width="50" height="50" xlink:href="" />
-  </g>
-  
-  <g class="tech-badge" transform="translate(320, 250)">
-    <rect class="card" width="80" height="80" />
-    <image id="nodejs-badge" x="15" y="15" width="50" height="50" xlink:href="" />
-  </g>
-  
-  <g class="tech-badge" transform="translate(410, 250)">
-    <rect class="card" width="80" height="80" />
-    <image id="tailwind-badge" x="15" y="15" width="50" height="50" xlink:href="" />
-  </g>
-  
-  <g class="tech-badge" transform="translate(500, 250)">
-    <rect class="card" width="80" height="80" />
-    <image id="prisma-badge" x="15" y="15" width="50" height="50" xlink:href="" />
-  </g>
-  
-  <!-- GitHub Stats -->
-  <g transform="translate(50, 350)">
-    <rect class="card" width="340" height="30" />
-    <image id="github-stats-img" x="10" y="5" width="320" height="20" xlink:href="" />
-  </g>
-  
-  <g transform="translate(400, 350)">
-    <rect class="card" width="340" height="30" />
-    <image id="github-langs-img" x="10" y="5" width="320" height="20" xlink:href="" />
-  </g>
-  
-  <!-- Social Links -->
-  <g transform="translate(600, 180)">
-    <rect class="card" width="150" height="120" />
-    <text x="25" y="30" class="text-default" font-size="16" font-weight="600">Connect</text>
-    
-    <a id="github-link" xlink:href="" target="_blank">
-      <g transform="translate(30, 50)" class="link-btn">
-        <text x="30" y="15" class="text-default" font-size="14">GitHub</text>
-        <path d="M15,0.5c-8.3,0-15,6.7-15,15c0,6.6,4.3,12.2,10.3,14.2c0.8,0.1,1-0.3,1-0.7v-2.7c-4.2,0.9-5.1-2-5.1-2c-0.7-1.7-1.7-2.2-1.7-2.2c-1.4-0.9,0.1-0.9,0.1-0.9c1.5,0.1,2.3,1.6,2.3,1.6c1.4,2.3,3.6,1.6,4.5,1.2c0.1-1,0.5-1.6,1-2c-3.3-0.4-6.8-1.7-6.8-7.4c0-1.6,0.6-3,1.6-4c-0.2-0.4-0.7-2,0.2-4.2c0,0,1.3-0.4,4.2,1.6c1.2-0.3,2.5-0.5,3.8-0.5c1.3,0,2.6,0.2,3.8,0.5c2.9-2,4.2-1.6,4.2-1.6c0.8,2.2,0.3,3.8,0.2,4.2c1,1.1,1.6,2.4,1.6,4c0,5.8-3.5,7-6.8,7.4c0.5,0.5,1,1.4,1,2.8v4.2c0,0.4,0.3,0.9,1,0.7c6-2,10.2-7.6,10.2-14.2C30,7.2,23.3,0.5,15,0.5z" fill="var(--text-color)" transform="scale(0.5)" />
-      </g>
-    </a>
-    
-    <a id="twitter-link" xlink:href="" target="_blank">
-      <g transform="translate(30, 75)" class="link-btn">
-        <text x="30" y="15" class="text-default" font-size="14">Twitter</text>
-        <path d="M23.6,5c0.8-0.5,1.5-1.3,1.8-2.2c-0.8,0.5-1.7,0.8-2.6,1c-0.8-0.8-1.8-1.3-3-1.3c-2.3,0-4.1,1.8-4.1,4.1c0,0.3,0,0.6,0.1,0.9C10.5,7.2,5.8,5.6,3.1,3.1C2.7,3.7,2.5,4.5,2.5,5.3c0,1.4,0.7,2.7,1.8,3.4C3.7,8.7,3,8.5,2.4,8.2c0,0,0,0,0,0.1c0,2,1.4,3.6,3.3,4c-0.3,0.1-0.7,0.1-1.1,0.1c-0.3,0-0.5,0-0.8-0.1c0.5,1.6,2,2.8,3.8,2.8c-1.4,1.1-3.2,1.8-5.1,1.8c-0.3,0-0.7,0-1-0.1c1.8,1.2,4,1.8,6.3,1.8c7.5,0,11.7-6.3,11.7-11.7c0-0.2,0-0.4,0-0.5C22.3,6.6,23.1,5.9,23.6,5z" fill="var(--text-color)" transform="scale(0.5)" />
-      </g>
-    </a>
-    
-    <a id="linkedin-link" xlink:href="" target="_blank">
-      <g transform="translate(30, 100)" class="link-btn">
-        <text x="30" y="15" class="text-default" font-size="14">LinkedIn</text>
-        <path d="M4.7,12H0V0h4.7V12z M2.3-3C0.9-3-0.3-4.2-0.3-5.6c0-1.4,1.2-2.6,2.6-2.6c1.4,0,2.6,1.2,2.6,2.6C4.9-4.2,3.7-3,2.3-3z M18,12h-4.6V6c0-1.8-0.1-4-2.5-4c-2.5,0-2.8,1.9-2.8,3.9V12H3.5V0h4.3v2h0.1c0.6-1.2,2.2-2.5,4.5-2.5c4.8,0,5.7,3.2,5.7,7.2V12z" fill="var(--text-color)" transform="translate(6, 14) scale(0.7)" />
-      </g>
-    </a>
-  </g>
+      <!-- 2. ウェルカム見出し -->
+      <h1 class="flex-center">
+        <img id="welcome-gif" width="28" height="28" alt="Welcome GIF" />
+        <span style="margin-left:8px;">Welcome to my profile!</span>
+      </h1>
+
+      <!-- 3. About Me -->
+      <h2>👨‍💻 About Me</h2>
+      <ul>
+        <li>🧑‍💻 Full Stack Engineer with a passion for creating user-friendly applications</li>
+        <li>🚀 Currently focusing on cloud-native architecture and microservices</li>
+        <li>🔭 Working on building innovative services and solutions</li>
+        <li>🌱 Learning more about AI/ML integration in web applications</li>
+        <li>💡 Interested in open source contribution and community projects</li>
+      </ul>
+
+      <!-- 4. Skills and Technologies -->
+      <h2>🛠️ Skills and Technologies</h2>
+
+      <h3>Frontend</h3>
+      <p class="badge-row">
+        <img id="react-img" alt="React" />
+        <img id="nextjs-img" alt="Next.js" />
+        <img id="typescript-img" alt="TypeScript" />
+        <img id="javascript-img" alt="JavaScript" />
+        <img id="threejs-img" alt="Three.js" />
+        <img id="tailwind-img" alt="Tailwind CSS" />
+        <img id="materialui-img" alt="Material UI" />
+        <img id="astro-img" alt="Astro" />
+      </p>
+
+      <h3>Backend and Infrastructure</h3>
+      <p class="badge-row">
+        <img id="nodejs-img" alt="Node.js" />
+        <img id="go-img" alt="Go" />
+        <img id="python-img" alt="Python" />
+        <img id="csharp-img" alt="C#" />
+        <img id="dotnet-img" alt=".NET" />
+        <img id="docker-img" alt="Docker" />
+        <img id="kubernetes-img" alt="Kubernetes" />
+        <img id="graphql-img" alt="GraphQL" />
+        <img id="postgresql-img" alt="PostgreSQL" />
+      </p>
+
+      <!-- 5. Cloud and DevOps -->
+      <h3>Cloud and DevOps</h3>
+      <p class="badge-row">
+        <img id="aws-img" alt="AWS" />
+        <img id="azure-img" alt="Azure" />
+        <img id="gcp-img" alt="GCP" />
+        <img id="github-actions-img" alt="GitHub Actions" />
+        <img id="vercel-img" alt="Vercel" />
+        <img id="firebase-img" alt="Firebase" />
+        <img id="supabase-img" alt="Supabase" />
+        <img id="cloudflare-img" alt="Cloudflare" />
+      </p>
+
+      <!-- 6. Featured Projects -->
+      <h2>📂 Featured Projects</h2>
+      <p>Coming soon…</p>
+
+      <!-- 7. GitHub Stats -->
+      <h2>📊 GitHub Stats</h2>
+      <div class="center flex-center stats-section">
+        <img id="github-stats-img" alt="GitHub Stats" class="stats-card" />
+        <img id="top-langs-img" alt="Top Languages" class="stats-card" />
+      </div>
+      <div class="center stats-section">
+        <img id="streak-stats-img" alt="GitHub Streak Stats" />
+      </div>
+
+      <!-- 8. Connect with Me -->
+      <h2>📫 Connect with Me</h2>
+      <div class="center">
+        <a href="https://twitter.com/fab_for_fab">
+          <img id="twitter-img" alt="Twitter" />
+        </a>
+        <a href="https://github.com/0xfab0131">
+          <img id="github-img" alt="GitHub" />
+        </a>
+      </div>
+    </body>
+  </foreignObject>
 </svg> 
