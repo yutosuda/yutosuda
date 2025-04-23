@@ -65,77 +65,133 @@
     <body xmlns="http://www.w3.org/1999/xhtml">
       <script type="text/javascript">
       /* <![CDATA[ */
-        // GitHub PagesのURL
-        const baseUrl = "https://0xfab0131.github.io/0xfab0131";
+        // Asset URL cache
+        let assetCache = {};
         
-        // アセットURLを生成する関数
-        function getAssetUrl(key) {
-          return `${baseUrl}?asset=${key}`;
+        // Function to request an asset URL from the parent page
+        function getAssetUrl(assetKey) {
+          return new Promise((resolve, reject) => {
+            // Check if URL is already in cache
+            if (assetCache[assetKey]) {
+              resolve(assetCache[assetKey]);
+              return;
+            }
+            
+            // Set up a listener for the response
+            const messageHandler = (event) => {
+              if (event.data && event.data.type === 'assetUrlResponse' && event.data.assetKey === assetKey) {
+                // Remove the event listener to avoid memory leaks
+                window.removeEventListener('message', messageHandler);
+                
+                if (event.data.assetUrl) {
+                  // Cache the URL for future use
+                  assetCache[assetKey] = event.data.assetUrl;
+                  resolve(event.data.assetUrl);
+                } else {
+                  console.error(`Asset URL not received for key: ${assetKey}`);
+                  // Optionally reject or resolve with a default/placeholder URL
+                  // reject(new Error(`Asset URL not found for key: ${assetKey}`)); 
+                   resolve(''); // Resolve with empty string to avoid breaking image elements
+                }
+              }
+            };
+            
+            // Listen for the response
+            window.addEventListener('message', messageHandler);
+            
+            // Send request to parent page
+            try {
+               window.parent.postMessage({
+                 type: 'getAssetUrl',
+                 assetKey: assetKey
+               }, '*'); // Consider specifying the target origin instead of '*' for security
+            } catch(e) {
+               console.error("postMessage failed: ", e);
+               window.removeEventListener('message', messageHandler); // Clean up listener
+               reject(new Error('Could not communicate with parent window'));
+            }
+            
+            // Set a timeout in case the parent doesn't respond
+            setTimeout(() => {
+              window.removeEventListener('message', messageHandler);
+              // Avoid rejecting here if we already resolved with empty string or if still waiting
+              if (!assetCache[assetKey]) {
+                 console.warn(`Timeout getting asset URL for key: ${assetKey}`);
+                 resolve(''); // Resolve with empty string on timeout
+              }
+            }, 5000); // 5 second timeout
+          });
         }
         
-        // 画像要素の属性を設定
-        window.onload = function() {
-          // プロフィールビューと GitHub フォロワー
-          document.getElementById('profile-view-img').src = getAssetUrl('profileViews');
-          document.getElementById('github-followers-img').src = getAssetUrl('githubFollowers');
-          
-          // ウェルカム GIF
-          document.getElementById('welcome-gif').src = getAssetUrl('welcomeGif');
-          
-          // フロントエンドバッジ
-          document.getElementById('react-img').src = getAssetUrl('react');
-          document.getElementById('nextjs-img').src = getAssetUrl('nextjs');
-          document.getElementById('typescript-img').src = getAssetUrl('typescript');
-          document.getElementById('javascript-img').src = getAssetUrl('javascript');
-          document.getElementById('threejs-img').src = getAssetUrl('threejs');
-          document.getElementById('tailwind-img').src = getAssetUrl('tailwind');
-          document.getElementById('materialui-img').src = getAssetUrl('materialui');
-          document.getElementById('astro-img').src = getAssetUrl('astro');
-          
-          // バックエンドバッジ
-          document.getElementById('nodejs-img').src = getAssetUrl('nodejs');
-          document.getElementById('go-img').src = getAssetUrl('go');
-          document.getElementById('python-img').src = getAssetUrl('python');
-          document.getElementById('csharp-img').src = getAssetUrl('csharp');
-          document.getElementById('dotnet-img').src = getAssetUrl('dotnet');
-          document.getElementById('docker-img').src = getAssetUrl('docker');
-          document.getElementById('kubernetes-img').src = getAssetUrl('kubernetes');
-          document.getElementById('graphql-img').src = getAssetUrl('graphql');
-          document.getElementById('postgresql-img').src = getAssetUrl('postgresql');
-          
-          // クラウド and DevOpsバッジ
-          document.getElementById('aws-img').src = getAssetUrl('aws');
-          document.getElementById('azure-img').src = getAssetUrl('azure');
-          document.getElementById('gcp-img').src = getAssetUrl('gcp');
-          document.getElementById('github-actions-img').src = getAssetUrl('githubActions');
-          document.getElementById('vercel-img').src = getAssetUrl('vercel');
-          document.getElementById('firebase-img').src = getAssetUrl('firebase');
-          document.getElementById('supabase-img').src = getAssetUrl('supabase');
-          document.getElementById('cloudflare-img').src = getAssetUrl('cloudflare');
-          
-          // GitHub統計
-          document.getElementById('github-stats-img').src = getAssetUrl('githubStats');
-          document.getElementById('top-langs-img').src = getAssetUrl('topLanguages');
-          document.getElementById('streak-stats-img').src = getAssetUrl('streakStats');
-          
-          // SNSリンク
-          document.getElementById('twitter-img').src = getAssetUrl('twitter');
-          document.getElementById('github-img').src = getAssetUrl('github');
+        // Function to update an image element with the correct URL
+        async function updateImageElement(elementId, assetKey) {
+          try {
+            const url = await getAssetUrl(assetKey);
+            const element = document.getElementById(elementId);
+            if (element) {
+              if (url) {
+                 element.setAttribute('src', url);
+              } else {
+                 // Handle cases where URL is empty (e.g., hide element or show placeholder)
+                 console.warn(`No URL found for ${elementId} (${assetKey})`);
+                 // element.style.display = 'none'; // Option: hide the element
+              }
+            }
+          } catch (error) {
+            console.error(`Failed to update image ${elementId}:`, error);
+          }
+        }
+        
+        // Initialize all assets once the body is loaded
+        window.onload = () => {
+          updateImageElement('profile-view-img', 'profileViews');
+          updateImageElement('github-followers-img', 'githubFollowers');
+          updateImageElement('welcome-gif', 'welcomeGif');
+          updateImageElement('react-img', 'react');
+          updateImageElement('nextjs-img', 'nextjs');
+          updateImageElement('typescript-img', 'typescript');
+          updateImageElement('javascript-img', 'javascript');
+          updateImageElement('threejs-img', 'threejs');
+          updateImageElement('tailwind-img', 'tailwind');
+          updateImageElement('materialui-img', 'materialui');
+          updateImageElement('astro-img', 'astro');
+          updateImageElement('nodejs-img', 'nodejs');
+          updateImageElement('go-img', 'go');
+          updateImageElement('python-img', 'python');
+          updateImageElement('csharp-img', 'csharp');
+          updateImageElement('dotnet-img', 'dotnet');
+          updateImageElement('docker-img', 'docker');
+          updateImageElement('kubernetes-img', 'kubernetes');
+          updateImageElement('graphql-img', 'graphql');
+          updateImageElement('postgresql-img', 'postgresql');
+          updateImageElement('aws-img', 'aws');
+          updateImageElement('azure-img', 'azure');
+          updateImageElement('gcp-img', 'gcp');
+          updateImageElement('github-actions-img', 'githubActions');
+          updateImageElement('vercel-img', 'vercel');
+          updateImageElement('firebase-img', 'firebase');
+          updateImageElement('supabase-img', 'supabase');
+          updateImageElement('cloudflare-img', 'cloudflare');
+          updateImageElement('github-stats-img', 'githubStats');
+          updateImageElement('top-langs-img', 'topLanguages');
+          updateImageElement('streak-stats-img', 'streakStats');
+          updateImageElement('twitter-img', 'twitter');
+          updateImageElement('github-img', 'github');
         };
       /* ]]> */
       </script>
       
       <!-- 1. プロフィールビュー・フォロワー -->
       <div class="center">
-        <img id="profile-view-img" alt="Profile views" />
+        <img id="profile-view-img" alt="Profile views" src=""/>
         <a href="https://github.com/0xfab0131?tab=followers">
-          <img id="github-followers-img" alt="GitHub followers" />
+          <img id="github-followers-img" alt="GitHub followers" src=""/>
         </a>
       </div>
 
       <!-- 2. ウェルカム見出し -->
       <h1 class="flex-center">
-        <img id="welcome-gif" width="28" height="28" alt="Welcome GIF" />
+        <img id="welcome-gif" width="28" height="28" alt="Welcome GIF" src=""/>
         <span style="margin-left:8px;">Welcome to my profile!</span>
       </h1>
 
@@ -154,40 +210,40 @@
 
       <h3>Frontend</h3>
       <p class="badge-row">
-        <img id="react-img" alt="React" />
-        <img id="nextjs-img" alt="Next.js" />
-        <img id="typescript-img" alt="TypeScript" />
-        <img id="javascript-img" alt="JavaScript" />
-        <img id="threejs-img" alt="Three.js" />
-        <img id="tailwind-img" alt="Tailwind CSS" />
-        <img id="materialui-img" alt="Material UI" />
-        <img id="astro-img" alt="Astro" />
+        <img id="react-img" alt="React" src=""/>
+        <img id="nextjs-img" alt="Next.js" src=""/>
+        <img id="typescript-img" alt="TypeScript" src=""/>
+        <img id="javascript-img" alt="JavaScript" src=""/>
+        <img id="threejs-img" alt="Three.js" src=""/>
+        <img id="tailwind-img" alt="Tailwind CSS" src=""/>
+        <img id="materialui-img" alt="Material UI" src=""/>
+        <img id="astro-img" alt="Astro" src=""/>
       </p>
 
       <h3>Backend and Infrastructure</h3>
       <p class="badge-row">
-        <img id="nodejs-img" alt="Node.js" />
-        <img id="go-img" alt="Go" />
-        <img id="python-img" alt="Python" />
-        <img id="csharp-img" alt="C#" />
-        <img id="dotnet-img" alt=".NET" />
-        <img id="docker-img" alt="Docker" />
-        <img id="kubernetes-img" alt="Kubernetes" />
-        <img id="graphql-img" alt="GraphQL" />
-        <img id="postgresql-img" alt="PostgreSQL" />
+        <img id="nodejs-img" alt="Node.js" src=""/>
+        <img id="go-img" alt="Go" src=""/>
+        <img id="python-img" alt="Python" src=""/>
+        <img id="csharp-img" alt="C#" src=""/>
+        <img id="dotnet-img" alt=".NET" src=""/>
+        <img id="docker-img" alt="Docker" src=""/>
+        <img id="kubernetes-img" alt="Kubernetes" src=""/>
+        <img id="graphql-img" alt="GraphQL" src=""/>
+        <img id="postgresql-img" alt="PostgreSQL" src=""/>
       </p>
 
       <!-- 5. Cloud and DevOps -->
       <h3>Cloud and DevOps</h3>
       <p class="badge-row">
-        <img id="aws-img" alt="AWS" />
-        <img id="azure-img" alt="Azure" />
-        <img id="gcp-img" alt="GCP" />
-        <img id="github-actions-img" alt="GitHub Actions" />
-        <img id="vercel-img" alt="Vercel" />
-        <img id="firebase-img" alt="Firebase" />
-        <img id="supabase-img" alt="Supabase" />
-        <img id="cloudflare-img" alt="Cloudflare" />
+        <img id="aws-img" alt="AWS" src=""/>
+        <img id="azure-img" alt="Azure" src=""/>
+        <img id="gcp-img" alt="GCP" src=""/>
+        <img id="github-actions-img" alt="GitHub Actions" src=""/>
+        <img id="vercel-img" alt="Vercel" src=""/>
+        <img id="firebase-img" alt="Firebase" src=""/>
+        <img id="supabase-img" alt="Supabase" src=""/>
+        <img id="cloudflare-img" alt="Cloudflare" src=""/>
       </p>
 
       <!-- 6. Featured Projects -->
@@ -197,21 +253,21 @@
       <!-- 7. GitHub Stats -->
       <h2>📊 GitHub Stats</h2>
       <div class="center flex-center stats-section">
-        <img id="github-stats-img" alt="GitHub Stats" class="stats-card" />
-        <img id="top-langs-img" alt="Top Languages" class="stats-card" />
+        <img id="github-stats-img" alt="GitHub Stats" class="stats-card" src=""/>
+        <img id="top-langs-img" alt="Top Languages" class="stats-card" src=""/>
       </div>
       <div class="center stats-section">
-        <img id="streak-stats-img" alt="GitHub Streak Stats" />
+        <img id="streak-stats-img" alt="GitHub Streak Stats" src=""/>
       </div>
 
       <!-- 8. Connect with Me -->
       <h2>📫 Connect with Me</h2>
       <div class="center">
         <a href="https://twitter.com/fab_for_fab">
-          <img id="twitter-img" alt="Twitter" />
+          <img id="twitter-img" alt="Twitter" src=""/>
         </a>
         <a href="https://github.com/0xfab0131">
-          <img id="github-img" alt="GitHub" />
+          <img id="github-img" alt="GitHub" src=""/>
         </a>
       </div>
     </body>

@@ -62,6 +62,7 @@
         // Check if the message is from our SVG
         if (event.data && event.data.type === "getAssetUrl") {
           const assetKey = event.data.assetKey;
+          // Get the URL from index.js (assetDict is globally available)
           const assetUrl = proxyAsset(assetKey);
 
           // Send the URL back to the SVG
@@ -71,37 +72,36 @@
               assetKey: assetKey,
               assetUrl: assetUrl,
             },
-            "*"
+            "*" // Consider specifying target origin for security
           );
         }
       });
 
-      // Handle query parameters to dynamically serve assets
+      // Handle query parameters - ONLY for loading the main SVG
       document.addEventListener("DOMContentLoaded", async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const assetParam = urlParams.get("asset");
 
-        if (assetParam) {
-          // If it's asking for an SVG file directly
-          if (assetParam.endsWith(".svg")) {
-            const obj = document.querySelector(".profile-svg");
-            const assetPath = `./assets/${assetParam}`;
-            obj.setAttribute("data", assetPath);
+        // Only handle the case where interactive.svg is requested
+        if (assetParam && assetParam === "interactive.svg") {
+          const obj = document.querySelector(".profile-svg");
+          const assetPath = `./assets/${assetParam}`;
+          obj.setAttribute("data", assetPath);
 
-            // Dynamically add preload for the requested asset
-            const preloadLink = document.querySelector(
-              'link[rel="preload"][as="image"]'
-            );
-            if (preloadLink) {
-              preloadLink.setAttribute("href", assetPath);
-            }
+          // Update preload link if necessary
+          const preloadLink = document.querySelector(
+            'link[rel="preload"][as="image"]'
+          );
+          if (preloadLink) {
+            preloadLink.setAttribute("href", assetPath);
           }
-          // If it's requesting an asset by key from the dictionary
-          else {
-            // assetDictとserveAsset関数はindex.jsから利用可能
-            await serveAsset(assetParam, document.body);
-          }
+        } else if (assetParam) {
+          // Handle requests for other assets (e.g., badges, gifs)
+          // assetDictとserveAsset関数はindex.jsから利用可能
+          const container = document.getElementById("container");
+          await serveAsset(assetParam, container);
         }
+        // If no asset parameter, it defaults to loading interactive.svg via the <object> tag
       });
     </script>
   </body>

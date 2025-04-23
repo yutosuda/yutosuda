@@ -1,4 +1,4 @@
-// GitHub Profileに使用するアセット辞書
+// svg用に使用するアセット辞書
 const assetDict = {
   profileViews: "https://komarev.com/ghpvc/?username=0xfab0131",
   githubFollowers:
