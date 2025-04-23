@@ -6,7 +6,7 @@
   </a>
 </div>
 
-# <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="28"> Welcome to my GitHub profile!
+# <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="28"> Welcome to my profile!
 
 <!-- 2. プロフィールや連絡先を変更 -->
 
@@ -102,7 +102,7 @@
 </div>
 
 <div align="center">
-  <img alt="GitHub Streak Stats" src="https://streak-stats.demolab.com/?user=0xfab0131&theme=vue-dark" />
+  <img alt="GitHub Streak Stats" src="https://github-readme-streak-stats-rust-eta.vercel.app/?user=0xfab0131&theme=vue-dark" />
 </div>
 <br>
 
