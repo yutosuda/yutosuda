@@ -6,5 +6,5 @@
 </div>
 
 <div align="center">
-  <img src="https://0xfab0131.github.io/0xfab0131/assets/interactive.svg" alt="Interactive Profile" width="800" />
+  <img src="./assets/interactive.svg" alt="Interactive Profile" width="800" />
 </div>
