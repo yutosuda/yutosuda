@@ -7,7 +7,7 @@
      width="800" height="1500">
 
   <style type="text/css"><![CDATA[
-    /* 背景アニメーション */
+    /* スタイル定義は変更なし */
     @keyframes bgScroll {
       from { background-position:   0 0; }
       to   { background-position: -800px 0; }
@@ -17,7 +17,6 @@
       background-size: 1600px 100%;
       animation: bgScroll 10s linear infinite;
     }
-    /* 埋め込み HTML の基本整形 */
     body {
       margin: 0;
       padding: 16px;
@@ -63,113 +62,19 @@
 
   <foreignObject x="0" y="0" width="800" height="1500">
     <body xmlns="http://www.w3.org/1999/xhtml">
-      <script type="text/javascript">
-      /* <![CDATA[ */
-        // アセット辞書をSVG内に直接定義
-        const assetDict = {
-          profileViews: "https://komarev.com/ghpvc/?username=0xfab0131",
-          githubFollowers: "https://img.shields.io/github/followers/0xfab0131?style=flat&logo=github",
-          welcomeGif: "https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif",
-          react: "https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white",
-          nextjs: "https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=nextjs&logoColor=white",
-          typescript: "https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white",
-          javascript: "https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black",
-          threejs: "https://img.shields.io/badge/-Three.js-000000?style=flat-square&logo=threejs&logoColor=white",
-          tailwind: "https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white",
-          materialui: "https://img.shields.io/badge/-Material%20UI-0081CB?style=flat-square&logo=materialui&logoColor=white",
-          astro: "https://img.shields.io/badge/-Astro-FF5D01?style=flat-square&logo=astro&logoColor=white",
-          nodejs: "https://img.shields.io/badge/-Node.js-339933?style=flat-square&logo=nodejs&logoColor=white",
-          go: "https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white",
-          python: "https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white",
-          csharp: "https://img.shields.io/badge/-C%23-239120?style=flat-square&logo=csharp&logoColor=white",
-          dotnet: "https://img.shields.io/badge/-.NET-512BD4?style=flat-square&logo=dotnet&logoColor=white",
-          docker: "https://img.shields.io/badge/-Docker-46a2f1?style=flat-square&logo=docker&logoColor=white",
-          kubernetes: "https://img.shields.io/badge/-Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white",
-          graphql: "https://img.shields.io/badge/-GraphQL-E10098?style=flat-square&logo=graphql&logoColor=white",
-          postgresql: "https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white",
-          aws: "https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white",
-          azure: "https://img.shields.io/badge/-Azure-0089D6?style=flat-square&logo=microsoftazure&logoColor=white",
-          gcp: "https://img.shields.io/badge/-Google%20Cloud-4285F4?style=flat-square&logo=googlecloud&logoColor=white",
-          githubActions: "https://img.shields.io/badge/-GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white",
-          vercel: "https://img.shields.io/badge/-Vercel-000000?style=flat-square&logo=vercel&logoColor=white",
-          firebase: "https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black",
-          supabase: "https://img.shields.io/badge/-Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white",
-          cloudflare: "https://img.shields.io/badge/-Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white",
-          githubStats: "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=0xfab0131&theme=vue-dark&count_private=true&include_all_commits=true&rank_icon=github&show_icons=true",
-          topLanguages: "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&count_private=true&show_icons=true&layout=compact&include_all_commits=true&rank_icon=github&size_weight=0.5&count_weight=0.5&langs_count=8&card_width=300&hide=html,css,php",
-          streakStats: "https://github-readme-streak-stats-rust-eta.vercel.app/?user=0xfab0131&theme=vue-dark",
-          twitter: "https://img.shields.io/badge/-Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white",
-          github: "https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white"
-        };
-
-        // アセットURLを取得する関数 (辞書から直接取得)
-        function getAssetUrl(key) {
-          return assetDict[key] || ''; // 見つからない場合は空文字を返す
-        }
-        
-        // 画像要素の属性を設定
-        window.onload = function() {
-          // プロフィールビューと GitHub フォロワー
-          document.getElementById('profile-view-img').src = getAssetUrl('profileViews');
-          document.getElementById('github-followers-img').src = getAssetUrl('githubFollowers');
-          
-          // ウェルカム GIF
-          document.getElementById('welcome-gif').src = getAssetUrl('welcomeGif');
-          
-          // フロントエンドバッジ
-          document.getElementById('react-img').src = getAssetUrl('react');
-          document.getElementById('nextjs-img').src = getAssetUrl('nextjs');
-          document.getElementById('typescript-img').src = getAssetUrl('typescript');
-          document.getElementById('javascript-img').src = getAssetUrl('javascript');
-          document.getElementById('threejs-img').src = getAssetUrl('threejs');
-          document.getElementById('tailwind-img').src = getAssetUrl('tailwind');
-          document.getElementById('materialui-img').src = getAssetUrl('materialui');
-          document.getElementById('astro-img').src = getAssetUrl('astro');
-          
-          // バックエンドバッジ
-          document.getElementById('nodejs-img').src = getAssetUrl('nodejs');
-          document.getElementById('go-img').src = getAssetUrl('go');
-          document.getElementById('python-img').src = getAssetUrl('python');
-          document.getElementById('csharp-img').src = getAssetUrl('csharp');
-          document.getElementById('dotnet-img').src = getAssetUrl('dotnet');
-          document.getElementById('docker-img').src = getAssetUrl('docker');
-          document.getElementById('kubernetes-img').src = getAssetUrl('kubernetes');
-          document.getElementById('graphql-img').src = getAssetUrl('graphql');
-          document.getElementById('postgresql-img').src = getAssetUrl('postgresql');
-          
-          // クラウド and DevOpsバッジ
-          document.getElementById('aws-img').src = getAssetUrl('aws');
-          document.getElementById('azure-img').src = getAssetUrl('azure');
-          document.getElementById('gcp-img').src = getAssetUrl('gcp');
-          document.getElementById('github-actions-img').src = getAssetUrl('githubActions');
-          document.getElementById('vercel-img').src = getAssetUrl('vercel');
-          document.getElementById('firebase-img').src = getAssetUrl('firebase');
-          document.getElementById('supabase-img').src = getAssetUrl('supabase');
-          document.getElementById('cloudflare-img').src = getAssetUrl('cloudflare');
-          
-          // GitHub統計
-          document.getElementById('github-stats-img').src = getAssetUrl('githubStats');
-          document.getElementById('top-langs-img').src = getAssetUrl('topLanguages');
-          document.getElementById('streak-stats-img').src = getAssetUrl('streakStats');
-          
-          // SNSリンク
-          document.getElementById('twitter-img').src = getAssetUrl('twitter');
-          document.getElementById('github-img').src = getAssetUrl('github');
-        };
-      /* ]]> */
-      </script>
+      <!-- JavaScriptブロックは削除 -->
       
       <!-- 1. プロフィールビュー・フォロワー -->
       <div class="center">
-        <img id="profile-view-img" alt="Profile views" src=""/>
+        <img id="profile-view-img" alt="Profile views" src="https://komarev.com/ghpvc/?username=0xfab0131"/>
         <a href="https://github.com/0xfab0131?tab=followers">
-          <img id="github-followers-img" alt="GitHub followers" src=""/>
+          <img id="github-followers-img" alt="GitHub followers" src="https://img.shields.io/github/followers/0xfab0131?style=flat&logo=github"/>
         </a>
       </div>
 
       <!-- 2. ウェルカム見出し -->
       <h1 class="flex-center">
-        <img id="welcome-gif" width="28" height="28" alt="Welcome GIF" src=""/>
+        <img id="welcome-gif" width="28" height="28" alt="Welcome GIF" src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif"/>
         <span style="margin-left:8px;">Welcome to my profile!</span>
       </h1>
 
@@ -188,40 +93,40 @@
 
       <h3>Frontend</h3>
       <p class="badge-row">
-        <img id="react-img" alt="React" src=""/>
-        <img id="nextjs-img" alt="Next.js" src=""/>
-        <img id="typescript-img" alt="TypeScript" src=""/>
-        <img id="javascript-img" alt="JavaScript" src=""/>
-        <img id="threejs-img" alt="Three.js" src=""/>
-        <img id="tailwind-img" alt="Tailwind CSS" src=""/>
-        <img id="materialui-img" alt="Material UI" src=""/>
-        <img id="astro-img" alt="Astro" src=""/>
+        <img id="react-img" alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white"/>
+        <img id="nextjs-img" alt="Next.js" src="https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=nextjs&logoColor=white"/>
+        <img id="typescript-img" alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white"/>
+        <img id="javascript-img" alt="JavaScript" src="https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black"/>
+        <img id="threejs-img" alt="Three.js" src="https://img.shields.io/badge/-Three.js-000000?style=flat-square&logo=threejs&logoColor=white"/>
+        <img id="tailwind-img" alt="Tailwind CSS" src="https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white"/>
+        <img id="materialui-img" alt="Material UI" src="https://img.shields.io/badge/-Material%20UI-0081CB?style=flat-square&logo=materialui&logoColor=white"/>
+        <img id="astro-img" alt="Astro" src="https://img.shields.io/badge/-Astro-FF5D01?style=flat-square&logo=astro&logoColor=white"/>
       </p>
 
       <h3>Backend and Infrastructure</h3>
       <p class="badge-row">
-        <img id="nodejs-img" alt="Node.js" src=""/>
-        <img id="go-img" alt="Go" src=""/>
-        <img id="python-img" alt="Python" src=""/>
-        <img id="csharp-img" alt="C#" src=""/>
-        <img id="dotnet-img" alt=".NET" src=""/>
-        <img id="docker-img" alt="Docker" src=""/>
-        <img id="kubernetes-img" alt="Kubernetes" src=""/>
-        <img id="graphql-img" alt="GraphQL" src=""/>
-        <img id="postgresql-img" alt="PostgreSQL" src=""/>
+        <img id="nodejs-img" alt="Node.js" src="https://img.shields.io/badge/-Node.js-339933?style=flat-square&logo=nodejs&logoColor=white"/>
+        <img id="go-img" alt="Go" src="https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white"/>
+        <img id="python-img" alt="Python" src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white"/>
+        <img id="csharp-img" alt="C#" src="https://img.shields.io/badge/-C%23-239120?style=flat-square&logo=csharp&logoColor=white"/>
+        <img id="dotnet-img" alt=".NET" src="https://img.shields.io/badge/-.NET-512BD4?style=flat-square&logo=dotnet&logoColor=white"/>
+        <img id="docker-img" alt="Docker" src="https://img.shields.io/badge/-Docker-46a2f1?style=flat-square&logo=docker&logoColor=white"/>
+        <img id="kubernetes-img" alt="Kubernetes" src="https://img.shields.io/badge/-Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white"/>
+        <img id="graphql-img" alt="GraphQL" src="https://img.shields.io/badge/-GraphQL-E10098?style=flat-square&logo=graphql&logoColor=white"/>
+        <img id="postgresql-img" alt="PostgreSQL" src="https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white"/>
       </p>
 
       <!-- 5. Cloud and DevOps -->
       <h3>Cloud and DevOps</h3>
       <p class="badge-row">
-        <img id="aws-img" alt="AWS" src=""/>
-        <img id="azure-img" alt="Azure" src=""/>
-        <img id="gcp-img" alt="GCP" src=""/>
-        <img id="github-actions-img" alt="GitHub Actions" src=""/>
-        <img id="vercel-img" alt="Vercel" src=""/>
-        <img id="firebase-img" alt="Firebase" src=""/>
-        <img id="supabase-img" alt="Supabase" src=""/>
-        <img id="cloudflare-img" alt="Cloudflare" src=""/>
+        <img id="aws-img" alt="AWS" src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white"/>
+        <img id="azure-img" alt="Azure" src="https://img.shields.io/badge/-Azure-0089D6?style=flat-square&logo=microsoftazure&logoColor=white"/>
+        <img id="gcp-img" alt="GCP" src="https://img.shields.io/badge/-Google%20Cloud-4285F4?style=flat-square&logo=googlecloud&logoColor=white"/>
+        <img id="github-actions-img" alt="GitHub Actions" src="https://img.shields.io/badge/-GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white"/>
+        <img id="vercel-img" alt="Vercel" src="https://img.shields.io/badge/-Vercel-000000?style=flat-square&logo=vercel&logoColor=white"/>
+        <img id="firebase-img" alt="Firebase" src="https://img.shields.io/badge/-Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black"/>
+        <img id="supabase-img" alt="Supabase" src="https://img.shields.io/badge/-Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white"/>
+        <img id="cloudflare-img" alt="Cloudflare" src="https://img.shields.io/badge/-Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white"/>
       </p>
 
       <!-- 6. Featured Projects -->
@@ -231,21 +136,21 @@
       <!-- 7. GitHub Stats -->
       <h2>📊 GitHub Stats</h2>
       <div class="center flex-center stats-section">
-        <img id="github-stats-img" alt="GitHub Stats" class="stats-card" src=""/>
-        <img id="top-langs-img" alt="Top Languages" class="stats-card" src=""/>
+        <img id="github-stats-img" alt="GitHub Stats" class="stats-card" src="https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=0xfab0131&theme=vue-dark&count_private=true&include_all_commits=true&rank_icon=github&show_icons=true"/>
+        <img id="top-langs-img" alt="Top Languages" class="stats-card" src="https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&count_private=true&show_icons=true&layout=compact&include_all_commits=true&rank_icon=github&size_weight=0.5&count_weight=0.5&langs_count=8&card_width=300&hide=html,css,php"/>
       </div>
       <div class="center stats-section">
-        <img id="streak-stats-img" alt="GitHub Streak Stats" src=""/>
+        <img id="streak-stats-img" alt="GitHub Streak Stats" src="https://github-readme-streak-stats-rust-eta.vercel.app/?user=0xfab0131&theme=vue-dark"/>
       </div>
 
       <!-- 8. Connect with Me -->
       <h2>📫 Connect with Me</h2>
       <div class="center">
         <a href="https://twitter.com/fab_for_fab">
-          <img id="twitter-img" alt="Twitter" src=""/>
+          <img id="twitter-img" alt="Twitter" src="https://img.shields.io/badge/-Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white"/>
         </a>
         <a href="https://github.com/0xfab0131">
-          <img id="github-img" alt="GitHub" src=""/>
+          <img id="github-img" alt="GitHub" src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
         </a>
       </div>
     </body>
