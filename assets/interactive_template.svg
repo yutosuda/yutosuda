@@ -6,105 +6,95 @@
      preserveAspectRatio="xMidYMid meet"
      width="800" height="1650">
 
-  <!-- 高度なフィルター定義 -->
+  <!-- 最適化したフィルター定義 -->
   <defs>
     <!-- 量子場効果フィルター - 最適化版 -->
-    <filter id="quantumField" x="-30%" y="-30%" width="160%" height="160%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" seed="3" result="noise"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G"/>
-      <feGaussianBlur stdDeviation="1" result="blur"/>
+    <filter id="quantumField" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="1" seed="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
     
-    <!-- 光の屈折フィルター -->
-    <filter id="lightRefraction" x="-30%" y="-30%" width="160%" height="160%">
-      <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" seed="5" result="turbulence"/>
-      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="7" xChannelSelector="R" yChannelSelector="G"/>
-      <feComposite in="SourceGraphic" in2="turb" operator="arithmetic" k1="0.5" k2="0.5" k3="0.5" k4="0"/>
+    <!-- 光の屈折フィルター - 最適化版 -->
+    <filter id="lightRefraction" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="1" seed="5" result="turbulence"/>
+      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="3" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
     
     <!-- 深度マップフィルター - 最適化版 -->
-    <filter id="depthMap" x="-20%" y="-20%" width="140%" height="140%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="2" seed="2" result="noise"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.3 0" result="darkness"/>
-      <feGaussianBlur in="darkness" stdDeviation="1.5" result="blur"/>
+    <filter id="depthMap" x="-5%" y="-5%" width="110%" height="110%">
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.2 0" result="darkness"/>
     </filter>
     
-    <!-- 次元間干渉フィルター -->
-    <filter id="dimensionalInterference" x="-30%" y="-30%" width="160%" height="160%">
-      <feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="2" seed="10" result="turbulence"/>
-      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="8" xChannelSelector="R" yChannelSelector="G"/>
-      <feColorMatrix type="hueRotate" values="90" result="hueShift"/>
+    <!-- 次元間干渉フィルター - 最適化版 -->
+    <filter id="dimensionalInterference" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="1" seed="10" result="turbulence"/>
+      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="3" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
     
-    <!-- 強化した3D深度フィルター -->
-    <filter id="enhanced3dDepth" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="1.5" result="blur"/>
-      <feSpecularLighting in="blur" surfaceScale="2" specularConstant="1.2" specularExponent="15" lighting-color="#ffffff" result="specular">
-        <fePointLight x="250" y="250" z="100"/>
+    <!-- 強化した3D深度フィルター - 最適化版 -->
+    <filter id="enhanced3dDepth" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur stdDeviation="0.5" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="1" specularConstant="0.8" specularExponent="8" lighting-color="#ffffff" result="specular">
+        <fePointLight x="250" y="250" z="60"/>
       </feSpecularLighting>
-      <feComposite in="SourceGraphic" in2="specular" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="composite"/>
+      <feComposite in="SourceGraphic" in2="specular" operator="arithmetic" k1="0" k2="0.6" k3="0.6" k4="0" result="composite"/>
     </filter>
     
     <!-- 立体的なテクスチャフィルター - 最適化版 -->
-    <filter id="3dTexture" x="-20%" y="-20%" width="140%" height="140%">
-      <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" seed="15" result="turbulence"/>
-      <feDiffuseLighting in="turbulence" surfaceScale="3" diffuseConstant="0.8" result="diffuse">
+    <filter id="3dTexture" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="1" seed="15" result="turbulence"/>
+      <feDiffuseLighting in="turbulence" surfaceScale="1" diffuseConstant="0.5" result="diffuse">
         <feDistantLight azimuth="45" elevation="60"/>
       </feDiffuseLighting>
-      <feComposite in="SourceGraphic" in2="diffuse" operator="arithmetic" k1="1" k2="0" k3="0.3" k4="0"/>
+      <feComposite in="SourceGraphic" in2="diffuse" operator="arithmetic" k1="1" k2="0" k3="0.2" k4="0"/>
     </filter>
     
     <!-- テキスト影フィルター - 最適化版 -->
-    <filter id="textShadow" x="-5%" y="-5%" width="110%" height="110%">
-      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.5"/>
+    <filter id="textShadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="1" stdDeviation="0.5" flood-color="#000000" flood-opacity="0.3"/>
     </filter>
     
     <!-- コンテンツ背景フィルター - 最適化版 -->
-    <filter id="contentBgBlur" x="-5%" y="-5%" width="110%" height="110%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 10 -4" result="glow"/>
+    <filter id="contentBgBlur" x="-2%" y="-2%" width="104%" height="104%">
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 5 -2" result="glow"/>
     </filter>
     
     <!-- 流体力学シミュレーションのためのグラデーション -->
     <linearGradient id="fluidGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#0f2350" stop-opacity="0.7"/>
-      <stop offset="25%" stop-color="#1e3a8a" stop-opacity="0.8"/>
-      <stop offset="50%" stop-color="#2563eb" stop-opacity="0.85"/>
-      <stop offset="75%" stop-color="#1e40af" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#2563eb" stop-opacity="0.8"/>
       <stop offset="100%" stop-color="#172554" stop-opacity="0.7"/>
     </linearGradient>
     
     <linearGradient id="fluidGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#0c4a6e" stop-opacity="0.6"/>
-      <stop offset="30%" stop-color="#0369a1" stop-opacity="0.7"/>
-      <stop offset="70%" stop-color="#0284c7" stop-opacity="0.7"/>
+      <stop offset="50%" stop-color="#0284c7" stop-opacity="0.7"/>
       <stop offset="100%" stop-color="#075985" stop-opacity="0.6"/>
     </linearGradient>
     
     <linearGradient id="fluidGradient3" x1="50%" y1="0%" x2="50%" y2="100%">
       <stop offset="0%" stop-color="#312e81" stop-opacity="0.5"/>
-      <stop offset="40%" stop-color="#4338ca" stop-opacity="0.6"/>
-      <stop offset="60%" stop-color="#4f46e5" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#4f46e5" stop-opacity="0.6"/>
       <stop offset="100%" stop-color="#3730a3" stop-opacity="0.5"/>
     </linearGradient>
 
     <!-- 下部までのグラデーション波用 -->
     <linearGradient id="extendedWaveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#3730a3" stop-opacity="0.4"/>
-      <stop offset="50%" stop-color="#4f46e5" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#312e81" stop-opacity="0.2"/>
+      <stop offset="0%" stop-color="#3730a3" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#4f46e5" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#312e81" stop-opacity="0.1"/>
     </linearGradient>
     
     <!-- 量子パーティクル用のフィルターを最適化 -->
-    <filter id="quantumParticle" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 10 -2" result="glow"/>
-      <feBlend in="SourceGraphic" in2="glow" mode="screen"/>
+    <filter id="quantumParticle" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 5 -1" result="glow"/>
     </filter>
     
     <!-- ぼやけたパーティクル用の軽量フィルター -->
-    <filter id="blurredParticle" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="2.5"/>
+    <filter id="blurredParticle" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1"/>
     </filter>
     
     <!-- パーティクル用の放射状グラデーション -->
@@ -120,7 +110,7 @@
       <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
     </radialGradient>
     
-    <!-- 波動関数の干渉パターン用マスク -->
+    <!-- 波動関数の干渉パターン用マスク - 簡素化 -->
     <mask id="waveMask">
       <rect width="100%" height="100%" fill="white"/>
       <rect width="100%" height="100%" fill="url(#wavePattern)" opacity="0.3"/>
@@ -129,7 +119,6 @@
     <pattern id="wavePattern" patternUnits="userSpaceOnUse" width="200" height="200" patternTransform="scale(0.5)">
       <path d="M0,100 C20,140 50,60 70,100 S100,140 150,100 S180,60 200,100" fill="none" stroke="black" stroke-width="5"/>
       <path d="M0,50 C30,90 60,10 90,50 S120,90 150,50 S180,10 200,50" fill="none" stroke="black" stroke-width="5" transform="translate(0,20)"/>
-      <path d="M0,150 C30,190 60,110 90,150 S120,190 150,150 S180,110 200,150" fill="none" stroke="black" stroke-width="5" transform="translate(10,-20)"/>
     </pattern>
   </defs>
 
@@ -276,67 +265,72 @@
       z-index: 1;
     }
 
-    /* CSS版の3Dアニメーション（JS非依存） - パフォーマンス最適化版 */
+    /* パフォーマンス最適化版CSS 3Dアニメーション */
     @keyframes css3dFloat {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(10px, -15px) scale(0.95); }
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(8px, -10px); }
+      100% { transform: translate(0, 0); }
     }
 
     @keyframes css3dRotate {
-      0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(-5deg); }
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(-3deg); }
+      100% { transform: rotate(0deg); }
     }
 
     @keyframes css3dPulse {
-      0%, 100% { opacity: 0.5; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(1.05); }
+      0% { opacity: 0.5; }
+      50% { opacity: 0.8; }
+      100% { opacity: 0.5; }
     }
     
-    /* アニメーション定義 - パフォーマンス最適化版 */
+    /* 最適化したアニメーション定義 */
     @keyframes fluidMove1 {
-      0% { transform: translate(0, 0) scale(1.05); opacity: 0.7; }
-      50% { transform: translate(-10px, -15px) scale(0.95); opacity: 0.8; }
-      100% { transform: translate(0, 0) scale(1.05); opacity: 0.7; }
+      0% { transform: translate(0, 0); opacity: 0.7; }
+      50% { transform: translate(-8px, -10px); opacity: 0.8; }
+      100% { transform: translate(0, 0); opacity: 0.7; }
     }
     
     @keyframes fluidMove2 {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-      50% { transform: translate(15px, -10px) scale(1.05); opacity: 0.8; }
-      100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+      0% { transform: translate(0, 0); opacity: 0.6; }
+      50% { transform: translate(10px, -8px); opacity: 0.7; }
+      100% { transform: translate(0, 0); opacity: 0.6; }
     }
     
     @keyframes fluidMove3 {
-      0% { transform: translate(0, 0) rotate(0deg) scale(1.02); opacity: 0.5; }
-      33% { transform: translate(-15px, -5px) rotate(-1deg) scale(0.98); opacity: 0.6; }
-      66% { transform: translate(10px, -15px) rotate(-2deg) scale(1.03); opacity: 0.7; }
-      100% { transform: translate(0, 0) rotate(0deg) scale(1.02); opacity: 0.5; }
+      0% { transform: translate(0, 0); opacity: 0.5; }
+      50% { transform: translate(-10px, -5px); opacity: 0.6; }
+      100% { transform: translate(0, 0); opacity: 0.5; }
     }
     
     @keyframes particleFloat {
-      0%, 100% { transform: translate(0, 0); opacity: 0.8; }
-      50% { transform: translate(15px, 5px); opacity: 1; }
+      0% { transform: translate(0, 0); opacity: 0.7; }
+      50% { transform: translate(10px, 5px); opacity: 0.8; }
+      100% { transform: translate(0, 0); opacity: 0.7; }
     }
     
     @keyframes dimensionShift {
-      0% { filter: hue-rotate(0deg) blur(0px); transform: scale(1) rotate(0deg); }
-      50% { filter: hue-rotate(180deg) blur(0px); transform: scale(0.98) rotate(-1deg); }
-      100% { filter: hue-rotate(360deg) blur(0px); transform: scale(1) rotate(0deg); }
+      0% { transform: scale(1); }
+      50% { transform: scale(0.97); }
+      100% { transform: scale(1); }
     }
     
     @keyframes quantumFluctuation {
-      0%, 100% { opacity: 0.1; }
-      50% { opacity: 0.3; }
+      0% { opacity: 0.1; }
+      50% { opacity: 0.18; }
+      100% { opacity: 0.1; }
     }
     
     @keyframes waveMotion {
-      0% { transform: translateY(0) scaleY(1); }
-      50% { transform: translateY(-5px) scaleY(1.05); }
-      100% { transform: translateY(0) scaleY(1); }
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
     }
     
     @keyframes depthPulse {
-      0%, 100% { filter: brightness(1) contrast(1); }
-      50% { filter: brightness(1.2) contrast(1.1); }
+      0% { filter: brightness(1); }
+      50% { filter: brightness(1.1); }
+      100% { filter: brightness(1); }
     }
     
     @keyframes colorShift {
@@ -344,13 +338,7 @@
       100% { filter: hue-rotate(360deg); }
     }
     
-    /* 強化された3Dアニメーション - CSS のみ（最適化版） */
-    @keyframes enhanced3dFloat {
-      0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-      50% { transform: translate(20px, 10px) rotate(-2deg) scale(0.92); }
-    }
-    
-    /* 3D変換とパースペクティブ */
+    /* 3D変換とパースペクティブ - 最適化版 */
     .perspective-container {
       position: relative;
       overflow: hidden;
@@ -362,22 +350,19 @@
       left: 0;
       width: 100%;
       height: 100%;
-      animation: css3dFloat 20s ease-in-out infinite;
+      animation: css3dFloat 8s ease-in-out infinite;
     }
     
     .parallax-layer-1 {
-      animation-duration: 25s;
-      animation-delay: -5s;
+      animation-duration: 7s;
     }
     
     .parallax-layer-2 {
-      animation-duration: 20s;
-      animation-delay: -2s;
+      animation-duration: 8s;
     }
     
     .parallax-layer-3 {
-      animation-duration: 30s;
-      animation-delay: -8s;
+      animation-duration: 9s;
     }
     
     .fluid-layer {
@@ -390,34 +375,28 @@
     }
     
     .fluid-layer-1 {
-      animation: fluidMove1 20s ease-in-out infinite, colorShift 25s linear infinite;
+      animation: fluidMove1 8s ease-in-out infinite, colorShift 16s linear infinite;
     }
     
     .fluid-layer-2 {
-      animation: fluidMove2 25s ease-in-out infinite, colorShift 35s linear infinite reverse;
+      animation: fluidMove2 9s ease-in-out infinite, colorShift 20s linear infinite reverse;
     }
     
     .fluid-layer-3 {
-      animation: fluidMove3 22s ease-in-out infinite, colorShift 30s linear infinite;
+      animation: fluidMove3 10s ease-in-out infinite, colorShift 15s linear infinite;
     }
 
     /* 拡張した下部の波アニメーション */
     .extended-wave {
-      animation: fluidMove2 30s ease-in-out infinite, waveMotion 15s ease-in-out infinite;
+      animation: fluidMove2 10s ease-in-out infinite, waveMotion 8s ease-in-out infinite;
     }
     
     .quantum-particle {
       position: absolute;
       border-radius: 50%;
       mix-blend-mode: screen;
-      animation: particleFloat 20s ease-in-out infinite;
-      will-change: transform, opacity;
+      animation: particleFloat 8s ease-in-out infinite;
       transform-origin: center center;
-    }
-    
-    .enhanced-particle {
-      box-shadow: 0 0 15px rgba(100, 200, 255, 0.8);
-      filter: url(#enhanced3dDepth);
     }
     
     .wave-container {
@@ -426,19 +405,17 @@
       left: 0;
       width: 100%;
       height: 100%;
-      animation: waveMotion 8s ease-in-out infinite, css3dRotate 30s ease-in-out infinite;
+      animation: waveMotion 6s ease-in-out infinite, css3dRotate 12s ease-in-out infinite;
       opacity: 0.2;
     }
     
     .dimension-portal {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(65,105,225,0.7) 0%, rgba(65,105,225,0) 70%);
+      background: radial-gradient(circle, rgba(65,105,225,0.6) 0%, rgba(65,105,225,0) 70%);
       mix-blend-mode: screen;
-      animation: dimensionShift 20s linear infinite, css3dRotate 40s ease-in-out infinite;
+      animation: dimensionShift 8s linear infinite, css3dRotate 14s ease-in-out infinite;
       filter: url(#dimensionalInterference);
-      transform-style: preserve-3d;
-      will-change: transform;
     }
     
     .quantum-field {
@@ -448,8 +425,8 @@
       width: 100%;
       height: 100%;
       background: url(#quantumField);
-      opacity: 0.1;
-      animation: quantumFluctuation 10s ease-in-out infinite;
+      opacity: 0.08;
+      animation: quantumFluctuation 7s ease-in-out infinite;
     }
     
     .depth-layer {
@@ -458,8 +435,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      animation: depthPulse 15s ease-in-out infinite;
-      transform-style: preserve-3d;
+      animation: depthPulse 9s ease-in-out infinite;
     }
     
     .foreground-layer {
@@ -467,7 +443,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      animation: css3dFloat 15s ease-in-out infinite;
+      animation: css3dFloat 7s ease-in-out infinite;
     }
     
     .midground-layer {
@@ -475,7 +451,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      animation: css3dFloat 25s ease-in-out infinite reverse;
+      animation: css3dFloat 9s ease-in-out infinite reverse;
     }
     
     .background-layer {
@@ -483,72 +459,40 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      animation: css3dFloat 35s ease-in-out infinite;
+      animation: css3dFloat 11s ease-in-out infinite;
     }
     
-    /* 3D立体形状 - CSSアニメーションのみ（GitHub対応） */
-    .shape3d {
-      position: absolute;
-      animation: css3dRotate 30s ease-in-out infinite;
-      opacity: 0.15;
-      mix-blend-mode: screen;
+    /* パーティクル個別のアニメーション調整 - 最適化版 */
+    .quantum-particle:nth-child(1) {
+      animation-duration: 6.5s;
     }
     
-    .cube3d {
-      width: 100px;
-      height: 100px;
-      position: relative;
+    .quantum-particle:nth-child(2) {
+      animation-duration: 7.5s;
     }
     
-    .cube-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: rgba(100, 150, 255, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+    .quantum-particle:nth-child(3) {
+      animation-duration: 7s;
     }
     
-    .cube-front {
-      /* 前面はそのまま表示 */
-      box-shadow: 0 0 10px rgba(100, 150, 255, 0.2);
+    .quantum-particle:nth-child(4) {
+      animation-duration: 8s;
     }
     
-    .cube-back {
-      /* 背面は薄く表示して奥行き感を出す */
-      opacity: 0.3;
-      transform: scale(0.9);
+    .quantum-particle:nth-child(5) {
+      animation-duration: 7.5s;
     }
     
-    .cube-left {
-      /* 左面 */
-      transform: skewY(15deg);
-      transform-origin: left center;
-      width: 20px;
-      left: -20px;
+    .quantum-particle:nth-child(6) {
+      animation-duration: 7s;
     }
     
-    .cube-right {
-      /* 右面 */
-      transform: skewY(-15deg);
-      transform-origin: right center;
-      width: 20px;
-      right: -20px;
+    .quantum-particle:nth-child(7) {
+      animation-duration: 8.5s;
     }
     
-    .cube-top {
-      /* 上面 */
-      transform: skewX(15deg);
-      transform-origin: center top;
-      height: 20px;
-      top: -20px;
-    }
-    
-    .cube-bottom {
-      /* 下面 */
-      transform: skewX(-15deg);
-      transform-origin: center bottom;
-      height: 20px;
-      bottom: -20px;
+    .quantum-particle:nth-child(8) {
+      animation-duration: 9s;
     }
 
     /* コンテンツの背景 */
@@ -566,50 +510,7 @@
       bottom: -10px;
       background-color: rgba(10, 20, 50, 0.25);
       border-radius: 12px;
-      backdrop-filter: blur(0.5px);
-      -webkit-backdrop-filter: blur(0.5px);
       z-index: -1;
-    }
-
-    /* パーティクル個別のアニメーション調整 */
-    .quantum-particle:nth-child(1) {
-      animation-duration: 17s;
-      animation-delay: -2s;
-    }
-    
-    .quantum-particle:nth-child(2) {
-      animation-duration: 22s;
-      animation-delay: -5s;
-    }
-    
-    .quantum-particle:nth-child(3) {
-      animation-duration: 19s;
-      animation-delay: -8s;
-    }
-    
-    .quantum-particle:nth-child(4) {
-      animation-duration: 24s;
-      animation-delay: -3s;
-    }
-    
-    .quantum-particle:nth-child(5) {
-      animation-duration: 21s;
-      animation-delay: -7s;
-    }
-    
-    .quantum-particle:nth-child(6) {
-      animation-duration: 18s;
-      animation-delay: -4s;
-    }
-    
-    .quantum-particle:nth-child(7) {
-      animation-duration: 23s;
-      animation-delay: -9s;
-    }
-    
-    .quantum-particle:nth-child(8) {
-      animation-duration: 20s;
-      animation-delay: -6s;
     }
   ]]></style>
 
@@ -629,40 +530,21 @@
     <rect width="100%" height="100%" fill="#050a18" opacity="0.3" filter="url(#3dTexture)"/>
   </g>
   
-  <!-- 流体力学シミュレーションレイヤー -->
+  <!-- 流体力学シミュレーションレイヤー - 最適化版 -->
   <g class="perspective-container">
-    <!-- 背景流体レイヤー -->
-    <path class="fluid-layer fluid-layer-3" d="M0,500 C200,450 300,550 500,500 S700,450 900,500 S1100,550 1300,500 V1650 H0 Z" fill="url(#fluidGradient3)" opacity="0.4" filter="url(#lightRefraction)"/>
+    <!-- 背景流体レイヤー - 画面全体に分散 -->
+    <path class="fluid-layer fluid-layer-3" d="M0,150 C200,100 300,200 500,150 S700,100 800,150 V1650 H0 Z" fill="url(#fluidGradient3)" opacity="0.4" filter="url(#lightRefraction)"/>
     
-    <!-- 中間流体レイヤー -->
-    <path class="fluid-layer fluid-layer-2" d="M0,400 C150,350 250,450 400,400 S550,350 700,400 S850,450 1000,400 V1650 H0 Z" fill="url(#fluidGradient2)" opacity="0.5" filter="url(#lightRefraction)"/>
+    <!-- 中間流体レイヤー - 画面全体に分散 -->
+    <path class="fluid-layer fluid-layer-2" d="M0,350 C150,300 250,400 400,350 S550,300 800,350 V1650 H0 Z" fill="url(#fluidGradient2)" opacity="0.5" filter="url(#lightRefraction)"/>
     
-    <!-- 前景流体レイヤー -->
-    <path class="fluid-layer fluid-layer-1" d="M0,300 C100,250 200,350 300,300 S400,250 500,300 S600,350 700,300 S800,250 900,300 V1650 H0 Z" fill="url(#fluidGradient1)" opacity="0.6" filter="url(#enhanced3dDepth)"/>
+    <!-- 前景流体レイヤー - 画面全体に分散 -->
+    <path class="fluid-layer fluid-layer-1" d="M0,250 C100,200 200,300 300,250 S400,200 600,250 S800,300 800,250 V1650 H0 Z" fill="url(#fluidGradient1)" opacity="0.6" filter="url(#enhanced3dDepth)"/>
 
-    <!-- 下部まで広がる追加の波 -->
-    <path class="extended-wave" d="M0,800 C150,750 300,850 450,800 S600,750 750,800 S900,850 1050,800 V1650 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.4" filter="url(#lightRefraction)"/>
-    <path class="extended-wave" d="M0,1000 C200,950 400,1050 600,1000 S800,950 1000,1000 S1200,1050 1400,1000 V1650 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.3" filter="url(#lightRefraction)"/>
-    <path class="extended-wave" d="M0,1200 C250,1150 500,1250 750,1200 S1000,1150 1250,1200 S1650,1250 1750,1200 V1650 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.2" filter="url(#lightRefraction)"/>
-    
-    <!-- 3Dキューブオブジェクト -->
-    <g class="shape3d cube3d" style="left: 150px; top: 250px;">
-      <rect class="cube-face cube-front" fill="rgba(65, 105, 225, 0.3)"/>
-      <rect class="cube-face cube-back" fill="rgba(65, 105, 225, 0.2)"/>
-      <rect class="cube-face cube-left" fill="rgba(30, 64, 175, 0.25)"/>
-      <rect class="cube-face cube-right" fill="rgba(30, 64, 175, 0.25)"/>
-      <rect class="cube-face cube-top" fill="rgba(100, 150, 255, 0.3)"/>
-      <rect class="cube-face cube-bottom" fill="rgba(20, 40, 130, 0.2)"/>
-    </g>
-    
-    <g class="shape3d cube3d" style="left: 600px; top: 500px;">
-      <rect class="cube-face cube-front" fill="rgba(100, 70, 200, 0.3)"/>
-      <rect class="cube-face cube-back" fill="rgba(100, 70, 200, 0.2)"/>
-      <rect class="cube-face cube-left" fill="rgba(80, 40, 180, 0.25)"/>
-      <rect class="cube-face cube-right" fill="rgba(80, 40, 180, 0.25)"/>
-      <rect class="cube-face cube-top" fill="rgba(130, 100, 220, 0.3)"/>
-      <rect class="cube-face cube-bottom" fill="rgba(60, 20, 150, 0.2)"/>
-    </g>
+    <!-- 下部まで広がる追加の波 - 最適化版 -->
+    <path class="extended-wave" d="M0,500 C150,450 300,550 450,500 S600,450 800,500 V1650 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.35" filter="url(#lightRefraction)"/>
+    <path class="extended-wave" d="M0,700 C200,650 400,750 600,700 S800,650 800,700 V1650 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.3" filter="url(#lightRefraction)"/>
+    <path class="extended-wave" d="M0,900 C250,850 450,950 650,900 S850,850 800,900 V1650 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.25" filter="url(#lightRefraction)"/>
   </g>
   
   <!-- パララックス中間レイヤー -->
@@ -673,25 +555,25 @@
     </g>
   </g>
   
-  <!-- 量子パーティクル - ぼやけた円形スタイル -->
-  <circle class="quantum-particle" cx="200" cy="300" r="8" fill="url(#particleGradient1)" filter="url(#blurredParticle)"/>
-  <circle class="quantum-particle" cx="600" cy="200" r="10" fill="url(#particleGradient2)" filter="url(#blurredParticle)"/>
-  <circle class="quantum-particle" cx="400" cy="500" r="9" fill="url(#particleGradient1)" filter="url(#blurredParticle)"/>
-  <circle class="quantum-particle" cx="700" cy="600" r="7" fill="url(#particleGradient2)" filter="url(#blurredParticle)"/>
-  <circle class="quantum-particle" cx="300" cy="800" r="12" fill="url(#particleGradient1)" filter="url(#blurredParticle)"/>
-  <circle class="quantum-particle" cx="500" cy="1000" r="8" fill="url(#particleGradient2)" filter="url(#blurredParticle)"/>
-  <circle class="quantum-particle" cx="200" cy="1200" r="9" fill="url(#particleGradient1)" filter="url(#blurredParticle)"/>
-  <circle class="quantum-particle" cx="600" cy="1400" r="11" fill="url(#particleGradient2)" filter="url(#blurredParticle)"/>
+  <!-- 量子パーティクル - 画面全体に分散 -->
+  <circle class="quantum-particle" cx="200" cy="150" r="6" fill="url(#particleGradient1)" filter="url(#blurredParticle)"/>
+  <circle class="quantum-particle" cx="600" cy="120" r="8" fill="url(#particleGradient2)" filter="url(#blurredParticle)"/>
+  <circle class="quantum-particle" cx="400" cy="320" r="7" fill="url(#particleGradient1)" filter="url(#blurredParticle)"/>
+  <circle class="quantum-particle" cx="700" cy="450" r="5" fill="url(#particleGradient2)" filter="url(#blurredParticle)"/>
+  <circle class="quantum-particle" cx="300" cy="600" r="9" fill="url(#particleGradient1)" filter="url(#blurredParticle)"/>
+  <circle class="quantum-particle" cx="500" cy="750" r="6" fill="url(#particleGradient2)" filter="url(#blurredParticle)"/>
+  <circle class="quantum-particle" cx="200" cy="900" r="8" fill="url(#particleGradient1)" filter="url(#blurredParticle)"/>
+  <circle class="quantum-particle" cx="650" cy="1050" r="7" fill="url(#particleGradient2)" filter="url(#blurredParticle)"/>
   
-  <!-- パララックス前景レイヤー -->
+  <!-- パララックス前景レイヤー - 画面全体に分散 -->
   <g class="parallax-layer parallax-layer-1 foreground-layer">
-    <!-- 次元間干渉ポータル -->
-    <circle class="dimension-portal" cx="150" cy="400" r="100" opacity="0.2" filter="url(#enhanced3dDepth)"/>
-    <circle class="dimension-portal" cx="650" cy="300" r="80" opacity="0.15" filter="url(#enhanced3dDepth)"/>
-    <circle class="dimension-portal" cx="400" cy="700" r="120" opacity="0.1" filter="url(#enhanced3dDepth)"/>
-    <circle class="dimension-portal" cx="700" cy="900" r="90" opacity="0.2" filter="url(#enhanced3dDepth)"/>
-    <circle class="dimension-portal" cx="200" cy="1100" r="110" opacity="0.15" filter="url(#enhanced3dDepth)"/>
-    <circle class="dimension-portal" cx="600" cy="1300" r="100" opacity="0.1" filter="url(#enhanced3dDepth)"/>
+    <!-- 次元間干渉ポータル - 画面全体に分散 -->
+    <circle class="dimension-portal" cx="150" cy="200" r="80" opacity="0.15" filter="url(#enhanced3dDepth)"/>
+    <circle class="dimension-portal" cx="650" cy="150" r="60" opacity="0.12" filter="url(#enhanced3dDepth)"/>
+    <circle class="dimension-portal" cx="400" cy="450" r="100" opacity="0.1" filter="url(#enhanced3dDepth)"/>
+    <circle class="dimension-portal" cx="700" cy="600" r="70" opacity="0.18" filter="url(#enhanced3dDepth)"/>
+    <circle class="dimension-portal" cx="250" cy="800" r="90" opacity="0.14" filter="url(#enhanced3dDepth)"/>
+    <circle class="dimension-portal" cx="550" cy="950" r="85" opacity="0.12" filter="url(#enhanced3dDepth)"/>
   </g>
 
   <foreignObject x="0" y="0" width="800" height="1650">
