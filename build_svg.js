@@ -48,6 +48,11 @@ function escapeRegExp(string) {
   return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 }
 
+// HTMLエンティティをエスケープする関数 (& -> &amp;)
+function escapeHtmlEntities(string) {
+  return string.replace(/&/g, "&amp;");
+}
+
 async function buildSvg() {
   try {
     // テンプレートファイルを読み込む
@@ -55,7 +60,9 @@ async function buildSvg() {
     // プレースホルダーを実際のURLで置き換える
     for (const placeholder in placeholderMap) {
       const assetKey = placeholderMap[placeholder];
-      const url = assetDict[assetKey] || ""; // 見つからない場合は空文字
+      // assetDictからURLを取得し、HTMLエンティティをエスケープ
+      const rawUrl = assetDict[assetKey] || ""; // 見つからない場合は空文字
+      const escapedUrl = escapeHtmlEntities(rawUrl);
 
       // プレースホルダーの正規表現を作成（エスケープ処理を含む）
       const regex = new RegExp(escapeRegExp(placeholder), "g");
