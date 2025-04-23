@@ -86,61 +86,59 @@ const assetDict = {
   linkedinProfile: "https://linkedin.com/in/0xfab0131",
 };
 
-// Function to proxy an asset
-function proxyAsset(assetKey) {
-  if (!assetKey) return null;
-
-  // If the key exists in our dictionary, return the URL
-  if (assetDict[assetKey]) {
-    return assetDict[assetKey];
+// Check if running in Node.js environment for export
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { assetDict };
+} else {
+  // Browser environment functions (if index.html needs them directly,
+  // but ideally only the build script uses assetDict)
+  // Function to proxy an asset (browser context)
+  function proxyAsset(assetKey) {
+    if (!assetKey) return null;
+    if (assetDict[assetKey]) {
+      return assetDict[assetKey];
+    }
+    console.warn(`Asset key "${assetKey}" not found in dictionary`);
+    return null;
   }
 
-  // If not found in dictionary, return null
-  console.warn(`Asset key "${assetKey}" not found in dictionary`);
-  return null;
-}
+  // アセットをプロキシし、適切な形式で提供する関数 (browser context)
+  async function serveAsset(assetKey, container) {
+    const assetUrl = proxyAsset(assetKey);
 
-// アセットをプロキシし、適切な形式で提供する関数
-async function serveAsset(assetKey, container) {
-  const assetUrl = proxyAsset(assetKey);
+    if (!assetUrl) {
+      container.innerHTML = `<p>Asset key "${assetKey}" not found</p>`;
+      return;
+    }
 
-  if (!assetUrl) {
-    container.innerHTML = `<p>Asset key "${assetKey}" not found</p>`;
-    return;
-  }
+    const getContentType = (url) => {
+      if (url.endsWith(".svg")) return "image/svg+xml";
+      if (url.endsWith(".gif")) return "image/gif";
+      if (url.endsWith(".png")) return "image/png";
+      if (url.endsWith(".jpg") || url.endsWith(".jpeg")) return "image/jpeg";
+      return "application/octet-stream";
+    };
 
-  // Detect MIME type based on URL extension
-  const getContentType = (url) => {
-    if (url.endsWith(".svg")) return "image/svg+xml";
-    if (url.endsWith(".gif")) return "image/gif";
-    if (url.endsWith(".png")) return "image/png";
-    if (url.endsWith(".jpg") || url.endsWith(".jpeg")) return "image/jpeg";
-    return "application/octet-stream";
-  };
+    const contentType = getContentType(assetUrl);
 
-  // Set appropriate content type
-  const contentType = getContentType(assetUrl);
+    try {
+      const response = await fetch(assetUrl);
+      if (!response.ok)
+        throw new Error(`Failed to fetch asset: ${response.status}`);
 
-  // Fetch the asset and serve it
-  try {
-    const response = await fetch(assetUrl);
-    if (!response.ok)
-      throw new Error(`Failed to fetch asset: ${response.status}`);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
 
-    const blob = await response.blob();
-    const blobUrl = URL.createObjectURL(blob);
+      container.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = blobUrl;
+      img.style.maxWidth = "100%";
+      container.appendChild(img);
 
-    // Clear container and show the image
-    container.innerHTML = "";
-    const img = document.createElement("img");
-    img.src = blobUrl;
-    img.style.maxWidth = "100%";
-    container.appendChild(img);
-
-    // Set content type header (this won't actually work for client-side only)
-    document.contentType = contentType;
-  } catch (error) {
-    console.error("Error fetching asset:", error);
-    container.innerHTML = `<p>Error loading asset: ${error.message}</p>`;
+      document.contentType = contentType;
+    } catch (error) {
+      console.error("Error fetching asset:", error);
+      container.innerHTML = `<p>Error loading asset: ${error.message}</p>`;
+    }
   }
 }

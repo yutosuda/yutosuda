@@ -1,0 +1,37 @@
+name: Build Interactive SVG
+
+on:
+  push:
+    branches:
+      - main # またはデプロイに使用するブランチ
+  workflow_dispatch: # 手動実行も可能にする
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # 必要に応じてバージョンを調整
+          cache: "npm" # npmのキャッシュを有効化 (package.jsonがあれば)
+
+      # package.json があれば依存関係をインストール
+      # - name: Install dependencies
+      #   run: npm ci
+
+      - name: Build SVG
+        run: node build_svg.js
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Automated build: Update interactive.svg"
+          file_pattern: "assets/interactive.svg" # このファイルのみをコミット対象とする
+          commit_user_name: "github-actions[bot]" # コミットユーザー名
+          commit_user_email: "github-actions[bot]@users.noreply.github.com" # コミットユーザーメール
+          commit_author: "GitHub Actions <github-actions[bot]@users.noreply.github.com>" # コミット作者
