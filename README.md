@@ -29,6 +29,10 @@
   <img alt="Top Langs" height="170px" src="https://gtihub-readme-stats-azure.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&count_private=true&show_icons=true&layout=compact&include_all_commits=true&rank_icon=github&size_weight=0.5&count_weight=0.5&langs_count=8&card_width=300&hide=html,css,php" />
 </div>
 
+<div align="left"> 
+  <img alt="Top Langs" height="170px" src="https://gtihub-readme-stats-azure.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&count_private=true&show_icons=true&layout=compact&include_all_commits=true&rank_icon=github&size_weight=0.5&count_weight=0.5&langs_count=8&card_width=300&hide=html,css,php" />
+</div>
+
 
 <!--
 This repository is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
