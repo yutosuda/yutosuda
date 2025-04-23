@@ -29,7 +29,7 @@
 </div>
 
 <div align="left"> 
-  <img alt="Top Langs" height="200px" src="https://gtihub-readme-stats-azure.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&count_private=true&show_icons=true&include_all_commits=true&size_weight=0.5&count_weight=0.5&langs_count=8&hide=html,css,php" />
+  <img alt="Top Langs" height="200px" src="https://gtihub-readme-stats-azure.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&count_private=true&show_icons=true&layout=donut&include_all_commits=true&size_weight=0.5&count_weight=0.5&langs_count=8&hide=html,css,php" />
 </div>
 
 
