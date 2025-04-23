@@ -1,6 +1,6 @@
 <!-- 1. GitHub ユーザー名を変更 -->
 <div align="right">
-  <img src="https://komarev.com/ghpvc/?username=0xfab0101" />
+  <img src="https://komarev.com/ghpvc/?username=0xfab0131" />
 </div>
 
 
@@ -25,8 +25,8 @@
 <!-- ライトモート：theme=light, ダークモート：theme=vue-dark  -->
 ## 🏃‍♀️ Activities
 <div align="left"> 
-  <img alt="Top Langs" height="170px" src="https://github-readme-stats.vercel.app/api?username=0xfab0101&theme=vue-dark&layout=compact" />
-  <img alt="github stats" height="170px" src="https://github-readme-stats.vercel.app/api/top-langs/?username=0xfab0101&theme=vue-dark&layout=compact" />
+  <img alt="Top Langs" height="170px" src="https://github-readme-stats.vercel.app/api?username=0xfab0131&theme=vue-dark&layout=compact" />
+  <img alt="github stats" height="170px" src="https://github-readme-stats.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&layout=compact" />
 </div>
 
 
