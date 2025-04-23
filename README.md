@@ -7,6 +7,6 @@
 
 <div align="center">
   <a href="https://0xfab0131.github.io/0xfab0131/">
-    <img src="https://img.shields.io/badge/View%20Interactive%20Profile-2563eb?style=for-the-badge&logo=github&logoColor=white&cacheSeconds=86400" alt="View Interactive Profile" />
+    <img src="https://raw.githubusercontent.com/0xfab0131/0xfab0131/refs/heads/main/assets/interactive.svg" alt="View Interactive Profile" />
   </a>
 </div>

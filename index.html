@@ -14,12 +14,7 @@
       as="image"
       type="image/svg+xml"
     />
-    <link
-      rel="preload"
-      href="./assets/assetDict.json"
-      as="fetch"
-      crossorigin="anonymous"
-    />
+    <script src="./index.js"></script>
     <style>
       body {
         margin: 0;
@@ -49,7 +44,7 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="container" id="container">
       <object
         class="profile-svg"
         type="image/svg+xml"
@@ -62,45 +57,12 @@
     </div>
 
     <script>
-      // Global variable to store the asset dictionary
-      let assetDict = {};
-
-      // Function to load the asset dictionary
-      async function loadAssetDict() {
-        try {
-          const response = await fetch("./assets/assetDict.json");
-          if (!response.ok) {
-            throw new Error(
-              `Failed to load asset dictionary: ${response.status}`
-            );
-          }
-          assetDict = await response.json();
-          console.log("Asset dictionary loaded successfully");
-        } catch (error) {
-          console.error("Error loading asset dictionary:", error);
-        }
-      }
-
-      // Function to proxy an asset
-      async function proxyAsset(assetKey) {
-        if (!assetKey) return null;
-
-        // If the key exists in our dictionary, return the URL
-        if (assetDict[assetKey]) {
-          return assetDict[assetKey];
-        }
-
-        // If not found in dictionary, return null
-        console.warn(`Asset key "${assetKey}" not found in dictionary`);
-        return null;
-      }
-
       // Handler for window messages (for communication with the SVG)
       window.addEventListener("message", async function (event) {
         // Check if the message is from our SVG
         if (event.data && event.data.type === "getAssetUrl") {
           const assetKey = event.data.assetKey;
-          const assetUrl = await proxyAsset(assetKey);
+          const assetUrl = proxyAsset(assetKey);
 
           // Send the URL back to the SVG
           event.source.postMessage(
@@ -116,9 +78,6 @@
 
       // Handle query parameters to dynamically serve assets
       document.addEventListener("DOMContentLoaded", async () => {
-        // First load the asset dictionary
-        await loadAssetDict();
-
         const urlParams = new URLSearchParams(window.location.search);
         const assetParam = urlParams.get("asset");
 
@@ -139,48 +98,8 @@
           }
           // If it's requesting an asset by key from the dictionary
           else {
-            const assetUrl = await proxyAsset(assetParam);
-
-            if (assetUrl) {
-              // Detect MIME type based on URL extension
-              const getContentType = (url) => {
-                if (url.endsWith(".svg")) return "image/svg+xml";
-                if (url.endsWith(".gif")) return "image/gif";
-                if (url.endsWith(".png")) return "image/png";
-                if (url.endsWith(".jpg") || url.endsWith(".jpeg"))
-                  return "image/jpeg";
-                return "application/octet-stream";
-              };
-
-              // Set appropriate content type
-              const contentType = getContentType(assetUrl);
-
-              // Fetch the asset and serve it
-              try {
-                const response = await fetch(assetUrl);
-                if (!response.ok)
-                  throw new Error(`Failed to fetch asset: ${response.status}`);
-
-                const blob = await response.blob();
-                const blobUrl = URL.createObjectURL(blob);
-
-                // Clear content and show the image
-                document.body.innerHTML = "";
-                const img = document.createElement("img");
-                img.src = blobUrl;
-                img.style.maxWidth = "100%";
-                document.body.appendChild(img);
-
-                // Set content type header (this won't actually work for client-side only,
-                // but kept for completeness)
-                document.contentType = contentType;
-              } catch (error) {
-                console.error("Error fetching asset:", error);
-                document.body.innerHTML = `<p>Error loading asset: ${error.message}</p>`;
-              }
-            } else {
-              document.body.innerHTML = `<p>Asset key "${assetParam}" not found</p>`;
-            }
+            // assetDictとserveAsset関数はindex.jsから利用可能
+            await serveAsset(assetParam, document.body);
           }
         }
       });
