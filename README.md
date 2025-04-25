@@ -7,6 +7,6 @@
 
 <div align="center">
   <a href="https://x.com/fab_for_fab">
-    <img src="./assets/interactive.svg" alt="Interactive Profile" width="100%" />
+    <img src="./assets/interactive.svg" alt="Interactive Profile" width="100%" height="100%"/>
   </a>
 </div>
