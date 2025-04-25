@@ -660,7 +660,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">0xfab's GitHub Stats, Rank: B+</title>
-        <desc id="descId">Total Stars Earned: 3, Total Commits  : 2150, Total PRs: 451, Total Issues: 42, Contributed to (last year): 23</desc>
+        <desc id="descId">Total Stars Earned: 3, Total Commits  : 2149, Total PRs: 451, Total Issues: 42, Contributed to (last year): 23</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -724,7 +724,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 120.9435599631303;
+        stroke-dashoffset: 120.95010406578562;
       }
     }
   
@@ -1191,7 +1191,7 @@
                 <!-- Total Contributions big number -->
                 <g transform='translate(82.5, 48)'>
                     <text x='0' y='32' stroke-width='0' text-anchor='middle' fill='#41B883' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='700' font-size='28px' font-style='normal' style='opacity: 0; animation: fadein 0.5s linear forwards 0.6s'>
-                        3,343
+                        3,342
                     </text>
                 </g>
 
