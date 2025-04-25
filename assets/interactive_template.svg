@@ -302,14 +302,14 @@
     li {
       font-size: 18px;
       line-height: 1.65;
-      text-shadow: 0 1.8px 2.2px rgba(0, 0, 0, 0.4);
+      text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.4);
       position: relative;
       z-index: 2;
       margin-bottom: 9px;
     }
     
     p { 
-      font-size: 17px;
+      font-size: 18px;
       line-height: 1.65;
       margin: 14px 0 26px 0;
       text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.4);
@@ -735,6 +735,56 @@
       stroke: #8c7064;
     }
     /* === END: Cat Instance Styling === */
+
+    /* === START: Responsive Adjustments === */
+    @media (max-width: 600px) {
+      body {
+        padding: 8px; /* Reduce padding */
+      }
+      h1 {
+        font-size: 2.1em; /* Slightly larger mobile h1 */
+      }
+      h2 {
+        font-size: 1.7em; /* Slightly larger mobile h2 */
+        margin-top: 20px;
+      }
+      h3 {
+        font-size: 1.5em; /* Slightly larger mobile h3 */
+      }
+      li, p {
+        font-size: 19px; /* Further increase mobile body text */
+        line-height: 1.7;
+      }
+      .content-section:before {
+        /* Adjust background blur container for less padding */
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+      }
+      .badge-row {
+        gap: 8px; /* Slightly reduce gap */
+        max-width: 95%; /* Allow more width */
+        margin: 15px auto 25px auto; /* Adjust vertical margins */
+      }
+      .badge-row img {
+         height: 38px; /* Make badges slightly larger */
+      }
+      .stats-section .flex-center {
+        flex-direction: column; /* Stack stats cards vertically */
+        gap: 15px;
+      }
+      .stats-card {
+         width: 90%; /* Make stats cards wider */
+         max-width: 400px; /* Limit max width */
+         height: auto !important; /* Allow height to adjust */
+      }
+      .connect-icon {
+        margin: 0 8px; /* Adjust spacing */
+        transform: scale(1.1); /* Make connect icons slightly larger by default */
+      }
+    }
+    /* === END: Responsive Adjustments === */
   ]]></style>
 
   <!-- 背景レイヤー -->
