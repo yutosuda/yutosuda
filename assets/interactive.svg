@@ -2,9 +2,9 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
      version="1.1" baseProfile="full"
-     viewBox="0 0 800 1950"
+     viewBox="0 0 800 2250"
      preserveAspectRatio="xMidYMid meet"
-     width="800" height="1950">
+     width="800" height="2250">
 
   <!-- 最適化したフィルター定義 -->
   <defs>
@@ -554,8 +554,8 @@
     }
     
     @keyframes colorShift {
-      0% { filter: hue-rotate(0deg); }
-      100% { filter: hue-rotate(360deg); }
+      from { filter: hue-rotate(0deg); }
+      to { filter: hue-rotate(360deg); }
     }
     
     /* 3D変換とパースペクティブ - 最適化版 */
@@ -595,20 +595,20 @@
     }
     
     .fluid-layer-1 {
-      animation: fluidMove1 8s ease-in-out infinite, colorShift 60s linear infinite;
+      animation: fluidMove1 5s ease-in-out infinite, colorShift 15s linear infinite;
     }
     
     .fluid-layer-2 {
-      animation: fluidMove2 9s ease-in-out infinite, colorShift 20s linear infinite reverse;
+      animation: fluidMove2 9s ease-in-out infinite, colorShift 45s linear infinite reverse;
     }
     
     .fluid-layer-3 {
-      animation: fluidMove3 10s ease-in-out infinite, colorShift 15s linear infinite;
+      animation: fluidMove3 15s ease-in-out infinite, colorShift 9s linear infinite;
     }
 
     /* 拡張した下部の波アニメーション */
     .extended-wave {
-      animation: fluidMove2 10s ease-in-out infinite, waveMotion 8s ease-in-out infinite;
+      animation: fluidMove2 9s ease-in-out infinite, waveMotion 5s ease-in-out infinite;
     }
     
     .quantum-particle {
@@ -821,18 +821,18 @@
   <!-- 流体力学シミュレーションレイヤー - 最適化版 -->
   <g class="perspective-container">
     <!-- 背景流体レイヤー - 画面全体に分散 -->
-    <path class="fluid-layer fluid-layer-3" d="M0,150 C200,100 300,200 500,150 S700,100 800,150 V1950 H0 Z" fill="url(#fluidGradient3)" opacity="0.4" filter="url(#lightRefraction)"/>
+    <path class="fluid-layer fluid-layer-3" d="M0,150 C200,100 300,200 500,150 S700,100 800,150 V2250 H0 Z" fill="url(#fluidGradient3)" opacity="0.4" filter="url(#lightRefraction)"/>
     
     <!-- 中間流体レイヤー - 画面全体に分散 -->
-    <path class="fluid-layer fluid-layer-2" d="M0,350 C150,300 250,400 400,350 S550,300 800,350 V1950 H0 Z" fill="url(#fluidGradient2)" opacity="0.5" filter="url(#lightRefraction)"/>
+    <path class="fluid-layer fluid-layer-2" d="M0,350 C150,300 250,400 400,350 S550,300 800,350 V2250 H0 Z" fill="url(#fluidGradient2)" opacity="0.5" filter="url(#lightRefraction)"/>
     
     <!-- 前景流体レイヤー - 画面全体に分散 -->
-    <path class="fluid-layer fluid-layer-1" d="M0,250 C100,200 200,300 300,250 S400,200 600,250 S800,300 800,250 V1950 H0 Z" fill="url(#fluidGradient1)" opacity="0.6" filter="url(#enhanced3dDepth)"/>
+    <path class="fluid-layer fluid-layer-1" d="M0,250 C100,200 200,300 300,250 S400,200 600,250 S800,300 800,250 V2250 H0 Z" fill="url(#fluidGradient1)" opacity="0.6" filter="url(#enhanced3dDepth)"/>
 
     <!-- 下部まで広がる追加の波 - 最適化版 -->
-    <path class="extended-wave" d="M0,500 C150,450 300,550 450,500 S600,450 800,500 V1950 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.35" filter="url(#lightRefraction)"/>
-    <path class="extended-wave" d="M0,700 C200,650 400,750 600,700 S800,650 800,700 V1950 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.3" filter="url(#lightRefraction)"/>
-    <path class="extended-wave" d="M0,900 C250,850 450,950 650,900 S850,850 800,900 V1950 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.25" filter="url(#lightRefraction)"/>
+    <path class="extended-wave" d="M0,500 C150,450 300,550 450,500 S600,450 800,500 V2250 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.35" filter="url(#lightRefraction)"/>
+    <path class="extended-wave" d="M0,700 C200,650 400,750 600,700 S800,650 800,700 V2250 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.3" filter="url(#lightRefraction)"/>
+    <path class="extended-wave" d="M0,900 C250,850 450,950 650,900 S850,850 800,900 V2250 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.25" filter="url(#lightRefraction)"/>
   </g>
   
   <!-- パララックス中間レイヤー -->
@@ -915,7 +915,7 @@
   </g>
   <!-- === END: Animated Cats Instances === -->
 
-  <foreignObject x="0" y="0" width="800" height="1950">
+  <foreignObject x="0" y="0" width="800" height="2250">
     <body xmlns="http://www.w3.org/1999/xhtml">
       <!-- ウェルカム見出し -->
       <h1 class="flex-center">
@@ -994,7 +994,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">0xfab's GitHub Stats, Rank: B+</title>
-        <desc id="descId">Total Stars Earned: 3, Total Commits  : 2152, Total PRs: 451, Total Issues: 42, Contributed to (last year): 23</desc>
+        <desc id="descId">Total Stars Earned: 3, Total Commits  : 2150, Total PRs: 451, Total Issues: 42, Contributed to (last year): 23</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -1058,7 +1058,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 120.93048535804147;
+        stroke-dashoffset: 120.9435599631303;
       }
     }
   
@@ -1162,7 +1162,7 @@
         x="219.01"
         y="12.5"
         data-testid="commits"
-      >2.2k</text>
+      >2.1k</text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">
@@ -1347,7 +1347,7 @@
           data-testid="lang-progress"
           x="0"
           y="0"
-          width="108.01"
+          width="107.82"
           height="8"
           fill="#f1e05a"
         />
@@ -1355,9 +1355,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="108.01"
+          x="107.82"
           y="0"
-          width="53.23"
+          width="53.3"
           height="8"
           fill="#3178c6"
         />
@@ -1365,9 +1365,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="161.24"
+          x="161.12"
           y="0"
-          width="28.62"
+          width="28.66"
           height="8"
           fill="#178600"
         />
@@ -1375,9 +1375,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="189.86"
+          x="189.78"
           y="0"
-          width="16.3"
+          width="16.32"
           height="8"
           fill="#3572A5"
         />
@@ -1385,9 +1385,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="206.16000000000003"
+          x="206.1"
           y="0"
-          width="13.71"
+          width="13.73"
           height="8"
           fill="#3D6117"
         />
@@ -1395,9 +1395,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="219.87000000000003"
+          x="219.82999999999998"
           y="0"
-          width="13.6"
+          width="13.62"
           height="8"
           fill="#555555"
         />
@@ -1405,9 +1405,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="233.47000000000003"
+          x="233.45"
           y="0"
-          width="18.54"
+          width="18.560000000000002"
           height="8"
           fill="#00ADD8"
         />
@@ -1415,9 +1415,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="242.01000000000002"
+          x="242.01"
           y="0"
-          width="17.990000000000002"
+          width="18"
           height="8"
           fill="#89e051"
         />
@@ -1428,42 +1428,42 @@
     <g class="stagger" style="animation-delay: 450ms">
       <circle cx="5" cy="6" r="5" fill="#f1e05a" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        JavaScript 43.21%
+        JavaScript 43.13%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
       <circle cx="5" cy="6" r="5" fill="#3178c6" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        TypeScript 21.29%
+        TypeScript 21.32%
       </text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms">
       <circle cx="5" cy="6" r="5" fill="#178600" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        C# 11.45%
+        C# 11.46%
       </text>
     </g>
   </g><g transform="translate(0, 75)">
     <g class="stagger" style="animation-delay: 900ms">
       <circle cx="5" cy="6" r="5" fill="#3572A5" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Python 6.52%
+        Python 6.53%
       </text>
     </g>
   </g></g><g transform="translate(150, 0)"><g transform="translate(0, 0)">
     <g class="stagger" style="animation-delay: 450ms">
       <circle cx="5" cy="6" r="5" fill="#3D6117" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        TeX 5.48%
+        TeX 5.49%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
       <circle cx="5" cy="6" r="5" fill="#555555" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        C 5.44%
+        C 5.45%
       </text>
     </g>
   </g><g transform="translate(0, 50)">
@@ -1525,7 +1525,7 @@
                 <!-- Total Contributions big number -->
                 <g transform='translate(82.5, 48)'>
                     <text x='0' y='32' stroke-width='0' text-anchor='middle' fill='#41B883' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='700' font-size='28px' font-style='normal' style='opacity: 0; animation: fadein 0.5s linear forwards 0.6s'>
-                        3,347
+                        3,352
                     </text>
                 </g>
 
