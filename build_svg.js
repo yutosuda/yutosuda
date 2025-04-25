@@ -232,9 +232,202 @@ function fetchSvgContent(url) {
   });
 }
 
+// --- NEW: Function to fetch Google Fonts CSS ---
+function fetchGoogleFontCss(url) {
+  return new Promise((resolve, reject) => {
+    // Send request with User-Agent that prefers WOFF2
+    https
+      .get(
+        url,
+        {
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
+          },
+        },
+        (response) => {
+          if (response.statusCode < 200 || response.statusCode >= 300) {
+            return reject(
+              new Error(
+                `Failed to fetch CSS ${url}: Status Code ${response.statusCode}`
+              )
+            );
+          }
+          let css = "";
+          response.on("data", (chunk) => (css += chunk));
+          response.on("end", () => resolve(css));
+        }
+      )
+      .on("error", (err) =>
+        reject(new Error(`Network error fetching CSS ${url}: ${err.message}`))
+      );
+  });
+}
+
+// --- NEW: Function to parse CSS and extract WOFF2 URLs & font details ---
+function parseCssForFonts(css) {
+  const fonts = [];
+  // Regex to capture @font-face blocks and extract details
+  const fontFaceRegex = /@font-face\s*{([^}]*)}/g;
+  const propertyRegex = /([a-zA-Z-]+)\s*:\s*([^;]+);/g;
+  const urlRegex = /url\((https:\/\/fonts\.gstatic\.com\/[^\)]+\.woff2)\)/;
+
+  let match;
+  while ((match = fontFaceRegex.exec(css)) !== null) {
+    const block = match[1];
+    const details = {
+      family: null,
+      style: "normal",
+      weight: "400",
+      woff2Url: null,
+    };
+    let propMatch;
+    while ((propMatch = propertyRegex.exec(block)) !== null) {
+      const [, property, value] = propMatch;
+      if (property === "font-family") {
+        details.family = value.replace(/['\"]/g, ""); // Remove quotes
+      } else if (property === "font-style") {
+        details.style = value;
+      } else if (property === "font-weight") {
+        details.weight = value;
+      } else if (property === "src") {
+        const urlMatch = value.match(urlRegex);
+        if (urlMatch) {
+          details.woff2Url = urlMatch[1];
+        }
+      }
+    }
+    if (details.family && details.woff2Url) {
+      fonts.push(details);
+    }
+  }
+  return fonts;
+}
+
+// --- NEW: Function to fetch font file and convert to Data URI ---
+function fetchFontAsDataUri(url) {
+  return new Promise((resolve, reject) => {
+    if (!url || !url.startsWith("https://")) {
+      console.warn(`Skipping invalid or non-HTTPS font URL: ${url}`);
+      return resolve(""); // Resolve with empty string for invalid URLs
+    }
+
+    https
+      .get(
+        url,
+        { headers: { "User-Agent": "Node.js-Build-Script/1.0" } },
+        (response) => {
+          // Handle redirects
+          if (
+            response.statusCode >= 300 &&
+            response.statusCode < 400 &&
+            response.headers.location
+          ) {
+            console.log(
+              `Redirect detected for font ${url}. Following to ${response.headers.location}`
+            );
+            return fetchFontAsDataUri(response.headers.location)
+              .then(resolve)
+              .catch(reject);
+          }
+          if (response.statusCode < 200 || response.statusCode >= 300) {
+            return reject(
+              new Error(
+                `Failed to fetch font ${url}: Status Code ${response.statusCode}`
+              )
+            );
+          }
+
+          const chunks = [];
+          response.on("data", (chunk) => chunks.push(chunk));
+          response.on("end", () => {
+            try {
+              const buffer = Buffer.concat(chunks);
+              const base64 = buffer.toString("base64");
+              resolve(`data:font/woff2;base64,${base64}`); // Assume WOFF2 for now
+            } catch (e) {
+              reject(
+                new Error(`Error processing font data for ${url}: ${e.message}`)
+              );
+            }
+          });
+        }
+      )
+      .on("error", (err) =>
+        reject(new Error(`Network error fetching font ${url}: ${err.message}`))
+      );
+  });
+}
+
 async function buildSvg() {
   try {
     let templateContent = await fs.readFile(templatePath, "utf8");
+
+    // --- UPDATED: Fetch and embed multiple fonts ---
+    let allFontFaceRules = "";
+    // Request both fonts in one go
+    const fontsCssUrl =
+      "https://fonts.googleapis.com/css2?family=Honk&family=Oleo+Script:wght@400;700&display=swap";
+    try {
+      console.log("Fetching combined font CSS...");
+      const fontCss = await fetchGoogleFontCss(fontsCssUrl);
+      console.log("Parsing CSS for font details...");
+      const fontsToEmbed = parseCssForFonts(fontCss);
+
+      if (fontsToEmbed.length > 0) {
+        console.log(`Found ${fontsToEmbed.length} font variations to embed.`);
+        const fontPromises = fontsToEmbed.map(async (fontInfo) => {
+          try {
+            console.log(
+              `Fetching ${fontInfo.family} (${fontInfo.weight}) WOFF2 from ${fontInfo.woff2Url}`
+            );
+            const fontDataUri = await fetchFontAsDataUri(fontInfo.woff2Url);
+            if (fontDataUri) {
+              // Generate the @font-face rule for this specific font variation
+              return `
+    @font-face {
+      font-family: '${fontInfo.family}';
+      font-style: ${fontInfo.style};
+      font-weight: ${fontInfo.weight};
+      font-display: swap;
+      src: url(${fontDataUri}) format('woff2');
+    }`;
+            } else {
+              console.warn(
+                `Failed to get Data URI for ${fontInfo.family} (${fontInfo.weight}).`
+              );
+              return null;
+            }
+          } catch (fontError) {
+            console.error(
+              `Error processing font ${fontInfo.family} (${fontInfo.weight}): ${fontError.message}`
+            );
+            return null;
+          }
+        });
+
+        const results = await Promise.allSettled(fontPromises);
+        results.forEach((result) => {
+          if (result.status === "fulfilled" && result.value) {
+            allFontFaceRules += result.value;
+          }
+        });
+
+        if (allFontFaceRules) {
+          console.log("Successfully prepared all required @font-face rules.");
+        } else {
+          console.warn("Could not generate any @font-face rules.");
+        }
+      } else {
+        console.warn(
+          "Could not find any valid font definitions in Google Fonts CSS."
+        );
+      }
+    } catch (error) {
+      console.error(`Error processing fonts: ${error.message}`);
+      // Continue build without custom fonts if fetching fails
+    }
+    // --- END: Fetch and embed multiple fonts ---
 
     const fetchPromises = [];
     const placeholderData = {}; // Stores results: { placeholder: dataUriOrOriginalUrl }
@@ -368,6 +561,28 @@ async function buildSvg() {
       }
     }
     console.log("Placeholder replacement complete.");
+
+    // --- UPDATED: Inject all @font-face rules into <style> ---
+    if (allFontFaceRules) {
+      const styleTagStart = '<style type="text/css"><![CDATA[';
+      const styleTagIndex = templateContent.indexOf(styleTagStart);
+      if (styleTagIndex !== -1) {
+        const insertionPoint = styleTagIndex + styleTagStart.length;
+        // Inject all rules at the beginning of the style block
+        templateContent =
+          templateContent.slice(0, insertionPoint) +
+          "\n" +
+          allFontFaceRules +
+          "\n" +
+          templateContent.slice(insertionPoint);
+        console.log("Injected all @font-face rules into <style> tag.");
+      } else {
+        console.warn(
+          "Could not find <style> tag start to inject @font-face rules."
+        );
+      }
+    }
+    // --- END: Inject all @font-face rules ---
 
     // Write the modified content to the output file
     await fs.writeFile(outputPath, templateContent, "utf8");

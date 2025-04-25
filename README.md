@@ -10,7 +10,3 @@
     <img src="./assets/interactive.svg" alt="Interactive Profile" width="100%" />
   </a>
 </div>
-
-<div align="center">
-
-</div>
