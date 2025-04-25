@@ -2,9 +2,9 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
      version="1.1" baseProfile="full"
-     viewBox="0 0 800 2100"
+     viewBox="0 0 800 2150"
      preserveAspectRatio="xMidYMid meet"
-     width="800" height="2100">
+     width="800" height="2150">
 
   <!-- 最適化したフィルター定義 -->
   <defs>
@@ -756,18 +756,18 @@
   <!-- 流体力学シミュレーションレイヤー - 最適化版 -->
   <g class="perspective-container">
     <!-- 背景流体レイヤー - 画面全体に分散 -->
-    <path class="fluid-layer fluid-layer-3" d="M0,150 C200,100 300,200 500,150 S700,100 800,150 V2100 H0 Z" fill="url(#fluidGradient3)" opacity="0.4" filter="url(#lightRefraction)"/>
+    <path class="fluid-layer fluid-layer-3" d="M0,150 C200,100 300,200 500,150 S700,100 800,150 V2150 H0 Z" fill="url(#fluidGradient3)" opacity="0.4" filter="url(#lightRefraction)"/>
     
     <!-- 中間流体レイヤー - 画面全体に分散 -->
-    <path class="fluid-layer fluid-layer-2" d="M0,350 C150,300 250,400 400,350 S550,300 800,350 V2100 H0 Z" fill="url(#fluidGradient2)" opacity="0.5" filter="url(#lightRefraction)"/>
+    <path class="fluid-layer fluid-layer-2" d="M0,350 C150,300 250,400 400,350 S550,300 800,350 V2150 H0 Z" fill="url(#fluidGradient2)" opacity="0.5" filter="url(#lightRefraction)"/>
     
     <!-- 前景流体レイヤー - 画面全体に分散 -->
-    <path class="fluid-layer fluid-layer-1" d="M0,250 C100,200 200,300 300,250 S400,200 600,250 S800,300 800,250 V2100 H0 Z" fill="url(#fluidGradient1)" opacity="0.6" filter="url(#enhanced3dDepth)"/>
+    <path class="fluid-layer fluid-layer-1" d="M0,250 C100,200 200,300 300,250 S400,200 600,250 S800,300 800,250 V2150 H0 Z" fill="url(#fluidGradient1)" opacity="0.6" filter="url(#enhanced3dDepth)"/>
 
     <!-- 下部まで広がる追加の波 - 最適化版 -->
-    <path class="extended-wave" d="M0,500 C150,450 300,550 450,500 S600,450 800,500 V2100 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.35" filter="url(#lightRefraction)"/>
-    <path class="extended-wave" d="M0,700 C200,650 400,750 600,700 S800,650 800,700 V2100 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.3" filter="url(#lightRefraction)"/>
-    <path class="extended-wave" d="M0,900 C250,850 450,950 650,900 S850,850 800,900 V2100 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.25" filter="url(#lightRefraction)"/>
+    <path class="extended-wave" d="M0,500 C150,450 300,550 450,500 S600,450 800,500 V2150 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.35" filter="url(#lightRefraction)"/>
+    <path class="extended-wave" d="M0,700 C200,650 400,750 600,700 S800,650 800,700 V2150 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.3" filter="url(#lightRefraction)"/>
+    <path class="extended-wave" d="M0,900 C250,850 450,950 650,900 S850,850 800,900 V2150 H0 Z" fill="url(#extendedWaveGradient)" opacity="0.25" filter="url(#lightRefraction)"/>
   </g>
   
   <!-- パララックス中間レイヤー -->
@@ -850,7 +850,7 @@
   </g>
   <!-- === END: Animated Cats Instances === -->
 
-  <foreignObject x="0" y="0" width="800" height="2100">
+  <foreignObject x="0" y="0" width="800" height="2150">
     <body xmlns="http://www.w3.org/1999/xhtml">
       <!-- ウェルカム見出し -->
       <h1 class="flex-center">
