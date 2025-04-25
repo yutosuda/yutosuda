@@ -7,6 +7,8 @@ on:
     # Avoid triggering the workflow on commits made by the bot itself
     paths-ignore:
       - "assets/**"
+  schedule:
+    - cron: "0 */6 * * *" # 6時間ごとに実行
   workflow_dispatch: # 手動実行も可能にする
 
 # Add permissions block here
