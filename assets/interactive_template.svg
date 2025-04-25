@@ -489,8 +489,8 @@
     }
     
     @keyframes colorShift {
-      0% { filter: hue-rotate(0deg); }
-      100% { filter: hue-rotate(360deg); }
+      from { filter: hue-rotate(0deg); }
+      to { filter: hue-rotate(360deg); }
     }
     
     /* 3D変換とパースペクティブ - 最適化版 */
@@ -530,20 +530,20 @@
     }
     
     .fluid-layer-1 {
-      animation: fluidMove1 8s ease-in-out infinite, colorShift 60s linear infinite;
+      animation: fluidMove1 5s ease-in-out infinite, colorShift 15s linear infinite;
     }
     
     .fluid-layer-2 {
-      animation: fluidMove2 9s ease-in-out infinite, colorShift 20s linear infinite reverse;
+      animation: fluidMove2 9s ease-in-out infinite, colorShift 45s linear infinite reverse;
     }
     
     .fluid-layer-3 {
-      animation: fluidMove3 10s ease-in-out infinite, colorShift 15s linear infinite;
+      animation: fluidMove3 15s ease-in-out infinite, colorShift 9s linear infinite;
     }
 
     /* 拡張した下部の波アニメーション */
     .extended-wave {
-      animation: fluidMove2 10s ease-in-out infinite, waveMotion 8s ease-in-out infinite;
+      animation: fluidMove2 9s ease-in-out infinite, waveMotion 5s ease-in-out infinite;
     }
     
     .quantum-particle {
