@@ -999,10 +999,10 @@
       <section class="content-section">
         <h2>📫 Connect with Me</h2>
         <div class="center" style="perspective: 600px;">
-          <a href="https://x.com/fab_for_fab">
+          <a href="https://x.com/_aruday">
             <img id="twitter-img" alt="Twitter" src="{{TWITTER_URL}}" class="connect-icon"/>
           </a>
-          <a href="https://github.com/0xfab0131">
+          <a href="https://github.com/yutosuda">
             <img id="github-img" alt="GitHub" src="{{GITHUB_URL}}" class="connect-icon"/>
           </a>
         </div>

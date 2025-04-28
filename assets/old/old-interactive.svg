@@ -65,10 +65,10 @@
     <body xmlns="http://www.w3.org/1999/xhtml">
       <!-- 1. プロフィールビュー＆フォロワー -->
       <div class="center">
-        <img src="https://komarev.com/ghpvc/?username=0xfab0131" alt="Profile views" />
-        <a href="https://github.com/0xfab0131?tab=followers">
+        <img src="https://komarev.com/ghpvc/?username=yutosuda" alt="Profile views" />
+        <a href="https://github.com/yutosuda?tab=followers">
           <img alt="GitHub followers"
-               src="https://img.shields.io/github/followers/0xfab0131?style=flat&amp;logo=github" />
+               src="https://img.shields.io/github/followers/yutosuda?style=flat&amp;logo=github" />
         </a>
       </div>
 
@@ -163,23 +163,23 @@
       <h2>📊 GitHub Stats</h2>
       <div class="center flex-center stats-section">
         <img alt="GitHub Stats" class="stats-card"
-             src="https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=0xfab0131&amp;theme=vue-dark&amp;count_private=true&amp;include_all_commits=true&amp;rank_icon=github&amp;show_icons=true" />
+             src="https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=yutosuda&amp;theme=vue-dark&amp;count_private=true&amp;include_all_commits=true&amp;rank_icon=github&amp;show_icons=true" />
         <img alt="Top Languages" class="stats-card"
-             src="https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api/top-langs/?username=0xfab0131&amp;theme=vue-dark&amp;count_private=true&amp;show_icons=true&amp;layout=compact&amp;include_all_commits=true&amp;rank_icon=github&amp;size_weight=0.5&amp;count_weight=0.5&amp;langs_count=8&amp;card_width=300&amp;hide=html,css,php" />
+             src="https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api/top-langs/?username=yutosuda&amp;theme=vue-dark&amp;count_private=true&amp;show_icons=true&amp;layout=compact&amp;include_all_commits=true&amp;rank_icon=github&amp;size_weight=0.5&amp;count_weight=0.5&amp;langs_count=8&amp;card_width=300&amp;hide=html,css,php" />
       </div>
       <div class="center stats-section">
         <img alt="GitHub Streak Stats"
-             src="https://github-readme-streak-stats-rust-eta.vercel.app/?user=0xfab0131&amp;theme=vue-dark" />
+             src="https://github-readme-streak-stats-rust-eta.vercel.app/?user=yutosuda&amp;theme=vue-dark" />
       </div>
 
       <!-- 8. Connect with Me -->
       <h2>📫 Connect with Me</h2>
       <div class="center">
-        <a href="https://twitter.com/fab_for_fab">
+        <a href="https://twitter.com/_aruday">
           <img alt="Twitter"
                src="https://img.shields.io/badge/-Twitter-1DA1F2?style=for-the-badge&amp;logo=twitter&amp;logoColor=white" />
         </a>
-        <a href="https://github.com/0xfab0131">
+        <a href="https://github.com/yutosuda">
           <img alt="GitHub"
                src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" />
         </a>

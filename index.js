@@ -1,8 +1,8 @@
 // svg用に使用するアセット辞書
 const assetDict = {
-  profileViews: "https://komarev.com/ghpvc/?username=0xfab0131",
+  profileViews: "https://komarev.com/ghpvc/?username=yutosuda",
   githubFollowers:
-    "https://img.shields.io/github/followers/0xfab0131?style=flat&logo=github",
+    "https://img.shields.io/github/followers/yutosuda?style=flat&logo=github",
   welcomeGif: "https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif",
   react:
     "https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black",
@@ -52,18 +52,18 @@ const assetDict = {
   cloudflare:
     "https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=cloudflare&logoColor=white",
   githubStats:
-    "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=0xfab0131&theme=vue-dark&count_private=true&include_all_commits=true&rank_icon=github&show_icons=true",
+    "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=yutosuda&theme=vue-dark&count_private=true&include_all_commits=true&rank_icon=github&show_icons=true",
   topLanguages:
-    "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&count_private=true&show_icons=true&layout=compact&include_all_commits=true&rank_icon=github&size_weight=0.5&count_weight=0.5&langs_count=8&card_width=300&hide=html,css,php",
+    "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api/top-langs/?username=yutosuda&theme=vue-dark&count_private=true&show_icons=true&layout=compact&include_all_commits=true&rank_icon=github&size_weight=0.5&count_weight=0.5&langs_count=8&card_width=300&hide=html,css,php",
   streakStats:
-    "https://github-readme-streak-stats-rust-eta.vercel.app/?user=0xfab0131&theme=vue-dark",
+    "https://github-readme-streak-stats-rust-eta.vercel.app/?user=yutosuda&theme=vue-dark",
   twitter:
     "https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=x&logoColor=white",
   github:
     "https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white",
-  profileViews: "https://komarev.com/ghpvc/?username=0xfab0131",
+  profileViews: "https://komarev.com/ghpvc/?username=yutosuda",
   githubFollowers:
-    "https://img.shields.io/github/followers/0xfab0131?style=flat&logo=github",
+    "https://img.shields.io/github/followers/yutosuda?style=flat&logo=github",
   typescriptBadge:
     "https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white",
   reactBadge:
@@ -77,13 +77,13 @@ const assetDict = {
   prismaBadge:
     "https://img.shields.io/badge/-Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white",
   githubStats:
-    "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=0xfab0131&theme=vue-dark&count_private=true&include_all_commits=true&rank_icon=github&show_icons=true",
+    "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api?username=yutosuda&theme=vue-dark&count_private=true&include_all_commits=true&rank_icon=github&show_icons=true",
   githubLangs:
-    "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api/top-langs/?username=0xfab0131&theme=vue-dark&count_private=true&show_icons=true&layout=compact&include_all_commits=true&rank_icon=github&size_weight=0.5&count_weight=0.5&langs_count=8&card_width=300&hide=html,css,php",
-  avatar: "https://avatars.githubusercontent.com/u/0xfab0131",
-  githubProfile: "https://github.com/0xfab0131",
-  twitterProfile: "https://twitter.com/fab_for_fab",
-  linkedinProfile: "https://linkedin.com/in/0xfab0131",
+    "https://gtihub-readme-stats-fabmichelangelo-projects.vercel.app/api/top-langs/?username=yutosuda&theme=vue-dark&count_private=true&show_icons=true&layout=compact&include_all_commits=true&rank_icon=github&size_weight=0.5&count_weight=0.5&langs_count=8&card_width=300&hide=html,css,php",
+  avatar: "https://avatars.githubusercontent.com/u/yutosuda",
+  githubProfile: "https://github.com/yutosuda",
+  twitterProfile: "https://twitter.com/_aruday",
+  linkedinProfile: "https://linkedin.com/in/yutosuda",
 };
 
 // Check if running in Node.js environment for export
