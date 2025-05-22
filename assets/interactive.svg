@@ -1057,7 +1057,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">_aruday's GitHub Stats, Rank: C</title>
-        <desc id="descId">Total Stars Earned: 0, Total Commits  : 27, Total PRs: 1, Total Issues: 2, Contributed to (last year): 4</desc>
+        <desc id="descId">Total Stars Earned: 0, Total Commits  : 29, Total PRs: 1, Total Issues: 2, Contributed to (last year): 4</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -1121,7 +1121,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 243.72276120937707;
+        stroke-dashoffset: 243.6658083857033;
       }
     }
   
@@ -1225,7 +1225,7 @@
         x="219.01"
         y="12.5"
         data-testid="commits"
-      >27</text>
+      >29</text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">
@@ -1410,7 +1410,17 @@
           data-testid="lang-progress"
           x="0"
           y="0"
-          width="147.51"
+          width="96.93"
+          height="8"
+          fill="#3178c6"
+        />
+      
+        <rect
+          mask="url(#rect-mask)"
+          data-testid="lang-progress"
+          x="96.93"
+          y="0"
+          width="84.92"
           height="8"
           fill="#3572A5"
         />
@@ -1418,9 +1428,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="147.51"
+          x="181.85000000000002"
           y="0"
-          width="66.06"
+          width="47.18"
           height="8"
           fill="#f1e05a"
         />
@@ -1428,9 +1438,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="213.57"
+          x="229.03000000000003"
           y="0"
-          width="14.83"
+          width="18.54"
           height="8"
           fill="#336790"
         />
@@ -1438,9 +1448,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="228.4"
+          x="237.57000000000002"
           y="0"
-          width="13.64"
+          width="17.85"
           height="8"
           fill="#89e051"
         />
@@ -1448,9 +1458,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="242.04000000000002"
+          x="245.42000000000002"
           y="0"
-          width="17.96"
+          width="14.58"
           height="8"
           fill="#384d54"
         />
@@ -1459,37 +1469,44 @@
     <g transform="translate(0, 25)">
       <g transform="translate(0, 0)"><g transform="translate(0, 0)">
     <g class="stagger" style="animation-delay: 450ms">
-      <circle cx="5" cy="6" r="5" fill="#3572A5" />
+      <circle cx="5" cy="6" r="5" fill="#3178c6" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Python 59.00%
+        TypeScript 38.77%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
-      <circle cx="5" cy="6" r="5" fill="#f1e05a" />
+      <circle cx="5" cy="6" r="5" fill="#3572A5" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        JavaScript 26.42%
+        Python 33.97%
       </text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms">
-      <circle cx="5" cy="6" r="5" fill="#336790" />
+      <circle cx="5" cy="6" r="5" fill="#f1e05a" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        PLpgSQL 5.93%
+        JavaScript 18.87%
       </text>
     </g>
   </g></g><g transform="translate(150, 0)"><g transform="translate(0, 0)">
     <g class="stagger" style="animation-delay: 450ms">
-      <circle cx="5" cy="6" r="5" fill="#89e051" />
+      <circle cx="5" cy="6" r="5" fill="#336790" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Shell 5.46%
+        PLpgSQL 3.41%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
+      <circle cx="5" cy="6" r="5" fill="#89e051" />
+      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
+        Shell 3.14%
+      </text>
+    </g>
+  </g><g transform="translate(0, 50)">
+    <g class="stagger" style="animation-delay: 750ms">
       <circle cx="5" cy="6" r="5" fill="#384d54" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Dockerfile 3.18%
+        Dockerfile 1.83%
       </text>
     </g>
   </g></g>
@@ -1537,7 +1554,7 @@
                 <!-- Total Contributions big number -->
                 <g transform='translate(82.5, 48)'>
                     <text x='0' y='32' stroke-width='0' text-anchor='middle' fill='#41B883' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='700' font-size='28px' font-style='normal' style='opacity: 0; animation: fadein 0.5s linear forwards 0.6s'>
-                        53
+                        56
                     </text>
                 </g>
 
@@ -1559,7 +1576,7 @@
                 <!-- Current Streak big number -->
                 <g transform='translate(247.5, 48)'>
                     <text x='0' y='32' stroke-width='0' text-anchor='middle' fill='#41B883' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='700' font-size='28px' font-style='normal' style='animation: currstreak 0.6s linear forwards'>
-                        1
+                        2
                     </text>
                 </g>
 
@@ -1573,7 +1590,7 @@
                 <!-- Current Streak range -->
                 <g transform='translate(247.5, 145)'>
                     <text x='0' y='21' stroke-width='0' text-anchor='middle' fill='#FFFEFE' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='400' font-size='12px' font-style='normal' style='opacity: 0; animation: fadein 0.5s linear forwards 0.9s'>
-                        May 21
+                        May 21 - May 22
                     </text>
                 </g>
 
