@@ -1057,7 +1057,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">_aruday's GitHub Stats, Rank: C</title>
-        <desc id="descId">Total Stars Earned: 0, Total Commits  : 29, Total PRs: 1, Total Issues: 2, Contributed to (last year): 4</desc>
+        <desc id="descId">Total Stars Earned: 0, Total Commits  : 31, Total PRs: 1, Total Issues: 2, Contributed to (last year): 4</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -1121,7 +1121,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 243.6658083857033;
+        stroke-dashoffset: 243.60893446070676;
       }
     }
   
@@ -1225,7 +1225,7 @@
         x="219.01"
         y="12.5"
         data-testid="commits"
-      >29</text>
+      >31</text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">
@@ -1410,7 +1410,7 @@
           data-testid="lang-progress"
           x="0"
           y="0"
-          width="96.93"
+          width="105.96"
           height="8"
           fill="#3178c6"
         />
@@ -1418,9 +1418,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="96.93"
+          x="105.96"
           y="0"
-          width="84.92"
+          width="79.62"
           height="8"
           fill="#3572A5"
         />
@@ -1428,9 +1428,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="181.85000000000002"
+          x="185.57999999999998"
           y="0"
-          width="47.18"
+          width="44.76"
           height="8"
           fill="#f1e05a"
         />
@@ -1438,9 +1438,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="229.03000000000003"
+          x="230.33999999999997"
           y="0"
-          width="18.54"
+          width="18"
           height="8"
           fill="#336790"
         />
@@ -1448,9 +1448,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="237.57000000000002"
+          x="238.33999999999997"
           y="0"
-          width="17.85"
+          width="17.36"
           height="8"
           fill="#89e051"
         />
@@ -1458,9 +1458,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="245.42000000000002"
+          x="245.7"
           y="0"
-          width="14.58"
+          width="14.3"
           height="8"
           fill="#384d54"
         />
@@ -1471,42 +1471,42 @@
     <g class="stagger" style="animation-delay: 450ms">
       <circle cx="5" cy="6" r="5" fill="#3178c6" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        TypeScript 38.77%
+        TypeScript 42.38%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
       <circle cx="5" cy="6" r="5" fill="#3572A5" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Python 33.97%
+        Python 31.85%
       </text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms">
       <circle cx="5" cy="6" r="5" fill="#f1e05a" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        JavaScript 18.87%
+        JavaScript 17.90%
       </text>
     </g>
   </g></g><g transform="translate(150, 0)"><g transform="translate(0, 0)">
     <g class="stagger" style="animation-delay: 450ms">
       <circle cx="5" cy="6" r="5" fill="#336790" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        PLpgSQL 3.41%
+        PLpgSQL 3.20%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
       <circle cx="5" cy="6" r="5" fill="#89e051" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Shell 3.14%
+        Shell 2.95%
       </text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms">
       <circle cx="5" cy="6" r="5" fill="#384d54" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Dockerfile 1.83%
+        Dockerfile 1.72%
       </text>
     </g>
   </g></g>
@@ -1554,7 +1554,7 @@
                 <!-- Total Contributions big number -->
                 <g transform='translate(82.5, 48)'>
                     <text x='0' y='32' stroke-width='0' text-anchor='middle' fill='#41B883' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='700' font-size='28px' font-style='normal' style='opacity: 0; animation: fadein 0.5s linear forwards 0.6s'>
-                        56
+                        58
                     </text>
                 </g>
 
@@ -1576,7 +1576,7 @@
                 <!-- Current Streak big number -->
                 <g transform='translate(247.5, 48)'>
                     <text x='0' y='32' stroke-width='0' text-anchor='middle' fill='#41B883' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='700' font-size='28px' font-style='normal' style='animation: currstreak 0.6s linear forwards'>
-                        2
+                        3
                     </text>
                 </g>
 
@@ -1590,7 +1590,7 @@
                 <!-- Current Streak range -->
                 <g transform='translate(247.5, 145)'>
                     <text x='0' y='21' stroke-width='0' text-anchor='middle' fill='#FFFEFE' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='400' font-size='12px' font-style='normal' style='opacity: 0; animation: fadein 0.5s linear forwards 0.9s'>
-                        May 21 - May 22
+                        May 21 - May 23
                     </text>
                 </g>
 
